@@ -1,0 +1,26 @@
+name: Test
+
+on: [workflow_call]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+
+      - run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      # - name: Run tests
+      # run: npm run test
+
+      - name: View logs
+        if: failure()
+        run: docker compose -f docker-compose.ci.yml logs

@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "outDir": "../../dist/client",
+    "emitDeclarationOnly": true
+  },
+  "references": [
+    {
+      "path": "../common"
+    }
+  ]
+}

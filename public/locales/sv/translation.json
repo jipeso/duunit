@@ -1,0 +1,69 @@
+{
+  "common": {
+    "languages": {
+      "label": "Språk",
+      "fi": "Finska",
+      "sv": "Svenska",
+      "en": "Engelska"
+    },
+    "themes": {
+      "label": "Tema",
+      "light": "Ljus",
+      "dark": "Mörk",
+      "system": "System"
+    },
+    "name": "Namn",
+    "email": "E-post",
+    "password": "Lösenord",
+    "confirmPassword": "Bekräfta lösenord",
+    "register": "Registrera",
+    "login": "Logga in",
+    "logout": "Logga ut",
+    "profile": "Profil",
+    "home": "Hem",
+    "settings": "Inställningar",
+    "admin": "Admin"
+  },
+  "profile": {
+    "errors": {
+      "notFound": "Det gick inte att ladda profilinformationen."
+    }
+  },
+
+  "register": {
+    "title": "Skapa ett konto",
+    "errors": {
+      "confirmPasswordRequired": "Bekräfta ditt lösenord",
+      "passwordsDoNotMatch": "Lösenorden matchar inte",
+      "emailInUse": "E-postadressen används redan.",
+      "unexpectedError": "Något gick fel. Försök igen."
+    },
+    "alreadyHaveAccount": "Har du redan ett konto?"
+  },
+  "login": {
+    "title": "Välkommen tillbaka",
+    "subtitle": "Ange dina uppgifter för att logga in.",
+    "errors": {
+      "invalidCredentials": "Ogiltig e-post eller lösenord."
+    },
+    "doNotHaveAccount": "Har du inte ett konto?"
+  },
+  "validation": {
+    "name": {
+      "tooShort": "Namnet måste vara minst {{count}} tecken",
+      "tooLong": "Namnet får vara högst {{count}} tecken"
+    },
+    "email": {
+      "invalid": "Ange en giltig e-postadress",
+      "required": "Ange din e-postadress"
+    },
+    "password": {
+      "tooShort": "Lösenordet måste vara minst {{count}} tecken långt",
+      "tooLong": "Lösenordet får vara högst {{count}} tecken långt",
+      "missingLowercase": "Lösenordet måste innehålla minst en liten bokstav",
+      "missingUppercase": "Lösenordet måste innehålla minst en stor bokstav",
+      "missingNumber": "Lösenordet måste innehålla minst en siffra",
+      "missingSpecialChar": "Lösenordet måste innehålla minst ett specialtecken"
+    }
+  }
+}

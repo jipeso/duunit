@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: ['npm', 'run', 'start:test']
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
+      JWT_SECRET: secret
+    ports:
+      - 3000:3000
+    container_name: noveks_test
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    container_name: noveks_test_db

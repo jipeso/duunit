@@ -1,0 +1,73 @@
+{
+  "common": {
+    "languages": {
+      "label": "Kieli",
+      "fi": "Suomi",
+      "en": "Englanti",
+      "sv": "Ruotsi"
+    },
+    "themes": {
+      "label": "Teema",
+      "light": "Vaalea",
+      "dark": "Tumma",
+      "system": "Järjestelmä"
+    },
+    "name": "Nimi",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "confirmPassword": "Vahvista salasana",
+    "register": "Rekisteröidy",
+    "login": "Kirjaudu sisään",
+    "logout": "Kirjaudu ulos",
+    "profile": "Profiili",
+    "home": "Koti",
+    "settings": "Asetukset",
+    "admin": "Järjestelmänvalvoja"
+  },
+  "profile": {
+    "errors": {
+      "notFound": "Profiilitietoja ei voitu ladata."
+    }
+  },
+  "loggingOut": {
+    "title": "Olet kirjautunut ulos",
+    "subtitle": "Voit nyt sulkea tämän ikkunan."
+  },
+  "register": {
+    "title": "Luo tili",
+    "errors": {
+      "confirmPasswordRequired": "Vahvista salasanasi",
+      "passwordsDoNotMatch": "Salasanat eivät täsmää",
+      "emailInUse": "Sähköpostiosoite on jo käytössä.",
+      "unexpectedError": "Jokin meni pieleen. Yritä uudelleen."
+    },
+    "alreadyHaveAccount": "Onko sinulla jo tili?"
+  },
+  "login": {
+    "title": "Tervetuloa takaisin",
+    "subtitle": "Syötä kirjautumistiedot kirjautuaksesi sisään.",
+    "errors": {
+      "invalidCredentials": "Virheellinen sähköposti tai salasana."
+    },
+    "doNotHaveAccount": "Eikö sinulla ole vielä tiliä?"
+  },
+  "validation": {
+    "name": {
+      "tooShort": "Nimen tulee olla vähintään {{count}} merkkiä",
+      "tooLong": "Nimi voi olla enintään {{count}} merkkiä"
+    },
+    "email": {
+      "invalid": "Syötä kelvollinen sähköpostiosoite",
+      "required": "Syötä sähköpostiosoite"
+    },
+    "password": {
+      "tooShort": "Salasanan tulee olla vähintään {{count}} merkkiä pitkä",
+      "tooLong": "Salasana voi olla enintään {{count}} merkkiä pitkä",
+      "missingLowercase": "Salasanassa tulee olla vähintään yksi pieni kirjain",
+      "missingUppercase": "Salasanassa tulee olla vähintään yksi iso kirjain",
+      "missingNumber": "Salasanassa tulee olla vähintään yksi numero",
+      "missingSpecialChar": "Salasanassa tulee olla vähintään yksi erikoismerkki",
+      "required": "Syötä salasana"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "common": {
+    "languages": {
+      "label": "Language",
+      "fi": "Finnish",
+      "en": "English",
+      "sv": "Swedish"
+    },
+
+    "themes": {
+      "label": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "register": "Register",
+    "login": "Login",
+    "logout": "Logout",
+    "profile": "Profile",
+    "home": "Home",
+    "settings": "Settings",
+    "admin": "Admin"
+  },
+  "profile": {
+    "errors": {
+      "notFound": "Unable to load profile data."
+    }
+  },
+  "loggingOut": {
+    "title": "You have been logged out",
+    "subtitle": "You can now close this window."
+  },
+  "register": {
+    "title": "Create an account",
+    "errors": {
+      "confirmPasswordRequired": "Please confirm your password",
+      "passwordsDoNotMatch": "Passwords do not match",
+      "emailInUse": "That email address is already in use.",
+      "unexpectedError": "Something went wrong. Please try again."
+    },
+    "alreadyHaveAccount": "Already have an account?"
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Enter your credentials to sign in.",
+    "errors": {
+      "invalidCredentials": "Invalid email or password."
+    },
+    "doNotHaveAccount": "Do not have an account?"
+  },
+  "validation": {
+    "name": {
+      "tooShort": "Name must be at least {{count}} characters",
+      "tooLong": "Name must be at most {{count}} characters"
+    },
+    "email": {
+      "invalid": "Please enter a valid email address",
+      "required": "Please enter your email"
+    },
+    "password": {
+      "tooShort": "Password must be at least {{count}} characters long",
+      "tooLong": "Password must be at most {{count}} characters long",
+      "missingLowercase": "Password must contain at least one lowercase letter",
+      "missingUppercase": "Password must contain at least one uppercase letter",
+      "missingNumber": "Password must contain at least one number",
+      "missingSpecialChar": "Password must contain at least one special character"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
+      JWT_SECRET: secret
+    ports:
+      - 5000:5000
+    container_name: noveks_dev
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    container_name: noveks_dev_db
+volumes:
+  postgres_data:
