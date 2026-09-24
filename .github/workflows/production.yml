@@ -30,5 +30,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.IMAGE }}:${{ github.event.release.tag_name }}
-                ${{ env.IMAGE }}:latest
+          tags: |
+            ${{ env.IMAGE }}:${{ github.event.release.tag_name }}
+            ${{ env.IMAGE }}:latest
