@@ -1,7 +1,7 @@
 name: Production release
 
 env:
-  IMAGE: docker.io/jipeso/duunit
+  IMAGE: docker.io/${{ secrets.DOCKER_USERNAME }}/duunit
 
 on:
   release:
@@ -14,6 +14,8 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     needs: test
+    outputs:
+      tag: ${{ event.release.tag_name }}
 
     steps:
       - uses: actions/checkout@v7
@@ -21,11 +23,10 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f
         with:
-          username: jipeso
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push
-        id: push
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
         with:
           context: .
@@ -33,3 +34,22 @@ jobs:
           tags: |
             ${{ env.IMAGE }}:${{ github.event.release.tag_name }}
             ${{ env.IMAGE }}:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PROD_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan ${{ secrets.PROD_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to production
+        env:
+          APP_TAG: ${{ needs.build-and-push.outputs.tag }}
+        run: |
+          ssh ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} \
+            "~/duunit/deploy/deploy.sh ${APP_TAG}"
