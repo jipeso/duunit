@@ -1,14 +1,14 @@
 {
-  "name": "noveks",
+  "name": "duunit",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/jipeso/noveks#readme",
+  "homepage": "https://github.com/jipeso/duunit#readme",
   "bugs": {
-    "url": "https://github.com/jipeso/noveks/issues"
+    "url": "https://github.com/jipeso/duunit/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jipeso/noveks.git"
+    "url": "git+https://github.com/jipeso/duunit.git"
   },
   "license": "ISC",
   "author": "",

@@ -9,9 +9,9 @@ services:
       JWT_SECRET: secret
     ports:
       - 3000:3000
-    container_name: noveks_test
+    container_name: duunit_test
   db:
     image: postgres
     environment:
       POSTGRES_PASSWORD: postgres
-    container_name: noveks_test_db
+    container_name: duunit_test_db

@@ -1,0 +1,15 @@
+services:
+  app:
+    image: jipeso/duunit:${APP_TAG:?APP_TAG is required}
+    environment:
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@db:5432/postgres
+    ports:
+      - 127.0.0.1:3000:3000
+  db:
+    image: postgres:18.4-alpine
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+volumes:
+  postgres_data:

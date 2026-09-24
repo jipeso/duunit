@@ -10,13 +10,13 @@ services:
       JWT_SECRET: secret
     ports:
       - 5000:5000
-    container_name: noveks_dev
+    container_name: duunit_dev
   db:
     image: postgres
     environment:
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql
-    container_name: noveks_dev_db
+    container_name: duunit_dev_db
 volumes:
   postgres_data:

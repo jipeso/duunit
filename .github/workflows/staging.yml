@@ -1,5 +1,8 @@
 name: Staging release
 
+env:
+  IMAGE: docker.io/jipeso/duunit
+
 on:
   push:
     branches:
@@ -27,4 +30,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: docker.io/${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:staging
+          tags: ${{ env.IMAGE }}:staging

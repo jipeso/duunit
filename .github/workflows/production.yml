@@ -1,5 +1,8 @@
 name: Production release
 
+env:
+  IMAGE: docker.io/jipeso/duunit
+
 on:
   release:
     types: [published]
@@ -27,4 +30,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: docker.io/${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:production
+          tags: ${{ env.IMAGE }}:${{ github.event.release.tag_name }}
+                ${{ env.IMAGE }}:latest
