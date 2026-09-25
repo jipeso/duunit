@@ -13,13 +13,15 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Link from '@mui/material/Link'
 import { useTranslation } from 'react-i18next'
 
-import useLogin from '../../hooks/useLogin'
+import useAuth from '../../hooks/useAuth'
+import { useNotification } from '../../components/Notification'
 import { LoginSchema, type LoginCredentials } from '#common/types/users.ts'
 
 export const LoginForm: React.FC = () => {
   const { t } = useTranslation()
   const [globalError, setGlobalError] = useState<string | null>(null)
-  const { mutateAsync: login, isPending } = useLogin()
+  const { login, isLoggingIn } = useAuth()
+  const { showSuccess } = useNotification()
   const navigate = useNavigate()
 
   const {
@@ -37,6 +39,7 @@ export const LoginForm: React.FC = () => {
 
     try {
       await login(data)
+      showSuccess(t('notifications.loginSuccess'))
       void navigate('/')
     } catch {
       setGlobalError(t('login.errors.invalidCredentials'))
@@ -107,11 +110,11 @@ export const LoginForm: React.FC = () => {
               type='submit'
               fullWidth
               variant='contained'
-              disabled={isPending}
+              disabled={isLoggingIn}
               disableElevation
               sx={{ py: 1.5, mt: 2, textTransform: 'none', fontSize: '1rem' }}
             >
-              {isPending ? (
+              {isLoggingIn ? (
                 <CircularProgress size={24} color='inherit' />
               ) : (
                 t('common.login')

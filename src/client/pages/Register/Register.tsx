@@ -23,6 +23,7 @@ import {
   PASSWORD_MAX_LENGTH,
 } from '#common/types/users.ts'
 import useSaveUser from '../../hooks/useSaveUser'
+import { useNotification } from '../../components/Notification'
 
 const registerSchema = NewUserSchema.extend({
   confirmPassword: z
@@ -39,6 +40,7 @@ export const RegisterForm: React.FC = () => {
   const { t } = useTranslation()
   const [globalError, setGlobalError] = useState<string | null>(null)
   const { mutateAsync: saveUser, isPending } = useSaveUser()
+  const { showSuccess } = useNotification()
   const navigate = useNavigate()
 
   const {
@@ -58,6 +60,7 @@ export const RegisterForm: React.FC = () => {
 
     try {
       await saveUser({ name, email, password })
+      showSuccess(t('notifications.registerSuccess'))
       reset()
       void navigate('/login')
     } catch (error) {

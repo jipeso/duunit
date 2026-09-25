@@ -25,6 +25,11 @@
     "settings": "Settings",
     "admin": "Admin"
   },
+  "notifications": {
+    "loginSuccess": "You are now logged in.",
+    "logoutSuccess": "You have been logged out.",
+    "registerSuccess": "Your account has been created."
+  },
   "profile": {
     "errors": {
       "notFound": "Unable to load profile data."

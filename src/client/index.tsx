@@ -6,7 +6,7 @@ import queryClient from './util/queryClient'
 import './util/i18n'
 import App from './pages/App'
 import ErrorBoundary from './components/ErrorBoundary'
-import { AuthProvider } from './components/AuthProvider'
+import { NotificationProvider } from './components/Notification'
 
 const rootElement = document.getElementById('root')
 
@@ -17,11 +17,11 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <Router>
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
+      <NotificationProvider>
         <ErrorBoundary>
           <App />
         </ErrorBoundary>
-      </AuthProvider>
+      </NotificationProvider>
     </QueryClientProvider>
   </Router>
 )

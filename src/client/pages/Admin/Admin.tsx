@@ -1,12 +1,17 @@
 import { Typography } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
 import { Navigate } from 'react-router'
 
-import useAuthenticatedUser from '../../hooks/useAuthenticatedUser'
+import useAuth from '../../hooks/useAuth'
 
 const Admin = () => {
-  const { data: user } = useAuthenticatedUser()
+  const { state } = useAuth()
 
-  if (!user?.roles.includes('admin')) return <Navigate to='/' />
+  if (state.status === 'loading') return <CircularProgress />
+
+  if (state.status !== 'authenticated' || !state.user.roles.includes('admin')) {
+    return <Navigate to='/' replace />
+  }
 
   return (
     <Typography component='h1' variant='h4'>

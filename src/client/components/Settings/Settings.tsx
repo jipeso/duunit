@@ -8,8 +8,8 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import Modal from '../common/Modal'
 import ThemeSelect from '../common/ThemeSelect'
 import LanguageSelect from '../common/LanguageSelect'
-import useLogout from '../../hooks/useLogout'
-import { useAuth } from '../AuthProvider'
+import useAuth from '../../hooks/useAuth'
+import { useNotification } from '../Notification'
 
 interface Props {
   open: boolean
@@ -18,11 +18,13 @@ interface Props {
 
 const Settings = ({ open, onClose }: Props) => {
   const { t } = useTranslation()
-  const { mutateAsync: logout, isPending } = useLogout()
-  const { user } = useAuth()
+  const { state, logout, isLoggingOut } = useAuth()
+  const { showSuccess } = useNotification()
+  const isLoggedIn = state.status === 'authenticated'
 
   const handleLogout = async () => {
     await logout()
+    showSuccess(t('notifications.logoutSuccess'))
     onClose()
   }
 
@@ -43,14 +45,14 @@ const Settings = ({ open, onClose }: Props) => {
           <Typography variant='body2'>{t('common.themes.label')}</Typography>
           <ThemeSelect />
         </Stack>
-        {user && (
+        {isLoggedIn && (
           <Button
             onClick={() => {
               void handleLogout()
             }}
-            disabled={isPending}
+            disabled={isLoggingOut}
             startIcon={
-              isPending ? <CircularProgress size={16} /> : <LogoutIcon />
+              isLoggingOut ? <CircularProgress size={16} /> : <LogoutIcon />
             }
           >
             {t('common.logout')}

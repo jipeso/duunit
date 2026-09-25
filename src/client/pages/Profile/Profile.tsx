@@ -7,15 +7,17 @@ import { useTranslation } from 'react-i18next'
 import { Navigate } from 'react-router'
 import CircularProgress from '@mui/material/CircularProgress'
 
-import { useAuth } from '../../components/AuthProvider'
+import useAuth from '../../hooks/useAuth'
 
 const Profile = () => {
   const { t } = useTranslation()
-  const { user, isLoading } = useAuth()
+  const { state } = useAuth()
 
-  if (isLoading) return <CircularProgress />
+  if (state.status === 'loading') return <CircularProgress />
 
-  if (!user) return <Navigate to='/' />
+  if (state.status !== 'authenticated') return <Navigate to='/' replace />
+
+  const { user } = state
 
   return (
     <Container maxWidth='sm' sx={{ mt: 4 }}>

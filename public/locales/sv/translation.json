@@ -24,6 +24,11 @@
     "settings": "Inställningar",
     "admin": "Admin"
   },
+  "notifications": {
+    "loginSuccess": "Du är nu inloggad.",
+    "logoutSuccess": "Du har loggats ut.",
+    "registerSuccess": "Ditt konto har skapats."
+  },
   "profile": {
     "errors": {
       "notFound": "Det gick inte att ladda profilinformationen."

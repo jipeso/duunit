@@ -24,6 +24,11 @@
     "settings": "Asetukset",
     "admin": "Järjestelmänvalvoja"
   },
+  "notifications": {
+    "loginSuccess": "Olet nyt kirjautunut sisään.",
+    "logoutSuccess": "Olet kirjautunut ulos.",
+    "registerSuccess": "Tilisi on luotu."
+  },
   "profile": {
     "errors": {
       "notFound": "Profiilitietoja ei voitu ladata."

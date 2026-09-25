@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm'
 
 import { db, users } from '../db/index.ts'
 import { JWT_SECRET } from '../util/config.ts'
+import type { UserRole } from '#common/types/common.ts'
 
 export const userExtractor = async (
   req: Request,
@@ -20,7 +21,7 @@ export const userExtractor = async (
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as {
       id: string
-      roles: string[]
+      roles: UserRole[]
     }
 
     const user = await db.query.users.findFirst({

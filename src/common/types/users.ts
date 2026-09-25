@@ -1,10 +1,11 @@
 import { z } from 'zod'
+import { UserRoleSchema } from './common.ts'
 
 export const PublicUserSchema = z.object({
   id: z.uuid(),
   email: z.email(),
   name: z.string(),
-  roles: z.array(z.string()),
+  roles: z.array(UserRoleSchema),
   createdAt: z.iso.datetime(),
 })
 
