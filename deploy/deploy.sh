@@ -10,5 +10,5 @@ else
   echo "APP_TAG=${APP_TAG}" >> .env
 fi
 
-docker compose pull
-docker compose up -d
+docker compose -f docker-compose.prod.yml pull
+docker compose -f docker-compose.prod.yml up -d
