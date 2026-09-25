@@ -9,6 +9,8 @@ const locales = {
   sv: svSE,
 }
 
+// const THEME_ORANGE = '#E8895E'
+
 export const createAppTheme = (language: LanguageId) => {
   const theme = createTheme(
     {
