@@ -77,6 +77,7 @@ export const LoginForm: React.FC = () => {
               id='email'
               label={t('common.email')}
               autoComplete='email'
+              slotProps={{ htmlInput: { 'data-testid': 'login-email' } }}
               {...register('email')}
               error={!!errors.email}
               helperText={
@@ -91,6 +92,7 @@ export const LoginForm: React.FC = () => {
               label={t('common.password')}
               type='password'
               autoComplete='current-password'
+              slotProps={{ htmlInput: { 'data-testid': 'login-password' } }}
               {...register('password')}
               error={!!errors.password}
               helperText={
@@ -108,6 +110,7 @@ export const LoginForm: React.FC = () => {
 
             <Button
               type='submit'
+              data-testid='login-submit'
               fullWidth
               variant='contained'
               disabled={isLoggingIn}

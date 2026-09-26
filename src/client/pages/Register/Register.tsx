@@ -28,9 +28,9 @@ import { useNotification } from '../../components/Notification'
 const registerSchema = NewUserSchema.extend({
   confirmPassword: z
     .string()
-    .min(1, { message: 'register.errors.confirmPasswordRequired' }),
+    .min(1, { message: 'validation.confirmPassword.required' }),
 }).refine(data => data.password === data.confirmPassword, {
-  message: 'register.errors.passwordsDoNotMatch',
+  message: 'validation.confirmPassword.doesNotMatch',
   path: ['confirmPassword'],
 })
 
@@ -50,7 +50,7 @@ export const RegisterForm: React.FC = () => {
     reset,
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
-    mode: 'onSubmit',
+    mode: 'onTouched',
     reValidateMode: 'onSubmit',
   })
 
@@ -100,6 +100,7 @@ export const RegisterForm: React.FC = () => {
               fullWidth
               id='name'
               label={t('common.name')}
+              slotProps={{ htmlInput: { 'data-testid': 'register-name' } }}
               {...register('name')}
               error={!!errors.name}
               helperText={
@@ -120,6 +121,7 @@ export const RegisterForm: React.FC = () => {
               id='email'
               label={t('common.email')}
               autoComplete='email'
+              slotProps={{ htmlInput: { 'data-testid': 'register-email' } }}
               {...register('email')}
               error={!!errors.email}
               helperText={
@@ -134,6 +136,7 @@ export const RegisterForm: React.FC = () => {
               label={t('common.password')}
               type='password'
               autoComplete='new-password'
+              slotProps={{ htmlInput: { 'data-testid': 'register-password' } }}
               {...register('password')}
               error={!!errors.password}
               helperText={
@@ -156,6 +159,9 @@ export const RegisterForm: React.FC = () => {
               label={t('common.confirmPassword')}
               type='password'
               autoComplete='new-password'
+              slotProps={{
+                htmlInput: { 'data-testid': 'register-confirm-password' },
+              }}
               {...register('confirmPassword')}
               error={!!errors.confirmPassword}
               helperText={
@@ -173,6 +179,7 @@ export const RegisterForm: React.FC = () => {
 
             <Button
               type='submit'
+              data-testid='register-submit'
               fullWidth
               variant='contained'
               disabled={isPending}

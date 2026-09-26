@@ -42,8 +42,6 @@
   "register": {
     "title": "Create an account",
     "errors": {
-      "confirmPasswordRequired": "Please confirm your password",
-      "passwordsDoNotMatch": "Passwords do not match",
       "emailInUse": "That email address is already in use.",
       "unexpectedError": "Something went wrong. Please try again."
     },
@@ -59,8 +57,8 @@
   },
   "validation": {
     "name": {
-      "tooShort": "Name must be at least {{count}} characters",
-      "tooLong": "Name must be at most {{count}} characters"
+      "tooShort": "Name must be at least {{count}} characters long",
+      "tooLong": "Name must be at most {{count}} characters long"
     },
     "email": {
       "invalid": "Please enter a valid email address",
@@ -72,7 +70,12 @@
       "missingLowercase": "Password must contain at least one lowercase letter",
       "missingUppercase": "Password must contain at least one uppercase letter",
       "missingNumber": "Password must contain at least one number",
-      "missingSpecialChar": "Password must contain at least one special character"
+      "missingSpecialChar": "Password must contain at least one special character",
+      "required": "Please enter your password"
+    },
+    "confirmPassword": {
+      "required": "Please confirm your password",
+      "doesNotMatch": "Passwords do not match"
     }
   }
 }

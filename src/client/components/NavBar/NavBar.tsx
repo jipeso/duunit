@@ -78,6 +78,7 @@ const Navbar = () => {
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ p: 1 }}>
         <IconButton
+          aria-label={t('common.settings')}
           onClick={() => {
             setSettingsOpen(true)
           }}

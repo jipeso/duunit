@@ -41,8 +41,6 @@
   "register": {
     "title": "Luo tili",
     "errors": {
-      "confirmPasswordRequired": "Vahvista salasanasi",
-      "passwordsDoNotMatch": "Salasanat eivät täsmää",
       "emailInUse": "Sähköpostiosoite on jo käytössä.",
       "unexpectedError": "Jokin meni pieleen. Yritä uudelleen."
     },
@@ -73,6 +71,10 @@
       "missingNumber": "Salasanassa tulee olla vähintään yksi numero",
       "missingSpecialChar": "Salasanassa tulee olla vähintään yksi erikoismerkki",
       "required": "Syötä salasana"
+    },
+    "confirmPassword": {
+      "required": "Vahvista salasanasi",
+      "doesNotMatch": "Salasanat eivät täsmää"
     }
   }
 }

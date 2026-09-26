@@ -26,8 +26,11 @@
     "dev:client": "vite",
     "dev:server": "node --watch src/server/index.ts",
     "build": "npm run typecheck && vite build",
+    "test": "npm run test:setup && npm run test:e2e",
+    "test:setup": "docker compose down && docker compose -f docker-compose.ci.yml rm -vf && docker compose -f docker-compose.ci.yml up -d --build",
+    "test:e2e": "playwright test",
     "lint": "concurrently --kill-others-on-fail -raw \"npm run typecheck\" \"eslint --flag unstable_native_nodejs_ts_config\"",
-    "typecheck": "tsc --build && tsc --noEmit -p tsconfig.node.json"
+    "typecheck": "tsc --build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -61,6 +64,7 @@
   "devDependencies": {
     "@eslint-react/eslint-plugin": "^5.20.0",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
     "@types/bcrypt": "^6.0.0",
     "@types/compression": "^1.8.1",
     "@types/cookie-parser": "^1.4.10",

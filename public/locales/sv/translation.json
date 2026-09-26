@@ -38,8 +38,6 @@
   "register": {
     "title": "Skapa ett konto",
     "errors": {
-      "confirmPasswordRequired": "Bekräfta ditt lösenord",
-      "passwordsDoNotMatch": "Lösenorden matchar inte",
       "emailInUse": "E-postadressen används redan.",
       "unexpectedError": "Något gick fel. Försök igen."
     },
@@ -68,7 +66,12 @@
       "missingLowercase": "Lösenordet måste innehålla minst en liten bokstav",
       "missingUppercase": "Lösenordet måste innehålla minst en stor bokstav",
       "missingNumber": "Lösenordet måste innehålla minst en siffra",
-      "missingSpecialChar": "Lösenordet måste innehålla minst ett specialtecken"
+      "missingSpecialChar": "Lösenordet måste innehålla minst ett specialtecken",
+      "required": "Ange ditt lösenord"
+    },
+    "confirmPassword": {
+      "required": "Bekräfta ditt lösenord",
+      "doesNotMatch": "Lösenorden matchar inte"
     }
   }
 }

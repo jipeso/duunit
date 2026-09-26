@@ -3,6 +3,7 @@
   "references": [
     { "path": "src/server" },
     { "path": "src/common" },
-    { "path": "src/client" }
+    { "path": "src/client" },
+    { "path": "tsconfig.node.json" }
   ]
 }
