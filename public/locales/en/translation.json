@@ -11,71 +11,110 @@
       "label": "Theme",
       "light": "Light",
       "dark": "Dark",
-      "system": "System"
+      "system": "Auto"
     },
+
+    "errors": {
+      "unexpected": "Something went wrong. Please try again.",
+      "loadFailed": "Failed to load data. Please try again."
+    },
+
+    "buttons": {
+      "create": "Create",
+      "update": "Update",
+      "delete": "Delete",
+      "cancel": "Cancel"
+    }
+  },
+
+  "fields": {
     "name": "Name",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm password",
+    "company": "Company",
+    "position": "Position",
+    "status": "Status",
+    "appliedAt": "Applied on",
+    "jobPostingUrl": "Job posting URL",
+    "location": "Location"
+  },
+
+  "navigation": {
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
     "register": "Register",
+    "admin": "Admin",
     "login": "Login",
     "logout": "Logout",
-    "profile": "Profile",
-    "home": "Home",
-    "settings": "Settings",
-    "admin": "Admin"
+    "applications": "Applications"
   },
+
+  "profile": {
+    "details": "User details",
+    "updateProfile": "Update profile",
+    "updatePassword": "Update password"
+  },
+
   "notifications": {
     "loginSuccess": "You are now logged in.",
     "logoutSuccess": "You have been logged out.",
-    "registerSuccess": "Your account has been created."
+    "registerSuccess": "Your account has been created.",
+    "applicationCreatedSuccess": "New application has been added."
   },
-  "profile": {
-    "errors": {
-      "notFound": "Unable to load profile data."
+
+  "applications": {
+    "title": "My applications",
+    "subtitle": "Track the job applications you have saved and sent",
+    "empty": "You have not added any applications yet",
+    "new": "Add a new application",
+    "newSubtitle": "Fill in the details of the job you are applying to",
+    "openJobPosting": "Open job posting",
+
+    "statuses": {
+      "saved": "Saved",
+      "applied": "Applied",
+      "interviewing": "Interviewing",
+      "offer": "Offer",
+      "rejected": "Rejected",
+      "accepted": "Accepted",
+      "withdrawn": "Withdrawn"
     }
   },
-  "loggingOut": {
-    "title": "You have been logged out",
-    "subtitle": "You can now close this window."
-  },
+
   "register": {
     "title": "Create an account",
+    "subtitle": "Enter your details in the form below to create a new account",
+    "submit": "Register",
     "errors": {
-      "emailInUse": "That email address is already in use.",
-      "unexpectedError": "Something went wrong. Please try again."
+      "emailInUse": "That email address is already in use."
     },
     "alreadyHaveAccount": "Already have an account?"
   },
+
   "login": {
     "title": "Welcome back",
     "subtitle": "Enter your credentials to sign in.",
+    "submit": "Login",
     "errors": {
       "invalidCredentials": "Invalid email or password."
     },
     "doNotHaveAccount": "Do not have an account?"
   },
+
   "validation": {
-    "name": {
-      "tooShort": "Name must be at least {{count}} characters long",
-      "tooLong": "Name must be at most {{count}} characters long"
-    },
-    "email": {
-      "invalid": "Please enter a valid email address",
-      "required": "Please enter your email"
-    },
+    "tooShort": "{{field}} must be at least {{count}} characters long",
+    "tooLong": "{{field}} must be at most {{count}} characters long",
+    "invalid": "{{field}} is invalid",
+    "required": "{{field}} is required",
+    "tooEarly": "{{field}} must be after {{date}}",
+    "passwordsDoNotMatch": "Passwords do not match",
     "password": {
-      "tooShort": "Password must be at least {{count}} characters long",
-      "tooLong": "Password must be at most {{count}} characters long",
       "missingLowercase": "Password must contain at least one lowercase letter",
       "missingUppercase": "Password must contain at least one uppercase letter",
       "missingNumber": "Password must contain at least one number",
-      "missingSpecialChar": "Password must contain at least one special character",
-      "required": "Please enter your password"
-    },
-    "confirmPassword": {
-      "required": "Please confirm your password",
-      "doesNotMatch": "Passwords do not match"
+      "missingSpecialChar": "Password must contain at least one special character"
     }
   }
 }

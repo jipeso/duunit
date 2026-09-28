@@ -29,7 +29,7 @@ const Settings = ({ open, onClose }: Props) => {
   }
 
   return (
-    <Modal open={open} onClose={onClose} title={t('common.settings')}>
+    <Modal open={open} onClose={onClose} title={t('navigation.settings')}>
       <Stack spacing={2} sx={{ pt: 1 }}>
         <Stack
           direction='row'
@@ -55,7 +55,7 @@ const Settings = ({ open, onClose }: Props) => {
               isLoggingOut ? <CircularProgress size={16} /> : <LogoutIcon />
             }
           >
-            {t('common.logout')}
+            {t('navigation.logout')}
           </Button>
         )}
       </Stack>

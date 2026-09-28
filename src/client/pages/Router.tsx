@@ -5,6 +5,8 @@ import Login from './Login'
 import Register from './Register'
 import Profile from './Profile'
 import Admin from './Admin'
+import Applications from './Applications'
+import NewApplication from './NewApplication'
 import GuestRoute from '../components/GuestRoute'
 
 const Router = () => {
@@ -15,6 +17,8 @@ const Router = () => {
         <Route path='/register' element={<Register />} />
       </Route>
       <Route path='/profile' element={<Profile />} />
+      <Route path='/applications' element={<Applications />} />
+      <Route path='/applications/new' element={<NewApplication />} />
       <Route path='/admin' element={<Admin />} />
       <Route path='*' element={<Home />} />
     </Routes>

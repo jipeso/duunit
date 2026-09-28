@@ -2,9 +2,10 @@ import jwt from 'jsonwebtoken'
 import type { Request, Response, NextFunction } from 'express'
 import { eq } from 'drizzle-orm'
 
-import { db, users } from '../db/index.ts'
+import { db } from '../db/index.ts'
+import { users } from '../db/schema.ts'
 import { JWT_SECRET } from '../util/config.ts'
-import type { UserRole } from '#common/types/common.ts'
+import type { Role } from '#common/types/users.ts'
 
 export const userExtractor = async (
   req: Request,
@@ -21,7 +22,7 @@ export const userExtractor = async (
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as {
       id: string
-      roles: UserRole[]
+      roles: Role[]
     }
 
     const user = await db.query.users.findFirst({

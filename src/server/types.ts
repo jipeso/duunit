@@ -1,4 +1,4 @@
-import { type users } from './db/index.ts'
+import { type users } from './db/schema.ts'
 
 export type DatabaseUser = typeof users.$inferSelect
 

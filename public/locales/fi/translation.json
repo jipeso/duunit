@@ -2,79 +2,119 @@
   "common": {
     "languages": {
       "label": "Kieli",
-      "fi": "Suomi",
-      "en": "Englanti",
-      "sv": "Ruotsi"
+      "fi": "suomi",
+      "en": "englanti",
+      "sv": "ruotsi"
     },
+
     "themes": {
       "label": "Teema",
       "light": "Vaalea",
       "dark": "Tumma",
-      "system": "Järjestelmä"
+      "system": "Automaattinen"
     },
+
+    "errors": {
+      "unexpected": "Jokin meni pieleen. Yritä uudelleen.",
+      "loadFailed": "Tietojen lataaminen epäonnistui. Yritä uudelleen."
+    },
+
+    "buttons": {
+      "create": "Luo",
+      "update": "Päivitä",
+      "delete": "Poista",
+      "cancel": "Peruuta"
+    }
+  },
+
+  "fields": {
     "name": "Nimi",
     "email": "Sähköposti",
     "password": "Salasana",
     "confirmPassword": "Vahvista salasana",
+    "company": "Yritys",
+    "position": "Tehtävä",
+    "status": "Tila",
+    "appliedAt": "Hakupäivä",
+    "jobPostingUrl": "Työpaikkailmoituksen linkki",
+    "location": "Sijainti"
+  },
+
+  "navigation": {
+    "home": "Etusivu",
+    "profile": "Profiili",
+    "settings": "Asetukset",
     "register": "Rekisteröidy",
+    "admin": "Ylläpito",
     "login": "Kirjaudu sisään",
     "logout": "Kirjaudu ulos",
-    "profile": "Profiili",
-    "home": "Koti",
-    "settings": "Asetukset",
-    "admin": "Järjestelmänvalvoja"
+    "applications": "Hakemukset"
   },
+
+  "profile": {
+    "details": "Käyttäjätiedot",
+    "updateProfile": "Päivitä profiili",
+    "updatePassword": "Päivitä salasana"
+  },
+
   "notifications": {
     "loginSuccess": "Olet nyt kirjautunut sisään.",
     "logoutSuccess": "Olet kirjautunut ulos.",
-    "registerSuccess": "Tilisi on luotu."
+    "registerSuccess": "Tilisi on luotu.",
+    "applicationCreatedSuccess": "Uusi hakemus on lisätty."
   },
-  "profile": {
-    "errors": {
-      "notFound": "Profiilitietoja ei voitu ladata."
+
+  "applications": {
+    "title": "Hakemukseni",
+    "subtitle": "Seuraa tallentamiasi ja lähettämiäsi työhakemuksia",
+    "empty": "Et ole vielä lisännyt hakemuksia",
+    "new": "Lisää uusi hakemus",
+    "newSubtitle": "Täytä hakemasi työpaikan tiedot",
+    "openJobPosting": "Avaa työpaikkailmoitus",
+
+    "statuses": {
+      "saved": "Tallennettu",
+      "applied": "Haettu",
+      "interviewing": "Haastattelussa",
+      "offer": "Tarjous",
+      "rejected": "Hylätty",
+      "accepted": "Hyväksytty",
+      "withdrawn": "Peruttu"
     }
   },
-  "loggingOut": {
-    "title": "Olet kirjautunut ulos",
-    "subtitle": "Voit nyt sulkea tämän ikkunan."
-  },
+
   "register": {
     "title": "Luo tili",
+    "subtitle": "Syötä tietosi alla olevaan lomakkeeseen luodaksesi uuden tilin",
+    "submit": "Rekisteröidy",
     "errors": {
-      "emailInUse": "Sähköpostiosoite on jo käytössä.",
-      "unexpectedError": "Jokin meni pieleen. Yritä uudelleen."
+      "emailInUse": "Tämä sähköpostiosoite on jo käytössä."
     },
     "alreadyHaveAccount": "Onko sinulla jo tili?"
   },
+
   "login": {
     "title": "Tervetuloa takaisin",
-    "subtitle": "Syötä kirjautumistiedot kirjautuaksesi sisään.",
+    "subtitle": "Kirjaudu sisään syöttämällä tunnuksesi.",
+    "submit": "Kirjaudu sisään",
     "errors": {
       "invalidCredentials": "Virheellinen sähköposti tai salasana."
     },
-    "doNotHaveAccount": "Eikö sinulla ole vielä tiliä?"
+    "doNotHaveAccount": "Eikö sinulla ole tiliä?"
   },
+
   "validation": {
-    "name": {
-      "tooShort": "Nimen tulee olla vähintään {{count}} merkkiä",
-      "tooLong": "Nimi voi olla enintään {{count}} merkkiä"
-    },
-    "email": {
-      "invalid": "Syötä kelvollinen sähköpostiosoite",
-      "required": "Syötä sähköpostiosoite"
-    },
+    "tooShort": "{{field}}: oltava vähintään {{count}} merkkiä",
+    "tooLong": "{{field}}: oltava enintään {{count}} merkkiä",
+    "invalid": "{{field}} on virheellinen",
+    "required": "{{field}} on pakollinen",
+    "tooEarly": "{{field}}: päivämäärän on oltava {{date}} jälkeen",
+    "passwordsDoNotMatch": "Salasanat eivät täsmää",
     "password": {
-      "tooShort": "Salasanan tulee olla vähintään {{count}} merkkiä pitkä",
-      "tooLong": "Salasana voi olla enintään {{count}} merkkiä pitkä",
-      "missingLowercase": "Salasanassa tulee olla vähintään yksi pieni kirjain",
-      "missingUppercase": "Salasanassa tulee olla vähintään yksi iso kirjain",
-      "missingNumber": "Salasanassa tulee olla vähintään yksi numero",
-      "missingSpecialChar": "Salasanassa tulee olla vähintään yksi erikoismerkki",
-      "required": "Syötä salasana"
-    },
-    "confirmPassword": {
-      "required": "Vahvista salasanasi",
-      "doesNotMatch": "Salasanat eivät täsmää"
+      "missingLowercase": "Salasanan on sisällettävä vähintään yksi pieni kirjain",
+      "missingUppercase": "Salasanan on sisällettävä vähintään yksi iso kirjain",
+      "missingNumber": "Salasanan on sisällettävä vähintään yksi numero",
+      "missingSpecialChar": "Salasanan on sisällettävä vähintään yksi erikoismerkki"
     }
   }
 }

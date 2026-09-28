@@ -1,1 +1,1 @@
-export { default } from './usersController.ts'
+export { default } from './userController.ts'

@@ -3,6 +3,7 @@ import morgan from 'morgan'
 
 import authRouter from './auth/index.ts'
 import usersRouter from './users/index.ts'
+import applicationsRouter from './applications/index.ts'
 
 const router = Router()
 
@@ -10,5 +11,6 @@ router.use(morgan('combined'))
 
 router.use(authRouter)
 router.use('/users', usersRouter)
+router.use('/applications', applicationsRouter)
 
 export { router }

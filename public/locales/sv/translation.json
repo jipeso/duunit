@@ -2,76 +2,119 @@
   "common": {
     "languages": {
       "label": "Språk",
-      "fi": "Finska",
-      "sv": "Svenska",
-      "en": "Engelska"
+      "fi": "finska",
+      "en": "engelska",
+      "sv": "svenska"
     },
+
     "themes": {
       "label": "Tema",
-      "light": "Ljus",
-      "dark": "Mörk",
-      "system": "System"
+      "light": "Ljust",
+      "dark": "Mörkt",
+      "system": "Automatiskt"
     },
+
+    "errors": {
+      "unexpected": "Något gick fel. Försök igen.",
+      "loadFailed": "Det gick inte att läsa in data. Försök igen."
+    },
+
+    "buttons": {
+      "create": "Skapa",
+      "update": "Uppdatera",
+      "delete": "Ta bort",
+      "cancel": "Avbryt"
+    }
+  },
+
+  "fields": {
     "name": "Namn",
     "email": "E-post",
     "password": "Lösenord",
     "confirmPassword": "Bekräfta lösenord",
-    "register": "Registrera",
+    "company": "Företag",
+    "position": "Befattning",
+    "status": "Status",
+    "appliedAt": "Ansökningsdatum",
+    "jobPostingUrl": "Länk till jobbannons",
+    "location": "Plats"
+  },
+
+  "navigation": {
+    "home": "Hem",
+    "profile": "Profil",
+    "settings": "Inställningar",
+    "register": "Registrera dig",
+    "admin": "Admin",
     "login": "Logga in",
     "logout": "Logga ut",
-    "profile": "Profil",
-    "home": "Hem",
-    "settings": "Inställningar",
-    "admin": "Admin"
+    "applications": "Ansökningar"
   },
+
+  "profile": {
+    "details": "Användaruppgifter",
+    "updateProfile": "Uppdatera profil",
+    "updatePassword": "Uppdatera lösenord"
+  },
+
   "notifications": {
     "loginSuccess": "Du är nu inloggad.",
     "logoutSuccess": "Du har loggats ut.",
-    "registerSuccess": "Ditt konto har skapats."
+    "registerSuccess": "Ditt konto har skapats.",
+    "applicationCreatedSuccess": "Den nya ansökan har lagts till."
   },
-  "profile": {
-    "errors": {
-      "notFound": "Det gick inte att ladda profilinformationen."
+
+  "applications": {
+    "title": "Mina ansökningar",
+    "subtitle": "Håll koll på de jobbansökningar du har sparat och skickat",
+    "empty": "Du har inte lagt till några ansökningar ännu",
+    "new": "Lägg till en ny ansökan",
+    "newSubtitle": "Fyll i uppgifterna om jobbet du söker",
+    "openJobPosting": "Öppna jobbannonsen",
+
+    "statuses": {
+      "saved": "Sparad",
+      "applied": "Sökt",
+      "interviewing": "Intervju",
+      "offer": "Erbjudande",
+      "rejected": "Avslagen",
+      "accepted": "Accepterad",
+      "withdrawn": "Återkallad"
     }
   },
 
   "register": {
     "title": "Skapa ett konto",
+    "subtitle": "Fyll i dina uppgifter i formuläret nedan för att skapa ett nytt konto",
+    "submit": "Registrera dig",
     "errors": {
-      "emailInUse": "E-postadressen används redan.",
-      "unexpectedError": "Något gick fel. Försök igen."
+      "emailInUse": "Den e-postadressen används redan."
     },
     "alreadyHaveAccount": "Har du redan ett konto?"
   },
+
   "login": {
     "title": "Välkommen tillbaka",
     "subtitle": "Ange dina uppgifter för att logga in.",
+    "submit": "Logga in",
     "errors": {
-      "invalidCredentials": "Ogiltig e-post eller lösenord."
+      "invalidCredentials": "Ogiltig e-postadress eller ogiltigt lösenord."
     },
-    "doNotHaveAccount": "Har du inte ett konto?"
+    "doNotHaveAccount": "Har du inget konto?"
   },
+
   "validation": {
-    "name": {
-      "tooShort": "Namnet måste vara minst {{count}} tecken",
-      "tooLong": "Namnet får vara högst {{count}} tecken"
-    },
-    "email": {
-      "invalid": "Ange en giltig e-postadress",
-      "required": "Ange din e-postadress"
-    },
+    "tooShort": "{{field}} måste innehålla minst {{count}} tecken",
+    "tooLong": "{{field}} får innehålla högst {{count}} tecken",
+    "invalid": "{{field}} ogiltigt värde",
+    "required": "{{field}} måste fyllas i",
+    "tooEarly": "{{field}} måste vara efter {{date}}",
+    "passwordsDoNotMatch": "Lösenorden matchar inte",
     "password": {
-      "tooShort": "Lösenordet måste vara minst {{count}} tecken långt",
-      "tooLong": "Lösenordet får vara högst {{count}} tecken långt",
-      "missingLowercase": "Lösenordet måste innehålla minst en liten bokstav",
-      "missingUppercase": "Lösenordet måste innehålla minst en stor bokstav",
+      "missingLowercase": "Lösenordet måste innehålla minst en gemen",
+      "missingUppercase": "Lösenordet måste innehålla minst en versal",
       "missingNumber": "Lösenordet måste innehålla minst en siffra",
-      "missingSpecialChar": "Lösenordet måste innehålla minst ett specialtecken",
-      "required": "Ange ditt lösenord"
-    },
-    "confirmPassword": {
-      "required": "Bekräfta ditt lösenord",
-      "doesNotMatch": "Lösenorden matchar inte"
+      "missingSpecialChar": "Lösenordet måste innehålla minst ett specialtecken"
     }
   }
 }

@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm'
 
-import { db, users } from '../db/index.ts'
+import { db } from '../db/index.ts'
+import { users } from '../db/schema.ts'
 import type {
   PublicUser,
   NewUser,

@@ -1,0 +1,1 @@
+ALTER TABLE "applications" ALTER COLUMN "applied_at" SET DATA TYPE date;

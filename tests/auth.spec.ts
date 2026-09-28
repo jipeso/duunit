@@ -33,7 +33,7 @@ test.describe('Authentication', () => {
 
       await expect(page).toHaveURL('/register')
       await expect(
-        page.getByText('Name must be at least 4 characters long')
+        page.getByText('Name must be at least 2 characters long')
       ).toBeVisible()
     })
 
@@ -62,9 +62,7 @@ test.describe('Authentication', () => {
       await page.getByTestId('register-submit').click()
 
       await expect(page).toHaveURL('/register')
-      await expect(
-        page.getByText('Please enter a valid email address')
-      ).toBeVisible()
+      await expect(page.getByText('Email is invalid')).toBeVisible()
     })
 
     test('registration fails with too short password', async ({ page }) => {
@@ -85,7 +83,6 @@ test.describe('Authentication', () => {
     test('registration fails with too long password', async ({ page }) => {
       await page.goto('/register')
 
-      // 27 characters, which exceeds the 24 character maximum.
       const tooLongPassword = `Password123?${'a'.repeat(15)}`
 
       await page.getByTestId('register-name').fill('Test User')
@@ -236,8 +233,8 @@ test.describe('Authentication', () => {
       await page.getByTestId('login-submit').click()
 
       await expect(page).toHaveURL('/login')
-      await expect(page.getByText('Please enter your email')).toBeVisible()
-      await expect(page.getByText('Please enter your password')).toBeVisible()
+      await expect(page.getByText('Email is required')).toBeVisible()
+      await expect(page.getByText('Password is required')).toBeVisible()
     })
   })
 

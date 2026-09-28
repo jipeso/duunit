@@ -15,22 +15,15 @@ import Alert from '@mui/material/Alert'
 import CircularProgress from '@mui/material/CircularProgress'
 import Link from '@mui/material/Link'
 
-import {
-  NewUserSchema,
-  NAME_MIN_LENGTH,
-  NAME_MAX_LENGTH,
-  PASSWORD_MIN_LENGTH,
-  PASSWORD_MAX_LENGTH,
-} from '#common/types/users.ts'
+import i18n from '../../util/i18n'
+import { NewUserSchema } from '#common/types/users.ts'
 import useSaveUser from '../../hooks/useSaveUser'
 import { useNotification } from '../../components/Notification'
 
 const registerSchema = NewUserSchema.extend({
-  confirmPassword: z
-    .string()
-    .min(1, { message: 'validation.confirmPassword.required' }),
+  confirmPassword: z.string().min(1, { error: 'validation.required' }),
 }).refine(data => data.password === data.confirmPassword, {
-  message: 'validation.confirmPassword.doesNotMatch',
+  error: () => i18n.t('validation.passwordsDoNotMatch'),
   path: ['confirmPassword'],
 })
 
@@ -67,7 +60,7 @@ export const RegisterForm: React.FC = () => {
       setGlobalError(
         axios.isAxiosError(error) && error.response?.status === 409
           ? 'register.errors.emailInUse'
-          : 'register.errors.unexpectedError'
+          : 'common.errors.unexpected'
       )
     }
   }
@@ -99,56 +92,40 @@ export const RegisterForm: React.FC = () => {
               required
               fullWidth
               id='name'
-              label={t('common.name')}
+              label={t('fields.name')}
               slotProps={{ htmlInput: { 'data-testid': 'register-name' } }}
               {...register('name')}
               error={!!errors.name}
-              helperText={
-                errors.name?.message
-                  ? t(errors.name.message, {
-                      count:
-                        errors.name.message === 'validation.name.tooShort'
-                          ? NAME_MIN_LENGTH
-                          : NAME_MAX_LENGTH,
-                    })
-                  : undefined
-              }
+              helperText={errors.name?.message}
             />
 
             <TextField
               required
               fullWidth
               id='email'
-              label={t('common.email')}
+              label={t('fields.email')}
               autoComplete='email'
               slotProps={{ htmlInput: { 'data-testid': 'register-email' } }}
               {...register('email')}
               error={!!errors.email}
-              helperText={
-                errors.email?.message ? t(errors.email.message) : undefined
-              }
+              helperText={errors.email?.message}
             />
 
             <TextField
               required
               fullWidth
               id='password'
-              label={t('common.password')}
+              label={t('fields.password')}
               type='password'
               autoComplete='new-password'
               slotProps={{ htmlInput: { 'data-testid': 'register-password' } }}
               {...register('password')}
               error={!!errors.password}
               helperText={
-                errors.password?.message
-                  ? t(errors.password.message, {
-                      count:
-                        errors.password.message ===
-                        'validation.password.tooShort'
-                          ? PASSWORD_MIN_LENGTH
-                          : PASSWORD_MAX_LENGTH,
-                    })
-                  : undefined
+                errors.password?.message &&
+                t(errors.password.message, {
+                  defaultValue: errors.password.message,
+                })
               }
             />
 
@@ -156,7 +133,7 @@ export const RegisterForm: React.FC = () => {
               required
               fullWidth
               id='confirmPassword'
-              label={t('common.confirmPassword')}
+              label={t('fields.confirmPassword')}
               type='password'
               autoComplete='new-password'
               slotProps={{
@@ -164,11 +141,7 @@ export const RegisterForm: React.FC = () => {
               }}
               {...register('confirmPassword')}
               error={!!errors.confirmPassword}
-              helperText={
-                errors.confirmPassword?.message
-                  ? t(errors.confirmPassword.message)
-                  : undefined
-              }
+              helperText={errors.confirmPassword?.message}
             />
 
             {globalError && (
@@ -189,7 +162,7 @@ export const RegisterForm: React.FC = () => {
               {isPending ? (
                 <CircularProgress size={24} color='inherit' />
               ) : (
-                t('common.register')
+                t('navigation.register')
               )}
             </Button>
 
@@ -202,7 +175,7 @@ export const RegisterForm: React.FC = () => {
                 sx={{ fontWeight: 600, cursor: 'pointer' }}
               >
                 {' '}
-                {t('common.login')}
+                {t('navigation.login')}
               </Link>
             </Typography>
           </Stack>

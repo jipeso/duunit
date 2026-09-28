@@ -27,14 +27,14 @@ const Profile = () => {
         <Stack spacing={2}>
           <Box>
             <Typography variant='body2' color='text.secondary'>
-              {t('common.name')}
+              {t('fields.name')}
             </Typography>
             <Typography variant='body1'>{user.name}</Typography>
           </Box>
 
           <Box>
             <Typography variant='body2' color='text.secondary'>
-              {t('common.email')}
+              {t('fields.email')}
             </Typography>
             <Typography variant='body1'>{user.email}</Typography>
           </Box>

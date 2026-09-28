@@ -6,4 +6,8 @@
 | 22.9  | 7        | Auth APIs                           |
 | 23.9  | 4        | Lint, TypeScript and GitHub Actions |
 | 24.9  | 8        | Production setup + research         |
-| Total | 35       |                                     |
+| 25.9  | 4        | Frontend + CI/CD                    |
+| 26.9  | 7        | Testing                             |
+| 27.9  | 5        | Applications API                    |
+| 28.9  | 7        | Refactoring                         |
+| Total | 58       |                                     |

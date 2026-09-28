@@ -24,16 +24,22 @@ const Navbar = () => {
   const { t } = useTranslation()
   const isMobile = useIsMobile()
   const { state } = useAuth()
+
   const user = state.status === 'authenticated' ? state.user : null
   const isLoggedIn = state.status === 'authenticated'
   const isAdmin = user?.roles.includes('admin') ?? false
 
   const links = [
-    { label: t('common.home'), to: '/', show: true },
-    { label: t('common.profile'), to: '/profile', show: isLoggedIn },
-    { label: t('common.login'), to: '/login', show: !isLoggedIn },
-    { label: t('common.register'), to: '/register', show: !isLoggedIn },
-    { label: t('common.admin'), to: '/admin', show: isAdmin },
+    { label: t('navigation.home'), to: '/', show: true },
+    { label: t('navigation.profile'), to: '/profile', show: isLoggedIn },
+    {
+      label: t('navigation.applications'),
+      to: '/applications',
+      show: isLoggedIn,
+    },
+    { label: t('navigation.login'), to: '/login', show: !isLoggedIn },
+    { label: t('navigation.register'), to: '/register', show: !isLoggedIn },
+    { label: t('navigation.admin'), to: '/admin', show: isAdmin },
   ].filter(link => link.show)
 
   const drawerContent = (
@@ -78,7 +84,7 @@ const Navbar = () => {
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ p: 1 }}>
         <IconButton
-          aria-label={t('common.settings')}
+          aria-label={t('navigation.settings')}
           onClick={() => {
             setSettingsOpen(true)
           }}

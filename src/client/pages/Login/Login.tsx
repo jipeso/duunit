@@ -75,31 +75,25 @@ export const LoginForm: React.FC = () => {
               required
               fullWidth
               id='email'
-              label={t('common.email')}
+              label={t('fields.email')}
               autoComplete='email'
               slotProps={{ htmlInput: { 'data-testid': 'login-email' } }}
               {...register('email')}
               error={!!errors.email}
-              helperText={
-                errors.email?.message ? t(errors.email.message) : undefined
-              }
+              helperText={errors.email?.message}
             />
 
             <TextField
               required
               fullWidth
               id='password'
-              label={t('common.password')}
+              label={t('fields.password')}
               type='password'
               autoComplete='current-password'
               slotProps={{ htmlInput: { 'data-testid': 'login-password' } }}
               {...register('password')}
               error={!!errors.password}
-              helperText={
-                errors.password?.message
-                  ? t(errors.password.message)
-                  : undefined
-              }
+              helperText={errors.password?.message}
             />
 
             {globalError && (
@@ -120,7 +114,7 @@ export const LoginForm: React.FC = () => {
               {isLoggingIn ? (
                 <CircularProgress size={24} color='inherit' />
               ) : (
-                t('common.login')
+                t('login.submit')
               )}
             </Button>
 
@@ -133,7 +127,7 @@ export const LoginForm: React.FC = () => {
                 sx={{ fontWeight: 600, cursor: 'pointer' }}
               >
                 {' '}
-                {t('common.register')}
+                {t('register.title')}
               </Link>
             </Typography>
           </Stack>

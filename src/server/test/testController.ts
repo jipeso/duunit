@@ -1,7 +1,8 @@
 import Router, { type Request, type Response } from 'express'
 import morgan from 'morgan'
 
-import { db, users, sessions } from '../db/index.ts'
+import { db } from '../db/index.ts'
+import { sessions, users } from '../db/schema.ts'
 import { inProduction } from '../util/config.ts'
 import { AppError } from '../util/AppError.ts'
 
