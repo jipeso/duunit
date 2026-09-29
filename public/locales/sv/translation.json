@@ -85,7 +85,7 @@
 
   "register": {
     "title": "Skapa ett konto",
-    "subtitle": "Fyll i dina uppgifter i formuläret nedan för att skapa ett nytt konto",
+    "subtitle": "Fyll i dina uppgifter för att skapa ett nytt konto",
     "submit": "Registrera dig",
     "errors": {
       "emailInUse": "Den e-postadressen används redan."

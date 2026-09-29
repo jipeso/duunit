@@ -9,5 +9,5 @@
 | 25.9  | 4        | Frontend + CI/CD                    |
 | 26.9  | 7        | Testing                             |
 | 27.9  | 5        | Applications API                    |
-| 28.9  | 7        | Refactoring                         |
+| 28.9  | 8        | Refactoring + Application pages     |
 | Total | 58       |                                     |

@@ -21,7 +21,7 @@ import useSaveUser from '../../hooks/useSaveUser'
 import { useNotification } from '../../components/Notification'
 
 const registerSchema = NewUserSchema.extend({
-  confirmPassword: z.string().min(1, { error: 'validation.required' }),
+  confirmPassword: z.string().min(1),
 }).refine(data => data.password === data.confirmPassword, {
   error: () => i18n.t('validation.passwordsDoNotMatch'),
   path: ['confirmPassword'],
@@ -77,6 +77,9 @@ export const RegisterForm: React.FC = () => {
           gutterBottom
         >
           {t('register.title')}
+        </Typography>
+        <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
+          {t('register.subtitle')}
         </Typography>
 
         <Box

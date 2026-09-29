@@ -85,7 +85,7 @@
 
   "register": {
     "title": "Create an account",
-    "subtitle": "Enter your details in the form below to create a new account",
+    "subtitle": "Enter your details to create a new account",
     "submit": "Register",
     "errors": {
       "emailInUse": "That email address is already in use."

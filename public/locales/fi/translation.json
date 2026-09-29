@@ -85,7 +85,7 @@
 
   "register": {
     "title": "Luo tili",
-    "subtitle": "Syötä tietosi alla olevaan lomakkeeseen luodaksesi uuden tilin",
+    "subtitle": "Syötä tietosi luodaksesi uuden tilin",
     "submit": "Rekisteröidy",
     "errors": {
       "emailInUse": "Tämä sähköpostiosoite on jo käytössä."
