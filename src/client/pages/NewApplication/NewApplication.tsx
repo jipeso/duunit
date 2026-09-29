@@ -36,7 +36,6 @@ const NewApplicationForm = () => {
     control,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<NewApplicationInput, unknown, NewApplicationPayload>({
     resolver: zodResolver(NewApplicationSchema),
     mode: 'onTouched',
@@ -50,7 +49,6 @@ const NewApplicationForm = () => {
     try {
       await saveApplication(data)
       showSuccess(t('notifications.applicationCreatedSuccess'))
-      reset()
       void navigate('/applications')
     } catch {
       setGlobalError('common.errors.unexpected')

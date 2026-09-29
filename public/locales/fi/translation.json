@@ -55,7 +55,7 @@
   "home": {
     "title": "Tervetuloa Duunit sovellukseen",
     "description": "Tämä on työhakemusten seurantaalusta, jonka avulla voit hallita työhakemuksiasi ja seurata niiden tilaa.",
-    "gettingStarted": "Aloittaminen",
+    "gettingStarted": "Näin pääset alkuun",
     "gettingStartedDesc": "Aloita tutkiminen:",
     "gsStep1": "<a>Rekisteröidy</a> luodaksesi uuden tilin",
     "gsStep2": "<a>Kirjaudu sisään</a> päästäksesi hallintapaneeliisi",
