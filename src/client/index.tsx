@@ -6,7 +6,6 @@ import queryClient from './util/queryClient'
 import './util/i18n'
 import App from './pages/App'
 import ErrorBoundary from './components/ErrorBoundary'
-import { NotificationProvider } from './components/Notification'
 
 const rootElement = document.getElementById('root')
 
@@ -17,11 +16,9 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <Router>
     <QueryClientProvider client={queryClient}>
-      <NotificationProvider>
-        <ErrorBoundary>
-          <App />
-        </ErrorBoundary>
-      </NotificationProvider>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </QueryClientProvider>
   </Router>
 )

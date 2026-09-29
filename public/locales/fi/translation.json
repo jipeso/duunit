@@ -48,7 +48,21 @@
     "admin": "Ylläpito",
     "login": "Kirjaudu sisään",
     "logout": "Kirjaudu ulos",
-    "applications": "Hakemukset"
+    "applications": "Hakemukset",
+    "newApplication": "Uusi hakemus"
+  },
+
+  "home": {
+    "title": "Tervetuloa Duunit sovellukseen",
+    "description": "Tämä on työhakemusten seurantaalusta, jonka avulla voit hallita työhakemuksiasi ja seurata niiden tilaa.",
+    "gettingStarted": "Aloittaminen",
+    "gettingStartedDesc": "Aloita tutkiminen:",
+    "gsStep1": "<a>Rekisteröidy</a> luodaksesi uuden tilin",
+    "gsStep2": "<a>Kirjaudu sisään</a> päästäksesi hallintapaneeliisi",
+    "gsStep3": "<a>Luo uusi hakemus</a>",
+    "gsStep4": "Tarkastele <a>hakemuksiasi</a>",
+    "builtUsing": "Sovellus on rakennettu Reactilla, MUI:lla ja Vitellä. Taustalla Node.js, PostgreSQL ja Drizzle ORM.",
+    "sourceCode": "Lähdekoodi löytyy <a>GitHubista</a>"
   },
 
   "profile": {

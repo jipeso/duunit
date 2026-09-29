@@ -47,7 +47,7 @@ export const LoginForm: React.FC = () => {
   }
 
   return (
-    <Container maxWidth='xs' sx={{ mt: 8 }}>
+    <Container maxWidth='sm' sx={{ mt: 8 }}>
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >

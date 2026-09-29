@@ -48,7 +48,21 @@
     "admin": "Admin",
     "login": "Login",
     "logout": "Logout",
-    "applications": "Applications"
+    "applications": "Applications",
+    "newApplication": "New application"
+  },
+
+  "home": {
+    "title": "Welcome to Duunit",
+    "description": "This is a job application tracking platform that helps you manage your job applications and keep track of their status.",
+    "gettingStarted": "Getting started",
+    "gettingStartedDesc": "To start exploring Duunit:",
+    "gsStep1": "<a>Register</a> for a new account",
+    "gsStep2": "<a>Log in</a> to access your dashboard",
+    "gsStep3": "<a>Create a new application</a>",
+    "gsStep4": "View <a>all applications</a>",
+    "builtUsing": "Built with React, MUI and Vite. On the backend: Node.js, PostgreSQL and Drizzle ORM.",
+    "sourceCode": "Source code is available on <a>GitHub</a>"
   },
 
   "profile": {

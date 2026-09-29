@@ -48,7 +48,21 @@
     "admin": "Admin",
     "login": "Logga in",
     "logout": "Logga ut",
-    "applications": "Ansökningar"
+    "applications": "Ansökningar",
+    "newApplication": "Ny ansökan"
+  },
+
+  "home": {
+    "title": "Välkommen till Duunit",
+    "description": "Detta är en plattform för att spåra jobbansökningar som hjälper dig att hantera dina ansökningar och följa deras status.",
+    "gettingStarted": "Kom igång",
+    "gettingStartedDesc": "För att börja utforska:",
+    "gsStep1": "<a>Registrera dig</a> för ett nytt konto",
+    "gsStep2": "<a>Logga in</a> för att komma åt din översikt",
+    "gsStep3": "<a>Skapa en ny ansökan</a>",
+    "gsStep4": "Visa <a>alla ansökningar</a>",
+    "builtUsing": "Appen är byggd med React, MUI och Vite. I backend: Node.js, PostgreSQL och Drizzle ORM.",
+    "sourceCode": "Källkoden finns tillgänglig på <a>GitHub</a>"
   },
 
   "profile": {

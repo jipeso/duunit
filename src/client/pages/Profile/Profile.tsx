@@ -20,7 +20,7 @@ const Profile = () => {
   const { user } = state
 
   return (
-    <Container maxWidth='sm' sx={{ mt: 4 }}>
+    <Container maxWidth='sm' sx={{ mt: 8 }}>
       <Paper variant='outlined' sx={{ p: 3 }}>
         <Typography variant='h5' gutterBottom></Typography>
 
