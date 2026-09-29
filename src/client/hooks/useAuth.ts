@@ -40,6 +40,7 @@ const useAuth = () => {
     queryKey: authQueryKey,
     queryFn: getCurrentUser,
     retry: false,
+    staleTime: 5 * 60 * 1000,
   })
 
   const loginMutation = useMutation({
