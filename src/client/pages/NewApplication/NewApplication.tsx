@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography'
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslation } from 'react-i18next'
-import { Navigate, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 import {
   APPLICATION_STATUSES,
@@ -20,11 +20,10 @@ import {
   type NewApplication as NewApplicationPayload,
   type NewApplicationInput,
 } from '#common/types/applications.ts'
-import useAuth from '../../hooks/useAuth'
 import useSaveApplication from '../../hooks/useSaveApplication'
 import { useNotification } from '../../components/Notification'
 
-const NewApplicationForm = () => {
+const NewApplication = () => {
   const { t, i18n } = useTranslation()
   const [globalError, setGlobalError] = useState<string | null>(null)
   const { mutateAsync: saveApplication, isPending } = useSaveApplication()
@@ -219,16 +218,6 @@ const NewApplicationForm = () => {
       </Box>
     </Container>
   )
-}
-
-const NewApplication = () => {
-  const { state } = useAuth()
-
-  if (state.status === 'loading') return <CircularProgress />
-
-  if (state.status !== 'authenticated') return <Navigate to='/' replace />
-
-  return <NewApplicationForm />
 }
 
 export default NewApplication

@@ -12,7 +12,7 @@ export const createUser = async (
   email: string,
   password: string
 ) => {
-  const response = await axios.post(`${baseUrl}/api/users`, {
+  const response = await axios.post(`${baseUrl}/api/auth/sign-up/email`, {
     email,
     name,
     password,

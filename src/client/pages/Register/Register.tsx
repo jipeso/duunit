@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { useNavigate } from 'react-router'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
@@ -17,7 +16,7 @@ import Link from '@mui/material/Link'
 
 import i18n from '../../util/i18n'
 import { NewUserSchema } from '#common/types/users.ts'
-import useSaveUser from '../../hooks/useSaveUser'
+import { authClient } from '../../util/authClient'
 import { useNotification } from '../../components/Notification'
 
 const registerSchema = NewUserSchema.extend({
@@ -32,15 +31,13 @@ type RegisterFormData = z.infer<typeof registerSchema>
 export const RegisterForm: React.FC = () => {
   const { t } = useTranslation()
   const [globalError, setGlobalError] = useState<string | null>(null)
-  const { mutateAsync: saveUser, isPending } = useSaveUser()
   const { showSuccess } = useNotification()
   const navigate = useNavigate()
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    reset,
+    formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     mode: 'onTouched',
@@ -51,18 +48,19 @@ export const RegisterForm: React.FC = () => {
     setGlobalError(null)
     const { name, email, password } = data
 
-    try {
-      await saveUser({ name, email, password })
-      showSuccess(t('notifications.registerSuccess'))
-      reset()
-      void navigate('/login')
-    } catch (error) {
+    const { error } = await authClient.signUp.email({ name, email, password })
+
+    if (error) {
       setGlobalError(
-        axios.isAxiosError(error) && error.response?.status === 409
+        error.status === 422
           ? 'register.errors.emailInUse'
           : 'common.errors.unexpected'
       )
+      return
     }
+
+    showSuccess(t('notifications.registerSuccess'))
+    void navigate('/')
   }
 
   return (
@@ -158,11 +156,11 @@ export const RegisterForm: React.FC = () => {
               data-testid='register-submit'
               fullWidth
               variant='contained'
-              disabled={isPending}
+              disabled={isSubmitting}
               disableElevation
               sx={{ py: 1.5, mt: 2, textTransform: 'none', fontSize: '1rem' }}
             >
-              {isPending ? (
+              {isSubmitting ? (
                 <CircularProgress size={24} color='inherit' />
               ) : (
                 t('navigation.register')

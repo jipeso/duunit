@@ -1,4 +1,8 @@
-duunit.site, www.duunit.site {
+www.duunit.site {
+  redir https://duunit.site{uri} permanent
+}
+
+duunit.site {
   encode gzip zstd
   reverse_proxy 127.0.0.1:3000
 }

@@ -5,20 +5,15 @@ import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import { Link as RouterLink, Navigate } from 'react-router'
+import { Link as RouterLink } from 'react-router'
 import { useTranslation } from 'react-i18next'
 
-import useAuth from '../../hooks/useAuth'
 import useApplications from '../../hooks/useApplications'
 import ApplicationGrid from './ApplicationGrid'
 
-interface ApplicationsListProps {
-  userId: string
-}
-
-const ApplicationsList = ({ userId }: ApplicationsListProps) => {
+const Applications = () => {
   const { t } = useTranslation()
-  const { data: applications, isPending, isError } = useApplications(userId)
+  const { data: applications, isPending, isError } = useApplications()
 
   if (isPending) {
     return <CircularProgress />
@@ -68,20 +63,6 @@ const ApplicationsList = ({ userId }: ApplicationsListProps) => {
       )}
     </Container>
   )
-}
-
-const Applications = () => {
-  const { state } = useAuth()
-
-  if (state.status === 'loading') {
-    return <CircularProgress />
-  }
-
-  if (state.status !== 'authenticated') {
-    return <Navigate to='/' replace />
-  }
-
-  return <ApplicationsList userId={state.user.id} />
 }
 
 export default Applications

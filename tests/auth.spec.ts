@@ -16,7 +16,7 @@ test.describe('Authentication', () => {
       await page.getByTestId('register-confirm-password').fill('Password123?')
       await page.getByTestId('register-submit').click()
 
-      await expect(page).toHaveURL('/login')
+      await expect(page).toHaveURL('/')
       await expect(
         page.getByText('Your account has been created.')
       ).toBeVisible()

@@ -1,58 +1,31 @@
 import { Router, type Response, type Request } from 'express'
 
-import { userExtractor } from '../../middleware/userExtractor.ts'
-import { requireRole } from '../../middleware/authentication.ts'
-import { requireSelf } from '../../middleware/authentication.ts'
+import { requireAuth } from '../../middleware/authentication.ts'
 import applicationService from '../../services/applicationService.ts'
 import {
   type ApplicationResponse,
   NewApplicationSchema,
 } from '#common/types/applications.ts'
-import { AppError } from '../../util/AppError.ts'
 
 const router = Router()
 
-router.get(
-  '/',
-  userExtractor,
-  requireRole('admin'),
-  async (_, res: Response<ApplicationResponse[]>) => {
-    const applications = await applicationService.getApplications()
-    res.json(applications)
-  }
-)
+router.use(requireAuth)
 
-router.get(
-  '/:id',
-  userExtractor,
-  requireSelf,
-  async (
-    req: Request<{ id: string }>,
-    res: Response<ApplicationResponse[]>
-  ) => {
-    const { id } = req.params
+router.get('/', async (req: Request, res: Response<ApplicationResponse[]>) => {
+  const applications = await applicationService.getApplicationsByUserId(
+    req.user.id
+  )
+  res.json(applications)
+})
 
-    const applications = await applicationService.getApplicationsByUserId(id)
-    res.json(applications)
-  }
-)
+router.post('/', async (req: Request, res: Response<ApplicationResponse>) => {
+  const application = NewApplicationSchema.parse(req.body)
 
-router.post(
-  '/',
-  userExtractor,
-  async (req: Request, res: Response<ApplicationResponse>) => {
-    if (!req.user) {
-      throw new AppError('unauthorized', 401)
-    }
-
-    const application = NewApplicationSchema.parse(req.body)
-
-    const createdApplication = await applicationService.createApplication(
-      req.user.id,
-      application
-    )
-    res.status(201).json(createdApplication)
-  }
-)
+  const createdApplication = await applicationService.createApplication(
+    req.user.id,
+    application
+  )
+  res.status(201).json(createdApplication)
+})
 
 export default router

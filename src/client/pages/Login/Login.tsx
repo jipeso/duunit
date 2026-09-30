@@ -13,21 +13,20 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Link from '@mui/material/Link'
 import { useTranslation } from 'react-i18next'
 
-import useAuth from '../../hooks/useAuth'
+import { authClient } from '../../util/authClient'
 import { useNotification } from '../../components/Notification'
 import { LoginSchema, type LoginCredentials } from '#common/types/users.ts'
 
 export const LoginForm: React.FC = () => {
   const { t } = useTranslation()
   const [globalError, setGlobalError] = useState<string | null>(null)
-  const { login, isLoggingIn } = useAuth()
   const { showSuccess } = useNotification()
   const navigate = useNavigate()
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginCredentials>({
     resolver: zodResolver(LoginSchema),
     mode: 'onSubmit',
@@ -37,13 +36,19 @@ export const LoginForm: React.FC = () => {
   const onSubmit: SubmitHandler<LoginCredentials> = async data => {
     setGlobalError(null)
 
-    try {
-      await login(data)
-      showSuccess(t('notifications.loginSuccess'))
-      void navigate('/')
-    } catch {
-      setGlobalError(t('login.errors.invalidCredentials'))
+    const { error } = await authClient.signIn.email(data)
+
+    if (error) {
+      setGlobalError(
+        error.status === 401
+          ? t('login.errors.invalidCredentials')
+          : t('common.errors.unexpected')
+      )
+      return
     }
+
+    showSuccess(t('notifications.loginSuccess'))
+    void navigate('/')
   }
 
   return (
@@ -107,11 +112,11 @@ export const LoginForm: React.FC = () => {
               data-testid='login-submit'
               fullWidth
               variant='contained'
-              disabled={isLoggingIn}
+              disabled={isSubmitting}
               disableElevation
               sx={{ py: 1.5, mt: 2, textTransform: 'none', fontSize: '1rem' }}
             >
-              {isLoggingIn ? (
+              {isSubmitting ? (
                 <CircularProgress size={24} color='inherit' />
               ) : (
                 t('login.submit')

@@ -6,7 +6,8 @@ services:
     command: ['npm', 'run', 'start:test']
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
-      JWT_SECRET: secret
+      BETTER_AUTH_SECRET: test-secret-at-least-32-characters-long
+      BETTER_AUTH_URL: http://localhost:3000
     ports:
       - 3000:3000
     container_name: duunit_test

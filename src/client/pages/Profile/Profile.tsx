@@ -4,20 +4,16 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
-import { Navigate } from 'react-router'
-import CircularProgress from '@mui/material/CircularProgress'
 
-import useAuth from '../../hooks/useAuth'
+import { authClient } from '../../util/authClient'
 
 const Profile = () => {
   const { t } = useTranslation()
-  const { state } = useAuth()
+  const { data: session } = authClient.useSession()
 
-  if (state.status === 'loading') return <CircularProgress />
+  if (!session) return null
 
-  if (state.status !== 'authenticated') return <Navigate to='/' replace />
-
-  const { user } = state
+  const { user } = session
 
   return (
     <Container maxWidth='sm' sx={{ mt: 8 }}>

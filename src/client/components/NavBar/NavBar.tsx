@@ -15,7 +15,7 @@ import CloseIcon from '@mui/icons-material/Close'
 
 import Settings from '../Settings'
 import useIsMobile from '../../hooks/useIsMobile'
-import useAuth from '../../hooks/useAuth'
+import { authClient } from '../../util/authClient'
 import { DRAWER_WIDTH } from '../../util/config'
 
 const Navbar = () => {
@@ -23,11 +23,10 @@ const Navbar = () => {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { t } = useTranslation()
   const isMobile = useIsMobile()
-  const { state } = useAuth()
+  const { data: session } = authClient.useSession()
 
-  const user = state.status === 'authenticated' ? state.user : null
-  const isLoggedIn = state.status === 'authenticated'
-  const isAdmin = user?.roles.includes('admin') ?? false
+  const isLoggedIn = !!session
+  const isAdmin = session?.user.role === 'admin'
 
   const links = [
     { label: t('navigation.home'), to: '/', show: true },

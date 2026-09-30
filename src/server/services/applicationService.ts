@@ -9,11 +9,6 @@ import type {
 import { AppError } from '../util/AppError.ts'
 import { toApplicationResponse } from './utils.ts'
 
-const getApplications = async (): Promise<ApplicationResponse[]> => {
-  const allApplications = await db.query.applications.findMany()
-  return allApplications.map(toApplicationResponse)
-}
-
 const createApplication = async (
   userId: string,
   application: NewApplication
@@ -40,7 +35,6 @@ const getApplicationsByUserId = async (
 }
 
 export default {
-  getApplications,
   createApplication,
   getApplicationsByUserId,
 }

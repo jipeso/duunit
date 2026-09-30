@@ -3,6 +3,8 @@ services:
     image: ${IMAGE}:${APP_TAG}
     environment:
       DATABASE_URL: 'postgres://postgres:${POSTGRES_PASSWORD}@db:5432/postgres'
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: https://duunit.site
     ports:
       - 127.0.0.1:3000:3000
   db:

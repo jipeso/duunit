@@ -1,16 +1,18 @@
 import express, { type Request, type Response } from 'express'
 import path from 'path'
 import compression from 'compression'
-import cookieParser from 'cookie-parser'
+import { toNodeHandler } from 'better-auth/node'
 
 import { errorHandler } from './middleware/errorHandler.ts'
 import { inProduction, inTest, inDevelopment } from './util/config.ts'
 import { router } from './routes/index.ts'
+import { auth } from './util/auth.ts'
 
 const app = express()
 
+app.all('/api/auth/*splat', toNodeHandler(auth))
+
 app.use(express.json())
-app.use(cookieParser())
 app.use(compression())
 
 app.use('/api', router)

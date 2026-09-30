@@ -3,21 +3,15 @@ import { useQuery } from '@tanstack/react-query'
 import apiClient from '../util/apiClient'
 import type { ApplicationResponse } from '#common/types/applications.ts'
 
-const applicationsQueryKey = ['applications'] as const
-
-const fetchApplications = async (
-  userId: string
-): Promise<ApplicationResponse[]> => {
-  const { data } = await apiClient.get<ApplicationResponse[]>(
-    `/applications/${userId}`
-  )
+const fetchApplications = async (): Promise<ApplicationResponse[]> => {
+  const { data } = await apiClient.get<ApplicationResponse[]>('/applications')
   return data
 }
 
-const useApplications = (userId: string) => {
+const useApplications = () => {
   return useQuery({
-    queryKey: [...applicationsQueryKey, userId],
-    queryFn: () => fetchApplications(userId),
+    queryKey: ['applications'],
+    queryFn: fetchApplications,
   })
 }
 

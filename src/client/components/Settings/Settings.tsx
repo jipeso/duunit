@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -8,7 +9,7 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import Modal from '../common/Modal'
 import ThemeSelect from '../common/ThemeSelect'
 import LanguageSelect from '../common/LanguageSelect'
-import useAuth from '../../hooks/useAuth'
+import { authClient, signOut } from '../../util/authClient'
 import { useNotification } from '../Notification'
 
 interface Props {
@@ -18,12 +19,14 @@ interface Props {
 
 const Settings = ({ open, onClose }: Props) => {
   const { t } = useTranslation()
-  const { state, logout, isLoggingOut } = useAuth()
+  const { data: session } = authClient.useSession()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
   const { showSuccess } = useNotification()
-  const isLoggedIn = state.status === 'authenticated'
 
   const handleLogout = async () => {
-    await logout()
+    setIsLoggingOut(true)
+    await signOut()
+    setIsLoggingOut(false)
     showSuccess(t('notifications.logoutSuccess'))
     onClose()
   }
@@ -45,7 +48,7 @@ const Settings = ({ open, onClose }: Props) => {
           <Typography variant='body2'>{t('common.themes.label')}</Typography>
           <ThemeSelect />
         </Stack>
-        {isLoggedIn && (
+        {session && (
           <Button
             onClick={() => {
               void handleLogout()

@@ -1,37 +1,22 @@
 import type { Request, Response, NextFunction } from 'express'
+import { fromNodeHeaders } from 'better-auth/node'
 
-export const requireRole = (...allowed: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    if (!req.user) {
-      res.status(401).json({ error: 'unauthorized' })
-      return
-    }
+import { auth } from '../util/auth.ts'
 
-    const hasRole = req.user.roles.some(role => allowed.includes(role))
-
-    if (!hasRole) {
-      res.status(403).json({ error: 'insufficient permissions' })
-      return
-    }
-
-    next()
-  }
-}
-
-export const requireSelf = (
+export const requireAuth = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.user) {
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+  })
+
+  if (!session) {
     res.status(401).json({ error: 'unauthorized' })
     return
   }
 
-  if (req.user.id !== req.params.id) {
-    res.status(403).json({ error: 'can only update your own information' })
-    return
-  }
-
+  req.user = session.user
   next()
 }
