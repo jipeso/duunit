@@ -1,20 +1,9 @@
-import { createContext } from 'react'
+import { createContext, use } from 'react'
 
-export type NotificationVariant = 'success' | 'error'
-
-export interface NotificationItem {
-  id: string
-  message: string
-  variant: NotificationVariant
-}
-
-export interface NotificationContextValue {
+const NotificationContext = createContext<{
   showSuccess: (message: string) => void
-  showError: (message: string) => void
-}
+}>({ showSuccess: () => undefined })
 
-const NotificationContext = createContext<NotificationContextValue | undefined>(
-  undefined
-)
+export const useNotification = () => use(NotificationContext)
 
 export default NotificationContext

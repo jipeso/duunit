@@ -18,7 +18,7 @@ if (!rootElement) {
 }
 
 createRoot(rootElement).render(
-  <Router>
+  <Router useTransitions={false}>
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
         <App />

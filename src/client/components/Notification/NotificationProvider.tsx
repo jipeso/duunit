@@ -1,80 +1,39 @@
-import { useCallback, useMemo, useState, type ReactNode } from 'react'
-import Stack from '@mui/material/Stack'
+import { useMemo, useState, type ReactNode } from 'react'
+import Alert from '@mui/material/Alert'
+import Snackbar from '@mui/material/Snackbar'
 
-import Notification from './Notification'
-import NotificationContext, {
-  type NotificationContextValue,
-  type NotificationItem,
-  type NotificationVariant,
-} from './context'
+import NotificationContext from './context'
 
-const MAX_NOTIFICATIONS = 3
+const NotificationProvider = ({ children }: { children: ReactNode }) => {
+  const [message, setMessage] = useState('')
+  const [open, setOpen] = useState(false)
 
-interface Props {
-  children: ReactNode
-}
-
-const NotificationProvider = ({ children }: Props) => {
-  const [notifications, setNotifications] = useState<NotificationItem[]>([])
-
-  const dismissNotification = useCallback((id: string) => {
-    setNotifications(current => current.filter(item => item.id !== id))
-  }, [])
-
-  const showNotification = useCallback(
-    (message: string, variant: NotificationVariant) => {
-      const notification: NotificationItem = {
-        id: crypto.randomUUID(),
-        message,
-        variant,
-      }
-
-      setNotifications(current =>
-        [...current, notification].slice(-MAX_NOTIFICATIONS)
-      )
-    },
+  const value = useMemo(
+    () => ({
+      showSuccess: (newMessage: string) => {
+        setMessage(newMessage)
+        setOpen(true)
+      },
+    }),
     []
-  )
-
-  const showSuccess = useCallback(
-    (message: string) => {
-      showNotification(message, 'success')
-    },
-    [showNotification]
-  )
-
-  const showError = useCallback(
-    (message: string) => {
-      showNotification(message, 'error')
-    },
-    [showNotification]
-  )
-
-  const value = useMemo<NotificationContextValue>(
-    () => ({ showSuccess, showError }),
-    [showSuccess, showError]
   )
 
   return (
     <NotificationContext value={value}>
       {children}
-      <Stack
-        spacing={1}
-        sx={{
-          position: 'fixed',
-          top: 16,
-          right: 16,
-          zIndex: theme => theme.zIndex.snackbar,
+      <Snackbar
+        key={message}
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => {
+          setOpen(false)
         }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        {notifications.map(notification => (
-          <Notification
-            key={notification.id}
-            notification={notification}
-            onClose={dismissNotification}
-          />
-        ))}
-      </Stack>
+        <Alert severity='success' variant='filled'>
+          {message}
+        </Alert>
+      </Snackbar>
     </NotificationContext>
   )
 }
