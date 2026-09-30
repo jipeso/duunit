@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 import { createUser, loginFromUi, resetDatabase } from './helpers.ts'
 
 const TEST_EMAIL = 'test@example.com'
-const TEST_PASSWORD = 'Password123?'
+const TEST_PASSWORD = 'joku erinomainen salasana'
 
 test.describe('Applications', () => {
   test.beforeEach(async () => {

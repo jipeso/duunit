@@ -123,12 +123,6 @@
     "invalid": "{{field}} is invalid",
     "required": "{{field}} is required",
     "tooEarly": "{{field}} must be after {{date}}",
-    "passwordsDoNotMatch": "Passwords do not match",
-    "password": {
-      "missingLowercase": "Password must contain at least one lowercase letter",
-      "missingUppercase": "Password must contain at least one uppercase letter",
-      "missingNumber": "Password must contain at least one number",
-      "missingSpecialChar": "Password must contain at least one special character"
-    }
+    "passwordsDoNotMatch": "Passwords do not match"
   }
 }

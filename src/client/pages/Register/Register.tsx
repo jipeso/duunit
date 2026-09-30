@@ -122,12 +122,7 @@ export const RegisterForm: React.FC = () => {
               slotProps={{ htmlInput: { 'data-testid': 'register-password' } }}
               {...register('password')}
               error={!!errors.password}
-              helperText={
-                errors.password?.message &&
-                t(errors.password.message, {
-                  defaultValue: errors.password.message,
-                })
-              }
+              helperText={errors.password?.message}
             />
 
             <TextField

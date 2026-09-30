@@ -123,12 +123,6 @@
     "invalid": "{{field}} ogiltigt värde",
     "required": "{{field}} måste fyllas i",
     "tooEarly": "{{field}} måste vara efter {{date}}",
-    "passwordsDoNotMatch": "Lösenorden matchar inte",
-    "password": {
-      "missingLowercase": "Lösenordet måste innehålla minst en gemen",
-      "missingUppercase": "Lösenordet måste innehålla minst en versal",
-      "missingNumber": "Lösenordet måste innehålla minst en siffra",
-      "missingSpecialChar": "Lösenordet måste innehålla minst ett specialtecken"
-    }
+    "passwordsDoNotMatch": "Lösenorden matchar inte"
   }
 }

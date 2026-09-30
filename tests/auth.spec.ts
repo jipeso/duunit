@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test'
 import { createUser, resetDatabase } from './helpers.ts'
 
+const TEST_PASSWORD = 'joku erinomainen salasana'
+
 test.describe('Authentication', () => {
   test.beforeEach(async () => {
     await resetDatabase()
@@ -12,8 +14,8 @@ test.describe('Authentication', () => {
 
       await page.getByTestId('register-name').fill('Test User')
       await page.getByTestId('register-email').fill('test@example.com')
-      await page.getByTestId('register-password').fill('Password123?')
-      await page.getByTestId('register-confirm-password').fill('Password123?')
+      await page.getByTestId('register-password').fill(TEST_PASSWORD)
+      await page.getByTestId('register-confirm-password').fill(TEST_PASSWORD)
       await page.getByTestId('register-submit').click()
 
       await expect(page).toHaveURL('/')
@@ -27,8 +29,8 @@ test.describe('Authentication', () => {
 
       await page.getByTestId('register-name').fill('T')
       await page.getByTestId('register-email').fill('test@example.com')
-      await page.getByTestId('register-password').fill('Password123?')
-      await page.getByTestId('register-confirm-password').fill('Password123?')
+      await page.getByTestId('register-password').fill(TEST_PASSWORD)
+      await page.getByTestId('register-confirm-password').fill(TEST_PASSWORD)
       await page.getByTestId('register-submit').click()
 
       await expect(page).toHaveURL('/register')
@@ -42,8 +44,8 @@ test.describe('Authentication', () => {
 
       await page.getByTestId('register-name').fill('T'.repeat(33))
       await page.getByTestId('register-email').fill('test@example.com')
-      await page.getByTestId('register-password').fill('Password123?')
-      await page.getByTestId('register-confirm-password').fill('Password123?')
+      await page.getByTestId('register-password').fill(TEST_PASSWORD)
+      await page.getByTestId('register-confirm-password').fill(TEST_PASSWORD)
       await page.getByTestId('register-submit').click()
 
       await expect(page).toHaveURL('/register')
@@ -57,8 +59,8 @@ test.describe('Authentication', () => {
 
       await page.getByTestId('register-name').fill('Test User')
       await page.getByTestId('register-email').fill('invalid-email')
-      await page.getByTestId('register-password').fill('Password123?')
-      await page.getByTestId('register-confirm-password').fill('Password123?')
+      await page.getByTestId('register-password').fill(TEST_PASSWORD)
+      await page.getByTestId('register-confirm-password').fill(TEST_PASSWORD)
       await page.getByTestId('register-submit').click()
 
       await expect(page).toHaveURL('/register')
@@ -70,20 +72,20 @@ test.describe('Authentication', () => {
 
       await page.getByTestId('register-name').fill('Test User')
       await page.getByTestId('register-email').fill('test@example.com')
-      await page.getByTestId('register-password').fill('P123!')
-      await page.getByTestId('register-confirm-password').fill('P123!')
+      await page.getByTestId('register-password').fill('a'.repeat(14))
+      await page.getByTestId('register-confirm-password').fill('a'.repeat(14))
       await page.getByTestId('register-submit').click()
 
       await expect(page).toHaveURL('/register')
       await expect(
-        page.getByText('Password must be at least 8 characters long')
+        page.getByText('Password must be at least 15 characters long')
       ).toBeVisible()
     })
 
     test('registration fails with too long password', async ({ page }) => {
       await page.goto('/register')
 
-      const tooLongPassword = `Password123?${'a'.repeat(15)}`
+      const tooLongPassword = 'a'.repeat(65)
 
       await page.getByTestId('register-name').fill('Test User')
       await page.getByTestId('register-email').fill('test@example.com')
@@ -93,75 +95,7 @@ test.describe('Authentication', () => {
 
       await expect(page).toHaveURL('/register')
       await expect(
-        page.getByText('Password must be at most 24 characters long')
-      ).toBeVisible()
-    })
-
-    test('registration fails without a lowercase letter in password', async ({
-      page,
-    }) => {
-      await page.goto('/register')
-
-      await page.getByTestId('register-name').fill('Test User')
-      await page.getByTestId('register-email').fill('test@example.com')
-      await page.getByTestId('register-password').fill('PASSWORD123?')
-      await page.getByTestId('register-confirm-password').fill('PASSWORD123?')
-      await page.getByTestId('register-submit').click()
-
-      await expect(page).toHaveURL('/register')
-      await expect(
-        page.getByText('Password must contain at least one lowercase letter')
-      ).toBeVisible()
-    })
-
-    test('registration fails without an uppercase letter in password', async ({
-      page,
-    }) => {
-      await page.goto('/register')
-
-      await page.getByTestId('register-name').fill('Test User')
-      await page.getByTestId('register-email').fill('test@example.com')
-      await page.getByTestId('register-password').fill('password123?')
-      await page.getByTestId('register-confirm-password').fill('password123?')
-      await page.getByTestId('register-submit').click()
-
-      await expect(page).toHaveURL('/register')
-      await expect(
-        page.getByText('Password must contain at least one uppercase letter')
-      ).toBeVisible()
-    })
-
-    test('registration fails without a number in password', async ({
-      page,
-    }) => {
-      await page.goto('/register')
-
-      await page.getByTestId('register-name').fill('Test User')
-      await page.getByTestId('register-email').fill('test@example.com')
-      await page.getByTestId('register-password').fill('Password??')
-      await page.getByTestId('register-confirm-password').fill('Password??')
-      await page.getByTestId('register-submit').click()
-
-      await expect(page).toHaveURL('/register')
-      await expect(
-        page.getByText('Password must contain at least one number')
-      ).toBeVisible()
-    })
-
-    test('registration fails without a special character in password', async ({
-      page,
-    }) => {
-      await page.goto('/register')
-
-      await page.getByTestId('register-name').fill('Test User')
-      await page.getByTestId('register-email').fill('test@example.com')
-      await page.getByTestId('register-password').fill('Password123')
-      await page.getByTestId('register-confirm-password').fill('Password123')
-      await page.getByTestId('register-submit').click()
-
-      await expect(page).toHaveURL('/register')
-      await expect(
-        page.getByText('Password must contain at least one special character')
+        page.getByText('Password must be at most 64 characters long')
       ).toBeVisible()
     })
 
@@ -170,8 +104,10 @@ test.describe('Authentication', () => {
 
       await page.getByTestId('register-name').fill('Test User')
       await page.getByTestId('register-email').fill('test@example.com')
-      await page.getByTestId('register-password').fill('Password123?')
-      await page.getByTestId('register-confirm-password').fill('Password123!')
+      await page.getByTestId('register-password').fill(TEST_PASSWORD)
+      await page
+        .getByTestId('register-confirm-password')
+        .fill(`${TEST_PASSWORD}!`)
       await page.getByTestId('register-submit').click()
 
       await expect(page).toHaveURL('/register')
@@ -181,14 +117,14 @@ test.describe('Authentication', () => {
     test('registration fails when the email is already in use', async ({
       page,
     }) => {
-      await createUser('Existing User', 'test@example.com', 'Password123?')
+      await createUser('Existing User', 'test@example.com', TEST_PASSWORD)
 
       await page.goto('/register')
 
       await page.getByTestId('register-name').fill('Test User')
       await page.getByTestId('register-email').fill('test@example.com')
-      await page.getByTestId('register-password').fill('Password123?')
-      await page.getByTestId('register-confirm-password').fill('Password123?')
+      await page.getByTestId('register-password').fill(TEST_PASSWORD)
+      await page.getByTestId('register-confirm-password').fill(TEST_PASSWORD)
       await page.getByTestId('register-submit').click()
 
       await expect(page).toHaveURL('/register')
@@ -200,12 +136,12 @@ test.describe('Authentication', () => {
 
   test.describe('Login', () => {
     test('user can login with valid credentials', async ({ page }) => {
-      await createUser('Test User', 'test@example.com', 'Password123?')
+      await createUser('Test User', 'test@example.com', TEST_PASSWORD)
 
       await page.goto('/login')
 
       await page.getByTestId('login-email').fill('test@example.com')
-      await page.getByTestId('login-password').fill('Password123?')
+      await page.getByTestId('login-password').fill(TEST_PASSWORD)
       await page.getByTestId('login-submit').click()
 
       await expect(page).toHaveURL('/')
@@ -213,7 +149,7 @@ test.describe('Authentication', () => {
     })
 
     test('login fails with invalid credentials', async ({ page }) => {
-      await createUser('Test User', 'test@example.com', 'Password123?')
+      await createUser('Test User', 'test@example.com', TEST_PASSWORD)
 
       await page.goto('/login')
 
@@ -240,11 +176,11 @@ test.describe('Authentication', () => {
 
   test.describe('Logout', () => {
     test('user can log out', async ({ page }) => {
-      await createUser('Test User', 'test@example.com', 'Password123?')
+      await createUser('Test User', 'test@example.com', TEST_PASSWORD)
 
       await page.goto('/login')
       await page.getByTestId('login-email').fill('test@example.com')
-      await page.getByTestId('login-password').fill('Password123?')
+      await page.getByTestId('login-password').fill(TEST_PASSWORD)
       await page.getByTestId('login-submit').click()
       await expect(page).toHaveURL('/')
 
@@ -260,11 +196,11 @@ test.describe('Authentication', () => {
     test('logged in user is redirected away from login and register', async ({
       page,
     }) => {
-      await createUser('Test User', 'test@example.com', 'Password123?')
+      await createUser('Test User', 'test@example.com', TEST_PASSWORD)
 
       await page.goto('/login')
       await page.getByTestId('login-email').fill('test@example.com')
-      await page.getByTestId('login-password').fill('Password123?')
+      await page.getByTestId('login-password').fill(TEST_PASSWORD)
       await page.getByTestId('login-submit').click()
       await expect(page).toHaveURL('/')
 

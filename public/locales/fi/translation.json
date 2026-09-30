@@ -123,12 +123,6 @@
     "invalid": "{{field}} on virheellinen",
     "required": "{{field}} on pakollinen",
     "tooEarly": "{{field}}: päivämäärän on oltava {{date}} jälkeen",
-    "passwordsDoNotMatch": "Salasanat eivät täsmää",
-    "password": {
-      "missingLowercase": "Salasanan on sisällettävä vähintään yksi pieni kirjain",
-      "missingUppercase": "Salasanan on sisällettävä vähintään yksi iso kirjain",
-      "missingNumber": "Salasanan on sisällettävä vähintään yksi numero",
-      "missingSpecialChar": "Salasanan on sisällettävä vähintään yksi erikoismerkki"
-    }
+    "passwordsDoNotMatch": "Salasanat eivät täsmää"
   }
 }
