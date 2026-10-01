@@ -39,11 +39,19 @@ export const LoginForm: React.FC = () => {
     const { error } = await authClient.signIn.email(data)
 
     if (error) {
-      setGlobalError(
-        error.status === 401
-          ? t('login.errors.invalidCredentials')
-          : t('common.errors.unexpected')
-      )
+      switch (error.status) {
+        case 400:
+          setGlobalError(t('login.errors.invalidEmail'))
+          break
+        case 401:
+          setGlobalError(t('login.errors.invalidCredentials'))
+          break
+        case 429:
+          setGlobalError(t('login.errors.tooManyRequests'))
+          break
+        default:
+          setGlobalError(t('common.errors.unexpected'))
+      }
       return
     }
 

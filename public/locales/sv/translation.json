@@ -112,7 +112,9 @@
     "subtitle": "Ange dina uppgifter för att logga in.",
     "submit": "Logga in",
     "errors": {
-      "invalidCredentials": "Ogiltig e-postadress eller ogiltigt lösenord."
+      "invalidCredentials": "Ogiltig e-postadress eller ogiltigt lösenord.",
+      "invalidEmail": "Ogiltig e-postadress.",
+      "tooManyRequests": "För många inloggningsförsök. Vänta en stund och försök igen."
     },
     "doNotHaveAccount": "Har du inget konto?"
   },

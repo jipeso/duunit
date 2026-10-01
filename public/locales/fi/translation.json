@@ -112,7 +112,9 @@
     "subtitle": "Kirjaudu sisään syöttämällä tunnuksesi.",
     "submit": "Kirjaudu sisään",
     "errors": {
-      "invalidCredentials": "Virheellinen sähköposti tai salasana."
+      "invalidCredentials": "Virheellinen sähköposti tai salasana.",
+      "invalidEmail": "Virheellinen sähköpostiosoite.",
+      "tooManyRequests": "Liian monta kirjautumisyritystä. Odota hetki ja yritä uudelleen."
     },
     "doNotHaveAccount": "Eikö sinulla ole tiliä?"
   },

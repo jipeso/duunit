@@ -11,4 +11,5 @@
 | 27.9  | 5        | Applications API                    |
 | 28.9  | 8        | Refactoring + Application pages     |
 | 29.9  | 8        | Frontend                            |
+| 30.9  | 5        | Auth refactor                       |
 | Total | 66       |                                     |

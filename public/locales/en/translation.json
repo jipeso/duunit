@@ -112,7 +112,9 @@
     "subtitle": "Enter your credentials to sign in.",
     "submit": "Login",
     "errors": {
-      "invalidCredentials": "Invalid email or password."
+      "invalidCredentials": "Invalid email or password.",
+      "invalidEmail": "Invalid email address.",
+      "tooManyRequests": "Too many login attempts. Please wait a moment and try again."
     },
     "doNotHaveAccount": "Do not have an account?"
   },
