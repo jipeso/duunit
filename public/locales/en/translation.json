@@ -76,7 +76,8 @@
     "logoutSuccess": "You have been logged out.",
     "registerSuccess": "Your account has been created.",
     "applicationCreatedSuccess": "New application has been added.",
-    "applicationUpdatedSuccess": "Application has been updated."
+    "applicationUpdatedSuccess": "Application has been updated.",
+    "applicationDeletedSuccess": "Application has been deleted."
   },
 
   "applications": {
@@ -88,6 +89,8 @@
     "edit": "Edit application",
     "editSubtitle": "Update the details of your application",
     "notFound": "Application not found",
+    "delete": "Delete application",
+    "deleteConfirm": "Delete the application for {{position}} at {{company}}? This cannot be undone.",
     "openJobPosting": "Open job posting",
 
     "statuses": {

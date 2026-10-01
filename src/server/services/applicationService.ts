@@ -54,8 +54,25 @@ const updateApplication = async (
   return toApplicationResponse(updatedApplication)
 }
 
+const deleteApplication = async (
+  userId: string,
+  applicationId: string
+): Promise<void> => {
+  const [deletedApplication] = await db
+    .delete(applications)
+    .where(
+      and(eq(applications.id, applicationId), eq(applications.userId, userId))
+    )
+    .returning({ id: applications.id })
+
+  if (!deletedApplication) {
+    throw new AppError('Application not found', 404)
+  }
+}
+
 export default {
   createApplication,
   getApplicationsByUserId,
   updateApplication,
+  deleteApplication,
 }

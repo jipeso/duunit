@@ -154,5 +154,40 @@ test.describe('Applications', () => {
       await expect(page.getByText('Application not found')).toBeVisible()
       await expect(page.getByTestId('application-submit')).toBeHidden()
     })
+
+    test('user can cancel deleting an application', async ({ page }) => {
+      await page.goto('/applications')
+      await createApplication(page, 'Test company', 'Test Developer')
+
+      const row = page.getByRole('row', { name: /Test company/ })
+      await row.getByTestId('application-delete').click()
+
+      const dialog = page.getByRole('dialog')
+      await expect(
+        dialog.getByText(
+          'Delete the application for Test Developer at Test company?'
+        )
+      ).toBeVisible()
+      await dialog.getByTestId('confirm-dialog-cancel').click()
+
+      await expect(dialog).toBeHidden()
+      await expect(row).toBeVisible()
+    })
+
+    test('user can delete an application', async ({ page }) => {
+      await page.goto('/applications')
+      await createApplication(page, 'Test company', 'Test Developer')
+
+      await page
+        .getByRole('row', { name: /Test company/ })
+        .getByTestId('application-delete')
+        .click()
+      await page.getByTestId('confirm-dialog-confirm').click()
+
+      await expect(page.getByText('Application has been deleted')).toBeVisible()
+      await expect(
+        page.getByText('You have not added any applications yet')
+      ).toBeVisible()
+    })
   })
 })

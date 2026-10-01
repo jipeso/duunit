@@ -76,7 +76,8 @@
     "logoutSuccess": "Olet kirjautunut ulos.",
     "registerSuccess": "Tilisi on luotu.",
     "applicationCreatedSuccess": "Uusi hakemus on lisätty.",
-    "applicationUpdatedSuccess": "Hakemus on päivitetty."
+    "applicationUpdatedSuccess": "Hakemus on päivitetty.",
+    "applicationDeletedSuccess": "Hakemus on poistettu."
   },
 
   "applications": {
@@ -88,6 +89,8 @@
     "edit": "Muokkaa hakemusta",
     "editSubtitle": "Päivitä hakemuksesi tiedot",
     "notFound": "Hakemusta ei löytynyt",
+    "delete": "Poista hakemus",
+    "deleteConfirm": "Poistetaanko hakemus: {{position}}, {{company}}? Toimintoa ei voi perua.",
     "openJobPosting": "Avaa työpaikkailmoitus",
 
     "statuses": {

@@ -41,4 +41,11 @@ router.put('/:id', async (req: Request, res: Response<ApplicationResponse>) => {
   res.json(updatedApplication)
 })
 
+router.delete('/:id', async (req: Request, res: Response) => {
+  const applicationId = z.uuid().parse(req.params.id)
+
+  await applicationService.deleteApplication(req.user.id, applicationId)
+  res.status(204).end()
+})
+
 export default router

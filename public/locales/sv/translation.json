@@ -76,7 +76,8 @@
     "logoutSuccess": "Du har loggats ut.",
     "registerSuccess": "Ditt konto har skapats.",
     "applicationCreatedSuccess": "Den nya ansökan har lagts till.",
-    "applicationUpdatedSuccess": "Ansökan har uppdaterats."
+    "applicationUpdatedSuccess": "Ansökan har uppdaterats.",
+    "applicationDeletedSuccess": "Ansökan har tagits bort."
   },
 
   "applications": {
@@ -88,6 +89,8 @@
     "edit": "Redigera ansökan",
     "editSubtitle": "Uppdatera uppgifterna om din ansökan",
     "notFound": "Ansökan hittades inte",
+    "delete": "Ta bort ansökan",
+    "deleteConfirm": "Ta bort ansökan för {{position}} hos {{company}}? Det går inte att ångra.",
     "openJobPosting": "Öppna jobbannonsen",
 
     "statuses": {

@@ -1,6 +1,7 @@
 import Chip from '@mui/material/Chip'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
+import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { GridActionsCellItem, type GridColDef } from '@mui/x-data-grid'
@@ -26,10 +27,15 @@ const statusColors: Record<
   withdrawn: 'default',
 }
 
+interface ApplicationActions {
+  onEdit: (application: ApplicationResponse) => void
+  onDelete: (application: ApplicationResponse) => void
+}
+
 export const createApplicationColumns = (
   t: TFunction,
   language: string,
-  onEdit: (id: string) => void
+  { onEdit, onDelete }: ApplicationActions
 ): GridColDef<ApplicationResponse>[] => {
   const dateFormatter = new Intl.DateTimeFormat(language)
 
@@ -105,7 +111,16 @@ export const createApplicationColumns = (
           label={t('applications.edit')}
           data-testid='application-edit'
           onClick={() => {
-            onEdit(row.id)
+            onEdit(row)
+          }}
+        />,
+        <GridActionsCellItem
+          key='delete'
+          icon={<DeleteIcon fontSize='small' />}
+          label={t('applications.delete')}
+          data-testid='application-delete'
+          onClick={() => {
+            onDelete(row)
           }}
         />,
       ],
