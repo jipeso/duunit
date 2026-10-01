@@ -18,7 +18,7 @@ const mutationFn = async (
   return data
 }
 
-const useSaveApplication = () => {
+const useCreateApplication = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -29,4 +29,4 @@ const useSaveApplication = () => {
   })
 }
 
-export default useSaveApplication
+export default useCreateApplication

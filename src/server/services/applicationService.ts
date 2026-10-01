@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { eq, and } from 'drizzle-orm'
 
 import { db } from '../db/index.ts'
 import { applications } from '../db/schema.ts'
@@ -34,7 +34,28 @@ const getApplicationsByUserId = async (
   return userApplications.map(toApplicationResponse)
 }
 
+const updateApplication = async (
+  userId: string,
+  applicationId: string,
+  application: NewApplication
+): Promise<ApplicationResponse> => {
+  const [updatedApplication] = await db
+    .update(applications)
+    .set(application)
+    .where(
+      and(eq(applications.id, applicationId), eq(applications.userId, userId))
+    )
+    .returning()
+
+  if (!updatedApplication) {
+    throw new AppError('Application not found', 404)
+  }
+
+  return toApplicationResponse(updatedApplication)
+}
+
 export default {
   createApplication,
   getApplicationsByUserId,
+  updateApplication,
 }

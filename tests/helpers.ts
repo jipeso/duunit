@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { type Page, expect } from '@playwright/test'
+import { type Page } from '@playwright/test'
 
 const baseUrl = 'http://localhost:3000'
 
@@ -21,14 +21,28 @@ export const createUser = async (
   return response.data
 }
 
-export const loginFromUi = async (
+export const loginWith = async (
   page: Page,
   email: string,
   password: string
 ) => {
-  await page.goto('/login')
   await page.getByTestId('login-email').fill(email)
   await page.getByTestId('login-password').fill(password)
   await page.getByTestId('login-submit').click()
-  await expect(page).toHaveURL('/')
+}
+
+export const createApplication = async (
+  page: Page,
+  company: string,
+  position: string,
+  location?: string
+) => {
+  await page.getByRole('link', { name: 'Add a new application' }).click()
+  await page.getByTestId('application-company').fill(company)
+  await page.getByTestId('application-position').fill(position)
+  if (location) {
+    await page.getByTestId('application-location').fill(location)
+  }
+  await page.getByRole('button', { name: 'Create' }).click()
+  await page.getByText('My applications').waitFor()
 }

@@ -12,7 +12,7 @@ export const NewUserSchema = z.object({
 export type NewUser = z.infer<typeof NewUserSchema>
 
 export const LoginSchema = z.object({
-  email: z.email().trim().toLowerCase(),
+  email: z.string().min(1).pipe(z.email().trim().toLowerCase()),
   password: z.string().min(1),
 })
 export type LoginCredentials = z.infer<typeof LoginSchema>

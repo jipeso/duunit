@@ -5,6 +5,7 @@ import {
   type GridAutosizeOptions,
 } from '@mui/x-data-grid'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
 import Paper from '@mui/material/Paper'
 
 import type { ApplicationResponse } from '#common/types/applications.ts'
@@ -28,10 +29,14 @@ const INITIAL_SORT_MODEL = [{ field: 'appliedAt', sort: 'desc' as const }]
 const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
   const { t, i18n } = useTranslation()
   const apiRef = useGridApiRef()
+  const navigate = useNavigate()
 
   const columns = useMemo(
-    () => createApplicationColumns(t, i18n.language),
-    [t, i18n.language]
+    () =>
+      createApplicationColumns(t, i18n.language, id => {
+        void navigate(`/applications/${id}/edit`)
+      }),
+    [t, i18n.language, navigate]
   )
 
   useEffect(() => {

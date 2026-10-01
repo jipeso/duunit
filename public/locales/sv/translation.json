@@ -75,7 +75,8 @@
     "loginSuccess": "Du är nu inloggad.",
     "logoutSuccess": "Du har loggats ut.",
     "registerSuccess": "Ditt konto har skapats.",
-    "applicationCreatedSuccess": "Den nya ansökan har lagts till."
+    "applicationCreatedSuccess": "Den nya ansökan har lagts till.",
+    "applicationUpdatedSuccess": "Ansökan har uppdaterats."
   },
 
   "applications": {
@@ -84,6 +85,9 @@
     "empty": "Du har inte lagt till några ansökningar ännu",
     "new": "Lägg till en ny ansökan",
     "newSubtitle": "Fyll i uppgifterna om jobbet du söker",
+    "edit": "Redigera ansökan",
+    "editSubtitle": "Uppdatera uppgifterna om din ansökan",
+    "notFound": "Ansökan hittades inte",
     "openJobPosting": "Öppna jobbannonsen",
 
     "statuses": {

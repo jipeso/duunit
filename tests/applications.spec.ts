@@ -1,8 +1,20 @@
 import { test, expect } from '@playwright/test'
-import { createUser, loginFromUi, resetDatabase } from './helpers.ts'
+import {
+  createApplication,
+  createUser,
+  loginWith,
+  resetDatabase,
+} from './helpers.ts'
 
 const TEST_EMAIL = 'test@example.com'
 const TEST_PASSWORD = 'joku erinomainen salasana'
+const OTHER_EMAIL = 'other@example.com'
+const MISSING_ID = '00000000-0000-4000-8000-000000000000'
+const UPDATE_BODY = {
+  company: 'Hijacked company',
+  position: 'Hijacked position',
+  status: 'applied',
+}
 
 test.describe('Applications', () => {
   test.beforeEach(async () => {
@@ -18,11 +30,16 @@ test.describe('Applications', () => {
 
     await page.goto('/applications/new')
     await expect(page).toHaveURL('/')
+
+    await page.goto(`/applications/${MISSING_ID}/edit`)
+    await expect(page).toHaveURL('/')
   })
 
   test.describe('when logged in', () => {
     test.beforeEach(async ({ page }) => {
-      await loginFromUi(page, TEST_EMAIL, TEST_PASSWORD)
+      await page.goto('/login')
+      await loginWith(page, TEST_EMAIL, TEST_PASSWORD)
+      await expect(page).toHaveURL('/')
     })
 
     test('user without applications sees the empty state', async ({ page }) => {
@@ -75,6 +92,67 @@ test.describe('Applications', () => {
       ).toBeVisible()
       await expect(page.getByText(/Applied on must be after/)).toBeVisible()
       await expect(page.getByText('Job posting URL is invalid')).toBeVisible()
+    })
+
+    test('user can edit an application', async ({ page }) => {
+      await page.goto('/applications')
+      await createApplication(page, 'Test company', 'Test Developer')
+
+      await page
+        .getByRole('row', { name: /Test company/ })
+        .getByTestId('application-edit')
+        .click()
+      await expect(page).toHaveURL(/\/applications\/.+\/edit$/)
+
+      await expect(page.getByTestId('application-company')).toHaveValue(
+        'Test company'
+      )
+      await expect(page.getByTestId('application-location')).toHaveValue('')
+
+      await page.getByTestId('application-position').fill('Senior Developer')
+      await page.getByRole('combobox', { name: /Status/ }).click()
+      await page.getByRole('option', { name: 'Interviewing' }).click()
+      await page.getByTestId('application-location').fill('Helsinki')
+      await page.getByTestId('application-submit').click()
+
+      await expect(page).toHaveURL('/applications')
+      await expect(page.getByText('Application has been updated')).toBeVisible()
+
+      const row = page.getByRole('row', { name: /Test company/ })
+      await expect(row.getByText('Senior Developer')).toBeVisible()
+      await expect(row.getByText('Interviewing')).toBeVisible()
+      await expect(row.getByText('Helsinki')).toBeVisible()
+    })
+
+    test('user can clear an optional field when editing', async ({ page }) => {
+      await page.goto('/applications')
+      await createApplication(
+        page,
+        'Test company',
+        'Test Developer',
+        'Helsinki'
+      )
+
+      const row = page.getByRole('row', { name: /Test company/ })
+      await expect(row.getByText('Helsinki')).toBeVisible()
+
+      await row.getByTestId('application-edit').click()
+      await expect(page.getByTestId('application-location')).toHaveValue(
+        'Helsinki'
+      )
+      await page.getByTestId('application-location').clear()
+      await page.getByTestId('application-submit').click()
+
+      await expect(page).toHaveURL('/applications')
+      await expect(row.getByText('Helsinki')).toBeHidden()
+      await expect(row.getByText('—')).toBeVisible()
+    })
+
+    test('editing a missing application shows not found', async ({ page }) => {
+      await page.goto(`/applications/${MISSING_ID}/edit`)
+
+      await expect(page.getByText('Application not found')).toBeVisible()
+      await expect(page.getByTestId('application-submit')).toBeHidden()
     })
   })
 })

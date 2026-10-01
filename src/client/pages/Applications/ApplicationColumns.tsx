@@ -1,8 +1,9 @@
 import Chip from '@mui/material/Chip'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
+import EditIcon from '@mui/icons-material/Edit'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import type { GridColDef } from '@mui/x-data-grid'
+import { GridActionsCellItem, type GridColDef } from '@mui/x-data-grid'
 import type { TFunction } from 'i18next'
 
 import type {
@@ -27,7 +28,8 @@ const statusColors: Record<
 
 export const createApplicationColumns = (
   t: TFunction,
-  language: string
+  language: string,
+  onEdit: (id: string) => void
 ): GridColDef<ApplicationResponse>[] => {
   const dateFormatter = new Intl.DateTimeFormat(language)
 
@@ -92,6 +94,21 @@ export const createApplicationColumns = (
             </IconButton>
           </Tooltip>
         ) : null,
+    },
+    {
+      field: 'actions',
+      type: 'actions',
+      getActions: ({ row }) => [
+        <GridActionsCellItem
+          key='edit'
+          icon={<EditIcon fontSize='small' />}
+          label={t('applications.edit')}
+          data-testid='application-edit'
+          onClick={() => {
+            onEdit(row.id)
+          }}
+        />,
+      ],
     },
   ]
 }

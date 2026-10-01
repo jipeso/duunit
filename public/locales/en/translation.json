@@ -75,7 +75,8 @@
     "loginSuccess": "You are now logged in.",
     "logoutSuccess": "You have been logged out.",
     "registerSuccess": "Your account has been created.",
-    "applicationCreatedSuccess": "New application has been added."
+    "applicationCreatedSuccess": "New application has been added.",
+    "applicationUpdatedSuccess": "Application has been updated."
   },
 
   "applications": {
@@ -84,6 +85,9 @@
     "empty": "You have not added any applications yet",
     "new": "Add a new application",
     "newSubtitle": "Fill in the details of the job you are applying to",
+    "edit": "Edit application",
+    "editSubtitle": "Update the details of your application",
+    "notFound": "Application not found",
     "openJobPosting": "Open job posting",
 
     "statuses": {

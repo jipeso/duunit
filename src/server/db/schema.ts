@@ -80,7 +80,10 @@ export const applications = pgTable('applications', {
   status: applicationStatusEnum('status').notNull().default('applied'),
   appliedAt: date('applied_at', { mode: 'string' }),
   createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at')
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 })
 
 export type DatabaseApplication = typeof applications.$inferSelect

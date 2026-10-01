@@ -75,7 +75,8 @@
     "loginSuccess": "Olet nyt kirjautunut sisään.",
     "logoutSuccess": "Olet kirjautunut ulos.",
     "registerSuccess": "Tilisi on luotu.",
-    "applicationCreatedSuccess": "Uusi hakemus on lisätty."
+    "applicationCreatedSuccess": "Uusi hakemus on lisätty.",
+    "applicationUpdatedSuccess": "Hakemus on päivitetty."
   },
 
   "applications": {
@@ -84,6 +85,9 @@
     "empty": "Et ole vielä lisännyt hakemuksia",
     "new": "Lisää uusi hakemus",
     "newSubtitle": "Täytä hakemasi työpaikan tiedot",
+    "edit": "Muokkaa hakemusta",
+    "editSubtitle": "Päivitä hakemuksesi tiedot",
+    "notFound": "Hakemusta ei löytynyt",
     "openJobPosting": "Avaa työpaikkailmoitus",
 
     "statuses": {

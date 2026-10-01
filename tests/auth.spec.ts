@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { createUser, resetDatabase } from './helpers.ts'
+import { createUser, loginWith, resetDatabase } from './helpers.ts'
 
 const TEST_PASSWORD = 'joku erinomainen salasana'
 
@@ -140,9 +140,7 @@ test.describe('Authentication', () => {
 
       await page.goto('/login')
 
-      await page.getByTestId('login-email').fill('test@example.com')
-      await page.getByTestId('login-password').fill(TEST_PASSWORD)
-      await page.getByTestId('login-submit').click()
+      await loginWith(page, 'test@example.com', TEST_PASSWORD)
 
       await expect(page).toHaveURL('/')
       await expect(page.getByText('You are now logged in.')).toBeVisible()
@@ -153,9 +151,7 @@ test.describe('Authentication', () => {
 
       await page.goto('/login')
 
-      await page.getByTestId('login-email').fill('test@example.com')
-      await page.getByTestId('login-password').fill('WrongPassword123?')
-      await page.getByTestId('login-submit').click()
+      await loginWith(page, 'test@example.com', 'WrongPassword123?')
 
       await expect(page).toHaveURL('/login')
       await expect(page.getByText('Invalid email or password.')).toBeVisible()
@@ -172,6 +168,15 @@ test.describe('Authentication', () => {
       await expect(page.getByText('Email is required')).toBeVisible()
       await expect(page.getByText('Password is required')).toBeVisible()
     })
+
+    test('login shows an error for an invalid email', async ({ page }) => {
+      await page.goto('/login')
+
+      await loginWith(page, 'invalid-email', TEST_PASSWORD)
+
+      await expect(page).toHaveURL('/login')
+      await expect(page.getByText('Email is invalid')).toBeVisible()
+    })
   })
 
   test.describe('Logout', () => {
@@ -179,9 +184,7 @@ test.describe('Authentication', () => {
       await createUser('Test User', 'test@example.com', TEST_PASSWORD)
 
       await page.goto('/login')
-      await page.getByTestId('login-email').fill('test@example.com')
-      await page.getByTestId('login-password').fill(TEST_PASSWORD)
-      await page.getByTestId('login-submit').click()
+      await loginWith(page, 'test@example.com', TEST_PASSWORD)
       await expect(page).toHaveURL('/')
 
       await page.getByRole('button', { name: 'Settings' }).click()
@@ -199,9 +202,7 @@ test.describe('Authentication', () => {
       await createUser('Test User', 'test@example.com', TEST_PASSWORD)
 
       await page.goto('/login')
-      await page.getByTestId('login-email').fill('test@example.com')
-      await page.getByTestId('login-password').fill(TEST_PASSWORD)
-      await page.getByTestId('login-submit').click()
+      await loginWith(page, 'test@example.com', TEST_PASSWORD)
       await expect(page).toHaveURL('/')
 
       await page.goto('/login')

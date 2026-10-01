@@ -1,4 +1,5 @@
 import { Router, type Response, type Request } from 'express'
+import { z } from 'zod'
 
 import { requireAuth } from '../../middleware/authentication.ts'
 import applicationService from '../../services/applicationService.ts'
@@ -26,6 +27,18 @@ router.post('/', async (req: Request, res: Response<ApplicationResponse>) => {
     application
   )
   res.status(201).json(createdApplication)
+})
+
+router.put('/:id', async (req: Request, res: Response<ApplicationResponse>) => {
+  const applicationId = z.uuid().parse(req.params.id)
+  const application = NewApplicationSchema.parse(req.body)
+
+  const updatedApplication = await applicationService.updateApplication(
+    req.user.id,
+    applicationId,
+    application
+  )
+  res.json(updatedApplication)
 })
 
 export default router
