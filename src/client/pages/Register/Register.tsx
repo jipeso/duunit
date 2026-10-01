@@ -52,7 +52,7 @@ export const RegisterForm: React.FC = () => {
 
     if (error) {
       setGlobalError(
-        error.status === 422
+        error.code === 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL'
           ? 'register.errors.emailInUse'
           : 'common.errors.unexpected'
       )

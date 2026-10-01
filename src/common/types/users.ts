@@ -16,3 +16,9 @@ export const LoginSchema = z.object({
   password: z.string().min(1),
 })
 export type LoginCredentials = z.infer<typeof LoginSchema>
+
+export const ChangePasswordSchema = z.object({
+  currentPassword: z.string().min(1),
+  newPassword: passwordField,
+})
+export type ChangePassword = z.infer<typeof ChangePasswordSchema>
