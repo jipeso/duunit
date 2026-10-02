@@ -1,31 +1,17 @@
+import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 import IconButton from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
+import Link from '@mui/material/Link'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { GridActionsCellItem, type GridColDef } from '@mui/x-data-grid'
 import type { TFunction } from 'i18next'
+import { Link as RouterLink } from 'react-router'
 
-import type {
-  ApplicationResponse,
-  ApplicationStatus,
-} from '#common/types/applications.ts'
-
-const EMPTY_VALUE = '—'
-
-const statusColors: Record<
-  ApplicationStatus,
-  'default' | 'info' | 'warning' | 'success' | 'error'
-> = {
-  saved: 'default',
-  applied: 'info',
-  interviewing: 'warning',
-  offer: 'success',
-  accepted: 'success',
-  rejected: 'error',
-  withdrawn: 'default',
-}
+import type { ApplicationResponse } from '#common/types/applications.ts'
+import { EMPTY_VALUE, statusColors } from '../../util/applications'
+import { parseDate } from '../../util/date'
 
 interface ApplicationActions {
   onEdit: (application: ApplicationResponse) => void
@@ -37,18 +23,28 @@ export const createApplicationColumns = (
   language: string,
   { onEdit, onDelete }: ApplicationActions
 ): GridColDef<ApplicationResponse>[] => {
-  const dateFormatter = new Intl.DateTimeFormat(language)
-
   return [
-    {
-      field: 'company',
-      headerName: t('fields.company'),
-      flex: 1,
-      rowHeader: true,
-    },
     {
       field: 'position',
       headerName: t('fields.position'),
+      flex: 1,
+      rowHeader: true,
+      renderCell: ({ row, hasFocus }) => (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+          <Link
+            component={RouterLink}
+            to={`/applications/${row.id}`}
+            data-testid='application-details-link'
+            tabIndex={hasFocus ? 0 : -1}
+          >
+            {row.position}
+          </Link>
+        </Box>
+      ),
+    },
+    {
+      field: 'company',
+      headerName: t('fields.company'),
       flex: 1,
     },
     {
@@ -75,8 +71,9 @@ export const createApplicationColumns = (
       headerName: t('fields.appliedAt'),
       flex: 1,
       type: 'date',
-      valueGetter: (_, row) => new Date(row.appliedAt ?? row.createdAt),
-      valueFormatter: value => dateFormatter.format(value),
+      valueGetter: (_, row) =>
+        row.appliedAt ? parseDate(row.appliedAt) : new Date(row.createdAt),
+      valueFormatter: (value: Date) => value.toLocaleDateString(language),
     },
     {
       field: 'jobPostingUrl',
@@ -87,18 +84,16 @@ export const createApplicationColumns = (
       align: 'right',
       renderCell: ({ row, hasFocus }) =>
         row.jobPostingUrl ? (
-          <Tooltip title={t('applications.openJobPosting')}>
-            <IconButton
-              size='small'
-              href={row.jobPostingUrl}
-              target='_blank'
-              rel='noopener noreferrer'
-              aria-label={t('applications.openJobPosting')}
-              tabIndex={hasFocus ? 0 : -1}
-            >
-              <OpenInNewIcon fontSize='small' />
-            </IconButton>
-          </Tooltip>
+          <IconButton
+            size='small'
+            href={row.jobPostingUrl}
+            target='_blank'
+            rel='noopener noreferrer'
+            aria-label={t('applications.openJobPosting')}
+            tabIndex={hasFocus ? 0 : -1}
+          >
+            <OpenInNewIcon fontSize='small' />
+          </IconButton>
         ) : null,
     },
     {

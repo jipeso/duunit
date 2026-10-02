@@ -24,7 +24,8 @@
       "update": "Uppdatera",
       "delete": "Ta bort",
       "cancel": "Avbryt",
-      "edit": "Redigera"
+      "edit": "Redigera",
+      "copyToClipboard": "Kopiera till urklipp"
     }
   },
 
@@ -40,7 +41,8 @@
     "status": "Status",
     "appliedAt": "Ansökningsdatum",
     "jobPostingUrl": "Länk till jobbannons",
-    "location": "Plats"
+    "location": "Plats",
+    "coverLetter": "Personligt brev"
   },
 
   "navigation": {
@@ -63,7 +65,7 @@
     "gsStep1": "<a>Registrera dig</a> för ett nytt konto",
     "gsStep2": "<a>Logga in</a> för att komma åt din översikt",
     "gsStep3": "<a>Skapa en ny ansökan</a>",
-    "gsStep4": "Visa <a>alla ansökningar</a>",
+    "gsStep4": "Visa <a> dina ansökningar</a>",
     "builtUsing": "Appen är byggd med React, MUI och Vite. I backend: Node.js, PostgreSQL och Drizzle ORM.",
     "sourceCode": "Källkoden finns tillgänglig på <a>GitHub</a>"
   },
@@ -82,6 +84,7 @@
     "applicationCreatedSuccess": "Den nya ansökan har lagts till.",
     "applicationUpdatedSuccess": "Ansökan har uppdaterats.",
     "applicationDeletedSuccess": "Ansökan har tagits bort.",
+    "coverLetterCopied": "Det personliga brevet har kopierats till urklipp.",
     "nameUpdatedSuccess": "Ditt namn har uppdaterats.",
     "passwordUpdatedSuccess": "Ditt lösenord har ändrats."
   },
@@ -98,6 +101,8 @@
     "delete": "Ta bort ansökan",
     "deleteConfirm": "Ta bort ansökan för {{position}} hos {{company}}? Det går inte att ångra.",
     "openJobPosting": "Öppna jobbannonsen",
+    "backToList": "Tillbaka till ansökningar",
+    "noCoverLetter": "Inget personligt brev har lagts till",
 
     "statuses": {
       "saved": "Sparad",

@@ -9,9 +9,7 @@ import { useNavigate } from 'react-router'
 import Paper from '@mui/material/Paper'
 
 import type { ApplicationResponse } from '#common/types/applications.ts'
-import useDeleteApplication from '../../hooks/useDeleteApplication'
-import ConfirmDialog from '../../components/common/ConfirmDialog'
-import { useNotification } from '../../components/Notification'
+import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
 import { createApplicationColumns } from './ApplicationColumns'
 
 interface ApplicationGridProps {
@@ -33,13 +31,6 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
   const { t, i18n } = useTranslation()
   const apiRef = useGridApiRef()
   const navigate = useNavigate()
-  const { showSuccess } = useNotification()
-  const {
-    mutate: deleteApplication,
-    isPending: isDeleting,
-    isError: isDeleteError,
-    reset: resetDelete,
-  } = useDeleteApplication()
 
   const [applicationToDelete, setApplicationToDelete] =
     useState<ApplicationResponse | null>(null)
@@ -52,26 +43,12 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
           void navigate(`/applications/${application.id}/edit`)
         },
         onDelete: application => {
-          resetDelete()
           setApplicationToDelete(application)
           setIsDeleteDialogOpen(true)
         },
       }),
-    [t, i18n.language, navigate, resetDelete]
+    [t, i18n.language, navigate]
   )
-
-  const confirmDelete = () => {
-    if (!applicationToDelete) {
-      return
-    }
-
-    deleteApplication(applicationToDelete.id, {
-      onSuccess: () => {
-        setIsDeleteDialogOpen(false)
-        showSuccess(t('notifications.applicationDeletedSuccess'))
-      },
-    })
-  }
 
   useEffect(() => {
     if (applications.length === 0) {
@@ -121,20 +98,12 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
         }}
       />
 
-      <ConfirmDialog
+      <DeleteApplicationDialog
+        application={applicationToDelete}
         open={isDeleteDialogOpen}
-        title={t('applications.delete')}
-        message={t('applications.deleteConfirm', {
-          company: applicationToDelete?.company,
-          position: applicationToDelete?.position,
-        })}
-        confirmLabel={t('common.buttons.delete')}
-        onConfirm={confirmDelete}
         onClose={() => {
           setIsDeleteDialogOpen(false)
         }}
-        isPending={isDeleting}
-        error={isDeleteError ? t('common.errors.unexpected') : null}
       />
     </Paper>
   )

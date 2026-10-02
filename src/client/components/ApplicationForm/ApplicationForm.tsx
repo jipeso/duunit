@@ -12,11 +12,13 @@ import { useNavigate } from 'react-router'
 
 import {
   APPLICATION_STATUSES,
+  MAX_COVER_LETTER_LENGTH,
   MIN_APPLIED_DATE,
   NewApplicationSchema,
   type NewApplication,
   type NewApplicationInput,
 } from '#common/types/applications.ts'
+import { parseDate } from '../../util/date'
 
 interface ApplicationFormProps {
   defaultValues: Partial<NewApplicationInput>
@@ -24,6 +26,8 @@ interface ApplicationFormProps {
   submitLabel: string
   isPending: boolean
   error: string | null
+  returnTo?: string
+  requireChanges?: boolean
 }
 
 const ApplicationForm = ({
@@ -32,6 +36,8 @@ const ApplicationForm = ({
   submitLabel,
   isPending,
   error,
+  returnTo = '/applications',
+  requireChanges = false,
 }: ApplicationFormProps) => {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
@@ -40,13 +46,16 @@ const ApplicationForm = ({
     register,
     control,
     handleSubmit,
-    formState: { errors },
+    watch,
+    formState: { errors, isDirty },
   } = useForm<NewApplicationInput, unknown, NewApplication>({
     resolver: zodResolver(NewApplicationSchema),
     mode: 'onTouched',
     reValidateMode: 'onSubmit',
     defaultValues,
   })
+
+  const coverLetterLength = watch('coverLetter')?.length ?? 0
 
   return (
     <Box
@@ -61,19 +70,6 @@ const ApplicationForm = ({
         <TextField
           required
           fullWidth
-          id='company'
-          label={t('fields.company')}
-          slotProps={{
-            htmlInput: { 'data-testid': 'application-company' },
-          }}
-          {...register('company')}
-          error={!!errors.company}
-          helperText={errors.company?.message}
-        />
-
-        <TextField
-          required
-          fullWidth
           id='position'
           label={t('fields.position')}
           slotProps={{
@@ -82,6 +78,19 @@ const ApplicationForm = ({
           {...register('position')}
           error={!!errors.position}
           helperText={errors.position?.message}
+        />
+
+        <TextField
+          required
+          fullWidth
+          id='company'
+          label={t('fields.company')}
+          slotProps={{
+            htmlInput: { 'data-testid': 'application-company' },
+          }}
+          {...register('company')}
+          error={!!errors.company}
+          helperText={errors.company?.message}
         />
 
         <Controller
@@ -125,7 +134,7 @@ const ApplicationForm = ({
             errors.appliedAt?.message &&
             t(errors.appliedAt.message, {
               field: t('fields.appliedAt'),
-              date: new Date(MIN_APPLIED_DATE + 'T00:00:00').toLocaleDateString(
+              date: parseDate(MIN_APPLIED_DATE).toLocaleDateString(
                 i18n.language
               ),
               defaultValue: errors.appliedAt.message,
@@ -157,6 +166,27 @@ const ApplicationForm = ({
           helperText={errors.location?.message}
         />
 
+        <TextField
+          fullWidth
+          multiline
+          rows={4}
+          id='coverLetter'
+          label={t('fields.coverLetter')}
+          slotProps={{
+            htmlInput: {
+              'data-testid': 'application-cover-letter',
+              maxLength: MAX_COVER_LETTER_LENGTH,
+              style: { resize: 'vertical', maxHeight: '40vh' },
+            },
+          }}
+          {...register('coverLetter')}
+          error={!!errors.coverLetter}
+          helperText={
+            errors.coverLetter?.message ??
+            `${String(coverLetterLength)}/${String(MAX_COVER_LETTER_LENGTH)}`
+          }
+        />
+
         {error && (
           <Alert severity='error' sx={{ borderRadius: 1 }}>
             {t(error)}
@@ -168,7 +198,7 @@ const ApplicationForm = ({
           data-testid='application-submit'
           fullWidth
           variant='contained'
-          disabled={isPending}
+          disabled={isPending || (requireChanges && !isDirty)}
           disableElevation
           sx={{ py: 1.5, mt: 2, textTransform: 'none', fontSize: '1rem' }}
         >
@@ -185,7 +215,7 @@ const ApplicationForm = ({
           fullWidth
           variant='text'
           onClick={() => {
-            void navigate('/applications')
+            void navigate(returnTo)
           }}
           sx={{ textTransform: 'none', fontSize: '1rem' }}
         >

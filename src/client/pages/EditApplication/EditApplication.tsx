@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import { isAxiosError } from 'axios'
 import { type SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useNavigate, useParams } from 'react-router'
+import { useLocation, useNavigate, useParams } from 'react-router'
 
 import type {
   ApplicationResponse,
@@ -28,6 +28,10 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
   const { mutateAsync: updateApplication, isPending } = useUpdateApplication()
   const { showSuccess } = useNotification()
   const navigate = useNavigate()
+  const location = useLocation()
+  const returnTo =
+    (location.state as { returnTo?: string } | null)?.returnTo ??
+    '/applications'
 
   const onSubmit: SubmitHandler<NewApplication> = async data => {
     setGlobalError(null)
@@ -35,7 +39,7 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
     try {
       await updateApplication({ id: application.id, values: data })
       showSuccess(t('notifications.applicationUpdatedSuccess'))
-      void navigate('/applications')
+      void navigate(returnTo)
     } catch (error) {
       setGlobalError(
         isAxiosError(error) && error.response?.status === 404
@@ -52,6 +56,8 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
       submitLabel={t('common.buttons.update')}
       isPending={isPending}
       error={globalError}
+      returnTo={returnTo}
+      requireChanges
     />
   )
 }

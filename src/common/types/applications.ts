@@ -13,6 +13,7 @@ export const APPLICATION_STATUSES = [
 ] as const
 
 export const MIN_APPLIED_DATE = '2015-01-01'
+export const MAX_COVER_LETTER_LENGTH = 6000
 
 export const ApplicationStatusSchema = z.enum(APPLICATION_STATUSES)
 export type ApplicationStatus = z.infer<typeof ApplicationStatusSchema>
@@ -47,6 +48,12 @@ export const NewApplicationSchema = z.object({
         .nullable()
     )
     .nullish(),
+  coverLetter: z
+    .string()
+    .trim()
+    .max(MAX_COVER_LETTER_LENGTH)
+    .transform(emptyToNull)
+    .nullish(),
 })
 
 export type NewApplication = z.infer<typeof NewApplicationSchema>
@@ -60,6 +67,7 @@ export const ApplicationResponseSchema = z.object({
   jobPostingUrl: z.string().nullable(),
   location: z.string().nullable(),
   appliedAt: z.iso.date().nullable(),
+  coverLetter: z.string().nullable(),
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
 })

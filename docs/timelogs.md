@@ -12,4 +12,5 @@
 | 28.9  | 8        | Refactoring + Application pages     |
 | 29.9  | 8        | Frontend                            |
 | 30.9  | 5        | Auth refactor                       |
-| Total | 66       |                                     |
+| 1.10  | 9        | Frontend, bug fixing                |
+| Total | 81       |                                     |

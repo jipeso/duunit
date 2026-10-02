@@ -6,6 +6,7 @@ import Register from './Register'
 import Profile from './Profile'
 import Admin from './Admin'
 import Applications from './Applications'
+import Application from './Application'
 import NewApplication from './NewApplication'
 import EditApplication from './EditApplication'
 import AuthRoute from '../components/AuthRoute'
@@ -20,6 +21,7 @@ const Router = () => {
       <Route element={<AuthRoute access='user' />}>
         <Route path='/profile' element={<Profile />} />
         <Route path='/applications' element={<Applications />} />
+        <Route path='/applications/:id' element={<Application />} />
         <Route path='/applications/new' element={<NewApplication />} />
         <Route path='/applications/:id/edit' element={<EditApplication />} />
       </Route>

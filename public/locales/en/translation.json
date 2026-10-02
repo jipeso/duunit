@@ -24,7 +24,8 @@
       "update": "Update",
       "delete": "Delete",
       "cancel": "Cancel",
-      "edit": "Edit"
+      "edit": "Edit",
+      "copyToClipboard": "Copy to clipboard"
     }
   },
 
@@ -40,7 +41,8 @@
     "status": "Status",
     "appliedAt": "Applied on",
     "jobPostingUrl": "Job posting URL",
-    "location": "Location"
+    "location": "Location",
+    "coverLetter": "Cover letter"
   },
 
   "navigation": {
@@ -63,7 +65,7 @@
     "gsStep1": "<a>Register</a> for a new account",
     "gsStep2": "<a>Log in</a> to access your dashboard",
     "gsStep3": "<a>Create a new application</a>",
-    "gsStep4": "View <a>all applications</a>",
+    "gsStep4": "View <a>your applications</a>",
     "builtUsing": "Built with React, MUI and Vite. On the backend: Node.js, PostgreSQL and Drizzle ORM.",
     "sourceCode": "Source code is available on <a>GitHub</a>"
   },
@@ -82,6 +84,7 @@
     "applicationCreatedSuccess": "New application has been added.",
     "applicationUpdatedSuccess": "Application has been updated.",
     "applicationDeletedSuccess": "Application has been deleted.",
+    "coverLetterCopied": "Cover letter copied to clipboard.",
     "nameUpdatedSuccess": "Your name has been updated.",
     "passwordUpdatedSuccess": "Your password has been changed."
   },
@@ -98,6 +101,8 @@
     "delete": "Delete application",
     "deleteConfirm": "Delete the application for {{position}} at {{company}}? This cannot be undone.",
     "openJobPosting": "Open job posting",
+    "backToList": "Back to applications",
+    "noCoverLetter": "No cover letter added",
 
     "statuses": {
       "saved": "Saved",

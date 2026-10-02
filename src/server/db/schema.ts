@@ -79,6 +79,7 @@ export const applications = pgTable('applications', {
   location: text('location'),
   status: applicationStatusEnum('status').notNull().default('applied'),
   appliedAt: date('applied_at', { mode: 'string' }),
+  coverLetter: text('cover_letter'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at')
     .notNull()
