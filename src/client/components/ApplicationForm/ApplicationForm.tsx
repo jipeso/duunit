@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router'
 import {
   APPLICATION_STATUSES,
   MAX_COVER_LETTER_LENGTH,
+  MAX_TEXT_LENGTH,
   MIN_APPLIED_DATE,
   NewApplicationSchema,
   type NewApplication,
@@ -55,7 +56,15 @@ const ApplicationForm = ({
     defaultValues,
   })
 
-  const coverLetterLength = watch('coverLetter')?.length ?? 0
+  const [position, company, location, coverLetter] = watch([
+    'position',
+    'company',
+    'location',
+    'coverLetter',
+  ])
+
+  const counter = (value: string | null | undefined, max: number) =>
+    `${String(value?.length ?? 0)}/${String(max)}`
 
   return (
     <Box
@@ -73,11 +82,16 @@ const ApplicationForm = ({
           id='position'
           label={t('fields.position')}
           slotProps={{
-            htmlInput: { 'data-testid': 'application-position' },
+            htmlInput: {
+              'data-testid': 'application-position',
+              maxLength: MAX_TEXT_LENGTH,
+            },
           }}
           {...register('position')}
           error={!!errors.position}
-          helperText={errors.position?.message}
+          helperText={
+            errors.position?.message ?? counter(position, MAX_TEXT_LENGTH)
+          }
         />
 
         <TextField
@@ -86,11 +100,16 @@ const ApplicationForm = ({
           id='company'
           label={t('fields.company')}
           slotProps={{
-            htmlInput: { 'data-testid': 'application-company' },
+            htmlInput: {
+              'data-testid': 'application-company',
+              maxLength: MAX_TEXT_LENGTH,
+            },
           }}
           {...register('company')}
           error={!!errors.company}
-          helperText={errors.company?.message}
+          helperText={
+            errors.company?.message ?? counter(company, MAX_TEXT_LENGTH)
+          }
         />
 
         <Controller
@@ -159,11 +178,16 @@ const ApplicationForm = ({
           id='location'
           label={t('fields.location')}
           slotProps={{
-            htmlInput: { 'data-testid': 'application-location' },
+            htmlInput: {
+              'data-testid': 'application-location',
+              maxLength: MAX_TEXT_LENGTH,
+            },
           }}
           {...register('location')}
           error={!!errors.location}
-          helperText={errors.location?.message}
+          helperText={
+            errors.location?.message ?? counter(location, MAX_TEXT_LENGTH)
+          }
         />
 
         <TextField
@@ -183,7 +207,7 @@ const ApplicationForm = ({
           error={!!errors.coverLetter}
           helperText={
             errors.coverLetter?.message ??
-            `${String(coverLetterLength)}/${String(MAX_COVER_LETTER_LENGTH)}`
+            counter(coverLetter, MAX_COVER_LETTER_LENGTH)
           }
         />
 

@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import { NAME_MAX_LENGTH, nameField } from './common.ts'
-
 export const APPLICATION_STATUSES = [
   'saved',
   'applied',
@@ -13,6 +11,8 @@ export const APPLICATION_STATUSES = [
 ] as const
 
 export const MIN_APPLIED_DATE = '2015-01-01'
+export const MIN_TEXT_LENGTH = 1
+export const MAX_TEXT_LENGTH = 100
 export const MAX_COVER_LETTER_LENGTH = 6000
 
 export const ApplicationStatusSchema = z.enum(APPLICATION_STATUSES)
@@ -21,21 +21,22 @@ export type ApplicationStatus = z.infer<typeof ApplicationStatusSchema>
 const emptyToNull = (value: string) =>
   value.trim() === '' ? null : value.trim()
 
+const requiredText = (max: number) =>
+  z.string().trim().min(MIN_TEXT_LENGTH).max(max)
+
+const optionalText = (max: number) =>
+  z.string().trim().max(max).transform(emptyToNull).nullish()
+
 export const NewApplicationSchema = z.object({
-  company: nameField,
-  position: nameField,
+  company: requiredText(MAX_TEXT_LENGTH),
+  position: requiredText(MAX_TEXT_LENGTH),
   status: ApplicationStatusSchema,
   jobPostingUrl: z
     .string()
     .transform(emptyToNull)
     .pipe(z.url().nullable())
     .nullish(),
-  location: z
-    .string()
-    .trim()
-    .max(NAME_MAX_LENGTH)
-    .transform(emptyToNull)
-    .nullish(),
+  location: optionalText(MAX_TEXT_LENGTH),
   appliedAt: z
     .string()
     .transform(emptyToNull)
@@ -48,12 +49,7 @@ export const NewApplicationSchema = z.object({
         .nullable()
     )
     .nullish(),
-  coverLetter: z
-    .string()
-    .trim()
-    .max(MAX_COVER_LETTER_LENGTH)
-    .transform(emptyToNull)
-    .nullish(),
+  coverLetter: optionalText(MAX_COVER_LETTER_LENGTH),
 })
 
 export type NewApplication = z.infer<typeof NewApplicationSchema>
