@@ -77,19 +77,13 @@ test.describe('Applications', () => {
     test('application form shows validation errors', async ({ page }) => {
       await page.goto('/applications/new')
 
-      await page.getByTestId('application-company').fill('A')
-      await page.getByTestId('application-position').fill('B')
       await page.getByTestId('application-applied-at').fill('2009-12-31')
       await page.getByTestId('application-job-posting-url').fill('not-a-url')
       await page.getByTestId('application-submit').click()
 
       await expect(page).toHaveURL('/applications/new')
-      await expect(
-        page.getByText('Company must be at least 2 characters long')
-      ).toBeVisible()
-      await expect(
-        page.getByText('Position must be at least 2 characters long')
-      ).toBeVisible()
+      await expect(page.getByText('Company is required')).toBeVisible()
+      await expect(page.getByText('Position is required')).toBeVisible()
       await expect(page.getByText(/Applied on must be after/)).toBeVisible()
       await expect(page.getByText('Job posting URL is invalid')).toBeVisible()
     })
