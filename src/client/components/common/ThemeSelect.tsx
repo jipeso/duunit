@@ -33,11 +33,7 @@ const ThemeSelect = () => {
       aria-label={t('common.themes.label')}
     >
       {THEMES.map(theme => (
-        <ToggleButton
-          key={theme}
-          value={theme}
-          sx={{ gap: 1, textTransform: 'none' }}
-        >
+        <ToggleButton key={theme} value={theme} sx={{ gap: 0.5 }}>
           {themeIcons[theme]}
           {t(`common.themes.${theme}`)}
         </ToggleButton>
