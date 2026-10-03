@@ -5,6 +5,7 @@ import { applications } from '../db/schema.ts'
 import type {
   ApplicationResponse,
   NewApplication,
+  UpdateApplication,
 } from '#common/types/applications.ts'
 import { AppError } from '../util/AppError.ts'
 import { toApplicationResponse } from './utils.ts'
@@ -37,7 +38,7 @@ const getApplicationsByUserId = async (
 const updateApplication = async (
   userId: string,
   applicationId: string,
-  application: NewApplication
+  application: UpdateApplication
 ): Promise<ApplicationResponse> => {
   const [updatedApplication] = await db
     .update(applications)

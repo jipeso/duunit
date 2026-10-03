@@ -10,13 +10,15 @@ import Paper from '@mui/material/Paper'
 
 import type { ApplicationResponse } from '#common/types/applications.ts'
 import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
+import { useNotification } from '../../components/Notification'
+import useUpdateApplication from '../../hooks/useUpdateApplication'
 import { createApplicationColumns } from './ApplicationColumns'
 
 interface ApplicationGridProps {
   applications: ApplicationResponse[]
 }
 
-const GRID_HEIGHT = '70dvh'
+const GRID_HEIGHT = '60dvh'
 const GRID_MIN_HEIGHT = 300
 const GRID_MAX_HEIGHT = 600
 
@@ -31,6 +33,8 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
   const { t, i18n } = useTranslation()
   const apiRef = useGridApiRef()
   const navigate = useNavigate()
+  const { mutateAsync: updateApplication } = useUpdateApplication()
+  const { showSuccess, showError } = useNotification()
 
   const [applicationToDelete, setApplicationToDelete] =
     useState<ApplicationResponse | null>(null)
@@ -49,6 +53,22 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
       }),
     [t, i18n.language, navigate]
   )
+
+  const processRowUpdate = async (
+    newRow: ApplicationResponse,
+    oldRow: ApplicationResponse
+  ) => {
+    if (newRow.status === oldRow.status) {
+      return oldRow
+    }
+
+    const updatedApplication = await updateApplication({
+      id: newRow.id,
+      values: { status: newRow.status },
+    })
+    showSuccess(t('notifications.applicationUpdatedSuccess'))
+    return updatedApplication
+  }
 
   useEffect(() => {
     if (applications.length === 0) {
@@ -86,6 +106,15 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
         columns={columns}
         aria-label={t('applications.title')}
         disableRowSelectionOnClick
+        processRowUpdate={processRowUpdate}
+        onProcessRowUpdateError={() => {
+          showError(t('common.errors.unexpected'))
+        }}
+        onCellClick={({ id, field, isEditable, cellMode }) => {
+          if (isEditable && cellMode === 'view') {
+            apiRef.current?.startCellEditMode({ id, field })
+          }
+        }}
         sx={{
           height: '100%',
           width: '100%',

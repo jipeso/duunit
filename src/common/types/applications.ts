@@ -16,7 +16,6 @@ export const MAX_TEXT_LENGTH = 100
 export const MAX_COVER_LETTER_LENGTH = 6000
 
 export const ApplicationStatusSchema = z.enum(APPLICATION_STATUSES)
-export type ApplicationStatus = z.infer<typeof ApplicationStatusSchema>
 
 const emptyToNull = (value: string) =>
   value.trim() === '' ? null : value.trim()
@@ -52,9 +51,6 @@ export const NewApplicationSchema = z.object({
   coverLetter: optionalText(MAX_COVER_LETTER_LENGTH),
 })
 
-export type NewApplication = z.infer<typeof NewApplicationSchema>
-export type NewApplicationInput = z.input<typeof NewApplicationSchema>
-
 export const ApplicationResponseSchema = z.object({
   id: z.uuid(),
   company: z.string(),
@@ -67,4 +63,14 @@ export const ApplicationResponseSchema = z.object({
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
 })
+
+export const UpdateApplicationSchema = NewApplicationSchema.partial().refine(
+  values => Object.keys(values).length > 0,
+  { error: 'validation.emptyUpdate' }
+)
+
+export type ApplicationStatus = z.infer<typeof ApplicationStatusSchema>
+export type NewApplication = z.infer<typeof NewApplicationSchema>
+export type NewApplicationInput = z.input<typeof NewApplicationSchema>
+export type UpdateApplication = z.infer<typeof UpdateApplicationSchema>
 export type ApplicationResponse = z.infer<typeof ApplicationResponseSchema>

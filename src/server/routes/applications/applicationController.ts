@@ -6,6 +6,7 @@ import applicationService from '../../services/applicationService.ts'
 import {
   type ApplicationResponse,
   NewApplicationSchema,
+  UpdateApplicationSchema,
 } from '#common/types/applications.ts'
 
 const router = Router()
@@ -29,17 +30,20 @@ router.post('/', async (req: Request, res: Response<ApplicationResponse>) => {
   res.status(201).json(createdApplication)
 })
 
-router.put('/:id', async (req: Request, res: Response<ApplicationResponse>) => {
-  const applicationId = z.uuid().parse(req.params.id)
-  const application = NewApplicationSchema.parse(req.body)
+router.patch(
+  '/:id',
+  async (req: Request, res: Response<ApplicationResponse>) => {
+    const applicationId = z.uuid().parse(req.params.id)
+    const values = UpdateApplicationSchema.parse(req.body)
 
-  const updatedApplication = await applicationService.updateApplication(
-    req.user.id,
-    applicationId,
-    application
-  )
-  res.json(updatedApplication)
-})
+    const updatedApplication = await applicationService.updateApplication(
+      req.user.id,
+      applicationId,
+      values
+    )
+    res.json(updatedApplication)
+  }
+)
 
 router.delete('/:id', async (req: Request, res: Response) => {
   const applicationId = z.uuid().parse(req.params.id)

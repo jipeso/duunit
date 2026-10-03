@@ -9,7 +9,10 @@ import { GridActionsCellItem, type GridColDef } from '@mui/x-data-grid'
 import type { TFunction } from 'i18next'
 import { Link as RouterLink } from 'react-router'
 
-import type { ApplicationResponse } from '#common/types/applications.ts'
+import {
+  APPLICATION_STATUSES,
+  type ApplicationResponse,
+} from '#common/types/applications.ts'
 import { EMPTY_VALUE, statusColors } from '../../util/applications'
 import { parseDate } from '../../util/date'
 
@@ -57,6 +60,12 @@ export const createApplicationColumns = (
       field: 'status',
       headerName: t('fields.status'),
       flex: 1,
+      editable: true,
+      type: 'singleSelect',
+      valueOptions: APPLICATION_STATUSES.map(status => ({
+        value: status,
+        label: t(`applications.statuses.${status}`),
+      })),
       renderCell: ({ row }) => (
         <Chip
           size='small'
@@ -81,7 +90,7 @@ export const createApplicationColumns = (
       flex: 1,
       sortable: false,
       filterable: false,
-      align: 'right',
+      align: 'center',
       renderCell: ({ row, hasFocus }) =>
         row.jobPostingUrl ? (
           <IconButton

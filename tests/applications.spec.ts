@@ -142,6 +142,56 @@ test.describe('Applications', () => {
       await expect(row.getByText('—')).toBeVisible()
     })
 
+    test('user can change the status from the grid', async ({ page }) => {
+      await page.goto('/applications')
+      await createApplication(page, 'Test company', 'Test Developer')
+
+      const row = page.getByRole('row', { name: /Test company/ })
+      await row.getByText('Applied').click()
+      await page.getByRole('option', { name: 'Interviewing' }).click()
+
+      await expect(page.getByText('Application has been updated')).toBeVisible()
+      await expect(row.getByText('Interviewing')).toBeVisible()
+
+      await page.reload()
+      await expect(
+        page
+          .getByRole('row', { name: /Test company/ })
+          .getByText('Interviewing')
+      ).toBeVisible()
+    })
+
+    test('patching only the status keeps other fields', async ({ page }) => {
+      await page.goto('/applications')
+      await createApplication(
+        page,
+        'Test company',
+        'Test Developer',
+        'Helsinki'
+      )
+
+      const listResponse = await page.request.get('/api/applications')
+      const [application] = await listResponse.json()
+
+      const response = await page.request.patch(
+        `/api/applications/${application.id}`,
+        { data: { status: 'offer' } }
+      )
+      expect(response.status()).toBe(200)
+      expect(await response.json()).toMatchObject({
+        company: 'Test company',
+        position: 'Test Developer',
+        location: 'Helsinki',
+        status: 'offer',
+      })
+
+      const emptyResponse = await page.request.patch(
+        `/api/applications/${application.id}`,
+        { data: {} }
+      )
+      expect(emptyResponse.status()).toBe(400)
+    })
+
     test('editing a missing application shows not found', async ({ page }) => {
       await page.goto(`/applications/${MISSING_ID}/edit`)
 

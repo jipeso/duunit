@@ -3,21 +3,21 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import apiClient from '../util/apiClient'
 import type {
   ApplicationResponse,
-  NewApplication,
+  UpdateApplication,
 } from '#common/types/applications.ts'
 
 const applicationsQueryKey = ['applications'] as const
 
 interface UpdateApplicationProps {
   id: string
-  values: NewApplication
+  values: UpdateApplication
 }
 
 const mutationFn = async ({
   id,
   values,
 }: UpdateApplicationProps): Promise<ApplicationResponse> => {
-  const { data } = await apiClient.put<ApplicationResponse>(
+  const { data } = await apiClient.patch<ApplicationResponse>(
     `/applications/${id}`,
     values
   )
