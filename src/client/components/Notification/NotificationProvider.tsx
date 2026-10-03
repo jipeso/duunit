@@ -30,8 +30,13 @@ const NotificationProvider = ({ children }: { children: ReactNode }) => {
           setOpen(false)
         }}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        sx={{ pointerEvents: 'none' }}
       >
-        <Alert severity={severity} variant='filled'>
+        <Alert
+          severity={severity}
+          variant='filled'
+          sx={{ pointerEvents: 'auto' }}
+        >
           {message}
         </Alert>
       </Snackbar>

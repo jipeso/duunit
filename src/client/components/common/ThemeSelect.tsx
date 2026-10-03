@@ -1,33 +1,48 @@
 import { useColorScheme } from '@mui/material/styles'
-import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import DarkModeIcon from '@mui/icons-material/DarkMode'
+import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
 import { useTranslation } from 'react-i18next'
 
 import { THEMES, type Theme } from '#common/types/common.ts'
+
+const themeIcons: Record<Theme, React.ReactNode> = {
+  light: <LightModeIcon fontSize='small' />,
+  dark: <DarkModeIcon fontSize='small' />,
+  system: <SettingsBrightnessIcon fontSize='small' />,
+}
 
 const ThemeSelect = () => {
   const { mode, setMode } = useColorScheme()
   const { t } = useTranslation()
 
   return (
-    <Select<Theme>
+    <ToggleButtonGroup
       value={mode ?? 'system'}
-      onChange={event => {
-        setMode(event.target.value)
-      }}
-      renderValue={value => t(`common.themes.${value}`)}
-      inputProps={{ 'aria-label': t('common.themes.label') }}
-      variant='standard'
-      disableUnderline
+      exclusive
+      color='primary'
+      fullWidth
       size='small'
-      sx={{ minWidth: '7em', color: 'text.primary' }}
+      onChange={(_, value: Theme | null) => {
+        if (value) {
+          setMode(value)
+        }
+      }}
+      aria-label={t('common.themes.label')}
     >
       {THEMES.map(theme => (
-        <MenuItem key={theme} value={theme}>
+        <ToggleButton
+          key={theme}
+          value={theme}
+          sx={{ gap: 1, textTransform: 'none' }}
+        >
+          {themeIcons[theme]}
           {t(`common.themes.${theme}`)}
-        </MenuItem>
+        </ToggleButton>
       ))}
-    </Select>
+    </ToggleButtonGroup>
   )
 }
 

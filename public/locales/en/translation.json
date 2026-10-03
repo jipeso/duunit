@@ -1,10 +1,7 @@
 {
   "common": {
     "languages": {
-      "label": "Language",
-      "fi": "Finnish",
-      "en": "English",
-      "sv": "Swedish"
+      "label": "Language"
     },
 
     "themes": {

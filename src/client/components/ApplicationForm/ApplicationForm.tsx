@@ -73,7 +73,7 @@ const ApplicationForm = ({
         void handleSubmit(onSubmit)(event)
       }}
       noValidate
-      sx={{ width: '100%' }}
+      sx={{ width: '100%', mb: 5 }}
     >
       <Stack spacing={3}>
         <TextField

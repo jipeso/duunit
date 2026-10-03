@@ -8,13 +8,7 @@ import {
 
 const TEST_EMAIL = 'test@example.com'
 const TEST_PASSWORD = 'joku erinomainen salasana'
-const OTHER_EMAIL = 'other@example.com'
 const MISSING_ID = '00000000-0000-4000-8000-000000000000'
-const UPDATE_BODY = {
-  company: 'Hijacked company',
-  position: 'Hijacked position',
-  status: 'applied',
-}
 
 test.describe('Applications', () => {
   test.beforeEach(async () => {

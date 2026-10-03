@@ -1,38 +1,43 @@
-import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import MenuItem from '@mui/material/MenuItem'
-import Select, { type SelectChangeEvent } from '@mui/material/Select'
-import { LANGUAGES } from '#common/types/common.ts'
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+
+import { LANGUAGES, type LanguageId } from '#common/types/common.ts'
+
+const languageNames: Record<LanguageId, string> = {
+  fi: 'Suomi',
+  en: 'English',
+  sv: 'Svenska',
+}
 
 const LanguageSelect = () => {
   const { i18n, t } = useTranslation()
 
-  const currentLanguage = i18n.resolvedLanguage
-
-  const handleChange = useCallback(
-    (event: SelectChangeEvent) => {
-      void i18n.changeLanguage(event.target.value)
-    },
-    [i18n]
-  )
-
   return (
-    <Select
-      value={currentLanguage}
-      onChange={handleChange}
-      renderValue={value => t(`common.languages.${value}`)}
-      inputProps={{ 'aria-label': t('common.languages.label') }}
-      variant='standard'
-      disableUnderline
+    <ToggleButtonGroup
+      value={i18n.resolvedLanguage}
+      exclusive
+      color='primary'
+      fullWidth
       size='small'
-      sx={{ minWidth: '7em', color: 'text.primary' }}
+      onChange={(_, value: LanguageId | null) => {
+        if (value) {
+          void i18n.changeLanguage(value)
+        }
+      }}
+      aria-label={t('common.languages.label')}
     >
       {LANGUAGES.map(language => (
-        <MenuItem key={language} value={language}>
-          {t(`common.languages.${language}`)}
-        </MenuItem>
+        <ToggleButton
+          key={language}
+          value={language}
+          lang={language}
+          sx={{ textTransform: 'none' }}
+        >
+          {languageNames[language]}
+        </ToggleButton>
       ))}
-    </Select>
+    </ToggleButtonGroup>
   )
 }
 

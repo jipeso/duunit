@@ -1,10 +1,7 @@
 {
   "common": {
     "languages": {
-      "label": "Kieli",
-      "fi": "suomi",
-      "en": "englanti",
-      "sv": "ruotsi"
+      "label": "Kieli"
     },
 
     "themes": {
@@ -58,7 +55,7 @@
 
   "home": {
     "title": "Tervetuloa Duunit sovellukseen",
-    "description": "Tämä on työhakemusten seurantaalusta, jonka avulla voit hallita työhakemuksiasi ja seurata niiden tilaa.",
+    "description": "Tämä on työhakemusten seuranta-alusta, jonka avulla voit hallita työhakemuksiasi ja seurata niiden tilaa.",
     "gettingStarted": "Näin pääset alkuun",
     "gettingStartedDesc": "Aloita tutkiminen:",
     "gsStep1": "<a>Rekisteröidy</a> luodaksesi uuden tilin",
