@@ -5,7 +5,13 @@ import Link from '@mui/material/Link'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import { GridActionsCellItem, type GridColDef } from '@mui/x-data-grid'
+import {
+  GridActionsCellItem,
+  GridEditSingleSelectCell,
+  useGridApiContext,
+  type GridColDef,
+  type GridEditSingleSelectCellProps,
+} from '@mui/x-data-grid'
 import type { TFunction } from 'i18next'
 import { Link as RouterLink } from 'react-router'
 
@@ -19,6 +25,19 @@ import { parseDate } from '../../util/date'
 interface ApplicationActions {
   onEdit: (application: ApplicationResponse) => void
   onDelete: (application: ApplicationResponse) => void
+}
+
+const StatusEditCell = (props: GridEditSingleSelectCellProps) => {
+  const apiRef = useGridApiContext()
+
+  return (
+    <GridEditSingleSelectCell
+      {...props}
+      onValueChange={() => {
+        apiRef.current.stopCellEditMode({ id: props.id, field: props.field })
+      }}
+    />
+  )
 }
 
 export const createApplicationColumns = (
@@ -66,6 +85,7 @@ export const createApplicationColumns = (
         value: status,
         label: t(`applications.statuses.${status}`),
       })),
+      renderEditCell: props => <StatusEditCell {...props} />,
       renderCell: ({ row }) => (
         <Chip
           size='small'

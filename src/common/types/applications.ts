@@ -66,7 +66,7 @@ export const ApplicationResponseSchema = z.object({
 
 export const UpdateApplicationSchema = NewApplicationSchema.partial().refine(
   values => Object.keys(values).length > 0,
-  { error: 'validation.emptyUpdate' }
+  { error: 'At least one field must be provided' }
 )
 
 export type ApplicationStatus = z.infer<typeof ApplicationStatusSchema>

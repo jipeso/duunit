@@ -53,8 +53,7 @@
     "admin": "Admin",
     "login": "Login",
     "logout": "Logout",
-    "applications": "Applications",
-    "newApplication": "New application"
+    "applications": "Applications"
   },
 
   "home": {
@@ -72,7 +71,6 @@
 
   "profile": {
     "details": "User details",
-    "updateProfile": "Update profile",
     "updatePassword": "Update password",
     "wrongPassword": "Current password is incorrect."
   },
@@ -118,7 +116,6 @@
   "register": {
     "title": "Create an account",
     "subtitle": "Enter your details to create a new account",
-    "submit": "Register",
     "errors": {
       "emailInUse": "That email address is already in use."
     },

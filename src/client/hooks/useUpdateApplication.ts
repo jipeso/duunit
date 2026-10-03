@@ -29,8 +29,16 @@ const useUpdateApplication = () => {
 
   return useMutation({
     mutationFn,
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: applicationsQueryKey })
+    onSuccess: updatedApplication => {
+      queryClient.setQueryData<ApplicationResponse[]>(
+        applicationsQueryKey,
+        applications =>
+          applications?.map(application =>
+            application.id === updatedApplication.id
+              ? updatedApplication
+              : application
+          )
+      )
     },
   })
 }

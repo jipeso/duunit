@@ -53,8 +53,7 @@
     "admin": "Ylläpito",
     "login": "Kirjaudu sisään",
     "logout": "Kirjaudu ulos",
-    "applications": "Hakemukset",
-    "newApplication": "Uusi hakemus"
+    "applications": "Hakemukset"
   },
 
   "home": {
@@ -72,7 +71,6 @@
 
   "profile": {
     "details": "Käyttäjätiedot",
-    "updateProfile": "Päivitä profiili",
     "updatePassword": "Päivitä salasana",
     "wrongPassword": "Nykyinen salasana on väärä."
   },
@@ -118,7 +116,6 @@
   "register": {
     "title": "Luo tili",
     "subtitle": "Syötä tietosi luodaksesi uuden tilin",
-    "submit": "Rekisteröidy",
     "errors": {
       "emailInUse": "Tämä sähköpostiosoite on jo käytössä."
     },
