@@ -40,6 +40,42 @@ const Detail = ({
   </Box>
 )
 
+const TextSection = ({
+  title,
+  text,
+  emptyText,
+  action,
+  testId,
+}: {
+  title: string
+  text: string | null
+  emptyText: string
+  action?: ReactNode
+  testId: string
+}) => (
+  <Box>
+    <Stack direction='row' sx={{ alignItems: 'center', mb: 1 }}>
+      <Typography component='h2' variant='h6' sx={{ flexGrow: 1 }}>
+        {title}
+      </Typography>
+      {text && action}
+    </Stack>
+    {text ? (
+      <Paper
+        variant='outlined'
+        data-testid={testId}
+        sx={{ p: 2, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}
+      >
+        {text}
+      </Paper>
+    ) : (
+      <Typography variant='body2' color='text.secondary'>
+        {emptyText}
+      </Typography>
+    )}
+  </Box>
+)
+
 const ApplicationDetails = ({
   application,
 }: {
@@ -54,8 +90,11 @@ const ApplicationDetails = ({
     company,
     status,
     appliedAt,
+    deadline,
     location,
+    salary,
     jobPostingUrl,
+    notes,
     coverLetter,
   } = application
 
@@ -89,7 +128,13 @@ const ApplicationDetails = ({
             ? parseDate(appliedAt).toLocaleDateString(i18n.language)
             : EMPTY_VALUE}
         </Detail>
+        <Detail label={t('fields.deadline')}>
+          {deadline
+            ? parseDate(deadline).toLocaleDateString(i18n.language)
+            : EMPTY_VALUE}
+        </Detail>
         <Detail label={t('fields.location')}>{location ?? EMPTY_VALUE}</Detail>
+        <Detail label={t('fields.salary')}>{salary ?? EMPTY_VALUE}</Detail>
         <Detail label={t('fields.jobPostingUrl')}>
           {jobPostingUrl ? (
             <Link
@@ -105,39 +150,32 @@ const ApplicationDetails = ({
         </Detail>
       </Stack>
 
-      <Box>
-        <Stack direction='row' sx={{ alignItems: 'center', mb: 1 }}>
-          <Typography component='h2' variant='h6' sx={{ flexGrow: 1 }}>
-            {t('fields.coverLetter')}
-          </Typography>
-          {coverLetter && (
-            <Tooltip title={t('common.buttons.copyToClipboard')}>
-              <IconButton
-                size='small'
-                aria-label={t('common.buttons.copyToClipboard')}
-                onClick={() => {
-                  void copyCoverLetter()
-                }}
-              >
-                <ContentCopyIcon fontSize='small' />
-              </IconButton>
-            </Tooltip>
-          )}
-        </Stack>
-        {coverLetter ? (
-          <Paper
-            variant='outlined'
-            data-testid='application-details-cover-letter'
-            sx={{ p: 2, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}
-          >
-            {coverLetter}
-          </Paper>
-        ) : (
-          <Typography variant='body2' color='text.secondary'>
-            {t('applications.noCoverLetter')}
-          </Typography>
-        )}
-      </Box>
+      <TextSection
+        title={t('fields.notes')}
+        text={notes}
+        emptyText={t('applications.noNotes')}
+        testId='application-details-notes'
+      />
+
+      <TextSection
+        title={t('fields.coverLetter')}
+        text={coverLetter}
+        emptyText={t('applications.noCoverLetter')}
+        testId='application-details-cover-letter'
+        action={
+          <Tooltip title={t('common.buttons.copyToClipboard')}>
+            <IconButton
+              size='small'
+              aria-label={t('common.buttons.copyToClipboard')}
+              onClick={() => {
+                void copyCoverLetter()
+              }}
+            >
+              <ContentCopyIcon fontSize='small' />
+            </IconButton>
+          </Tooltip>
+        }
+      />
 
       <Stack direction='row' spacing={1}>
         <Button

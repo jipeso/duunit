@@ -76,6 +76,12 @@ export const createApplicationColumns = (
       renderCell: ({ row }) => row.location ?? EMPTY_VALUE,
     },
     {
+      field: 'salary',
+      headerName: t('fields.salary'),
+      flex: 1,
+      renderCell: ({ row }) => row.salary ?? EMPTY_VALUE,
+    },
+    {
       field: 'status',
       headerName: t('fields.status'),
       flex: 1,
@@ -103,6 +109,15 @@ export const createApplicationColumns = (
       valueGetter: (_, row) =>
         row.appliedAt ? parseDate(row.appliedAt) : new Date(row.createdAt),
       valueFormatter: (value: Date) => value.toLocaleDateString(language),
+    },
+    {
+      field: 'deadline',
+      headerName: t('fields.deadline'),
+      flex: 1,
+      type: 'date',
+      valueGetter: (_, row) => (row.deadline ? parseDate(row.deadline) : null),
+      valueFormatter: (value: Date | null) =>
+        value ? value.toLocaleDateString(language) : EMPTY_VALUE,
     },
     {
       field: 'jobPostingUrl',

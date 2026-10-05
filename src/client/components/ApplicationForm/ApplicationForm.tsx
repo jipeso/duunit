@@ -14,6 +14,7 @@ import {
   APPLICATION_STATUSES,
   MAX_COVER_LETTER_LENGTH,
   MAX_TEXT_LENGTH,
+  MAX_NOTES_LENGTH,
   MIN_APPLIED_DATE,
   NewApplicationSchema,
   type NewApplication,
@@ -56,10 +57,12 @@ const ApplicationForm = ({
     defaultValues,
   })
 
-  const [position, company, location, coverLetter] = watch([
+  const [position, company, location, salary, notes, coverLetter] = watch([
     'position',
     'company',
     'location',
+    'salary',
+    'notes',
     'coverLetter',
   ])
 
@@ -163,6 +166,20 @@ const ApplicationForm = ({
 
         <TextField
           fullWidth
+          id='deadline'
+          type='date'
+          label={t('fields.deadline')}
+          slotProps={{
+            inputLabel: { shrink: true },
+            htmlInput: { 'data-testid': 'application-deadline' },
+          }}
+          {...register('deadline')}
+          error={!!errors.deadline}
+          helperText={errors.deadline?.message}
+        />
+
+        <TextField
+          fullWidth
           id='jobPostingUrl'
           label={t('fields.jobPostingUrl')}
           slotProps={{
@@ -188,6 +205,41 @@ const ApplicationForm = ({
           helperText={
             errors.location?.message ?? counter(location, MAX_TEXT_LENGTH)
           }
+        />
+
+        <TextField
+          fullWidth
+          id='salary'
+          label={t('fields.salary')}
+          slotProps={{
+            htmlInput: {
+              'data-testid': 'application-salary',
+              maxLength: MAX_TEXT_LENGTH,
+            },
+          }}
+          {...register('salary')}
+          error={!!errors.salary}
+          helperText={
+            errors.salary?.message ?? counter(salary, MAX_TEXT_LENGTH)
+          }
+        />
+
+        <TextField
+          fullWidth
+          multiline
+          rows={4}
+          id='notes'
+          label={t('fields.notes')}
+          slotProps={{
+            htmlInput: {
+              'data-testid': 'application-notes',
+              maxLength: MAX_NOTES_LENGTH,
+              style: { resize: 'vertical', maxHeight: '40vh' },
+            },
+          }}
+          {...register('notes')}
+          error={!!errors.notes}
+          helperText={errors.notes?.message ?? counter(notes, MAX_NOTES_LENGTH)}
         />
 
         <TextField

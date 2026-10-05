@@ -37,9 +37,12 @@
     "position": "Tehtävä",
     "status": "Tila",
     "appliedAt": "Hakupäivä",
+    "deadline": "Hakuaika päättyy",
     "jobPostingUrl": "Työpaikkailmoituksen linkki",
     "location": "Sijainti",
-    "coverLetter": "Saatekirje"
+    "salary": "Palkka",
+    "coverLetter": "Saatekirje",
+    "notes": "Muistiinpanot"
   },
 
   "navigation": {
@@ -98,6 +101,7 @@
     "openJobPosting": "Avaa työpaikkailmoitus",
     "backToList": "Takaisin hakemuksiin",
     "noCoverLetter": "Saatekirjettä ei ole lisätty",
+    "noNotes": "Muistiinpanoja ei ole lisätty",
 
     "statuses": {
       "saved": "Tallennettu",

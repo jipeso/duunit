@@ -12,5 +12,8 @@ export const toFormValues = (
   jobPostingUrl: application.jobPostingUrl ?? '',
   location: application.location ?? '',
   appliedAt: application.appliedAt ?? '',
+  deadline: application.deadline ?? '',
+  salary: application.salary ?? '',
   coverLetter: application.coverLetter ?? '',
+  notes: application.notes ?? '',
 })

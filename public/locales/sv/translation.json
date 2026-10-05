@@ -37,9 +37,12 @@
     "position": "Befattning",
     "status": "Status",
     "appliedAt": "Ansökningsdatum",
+    "deadline": "Sista ansökningsdag",
     "jobPostingUrl": "Länk till jobbannons",
     "location": "Plats",
-    "coverLetter": "Personligt brev"
+    "salary": "Lön",
+    "coverLetter": "Personligt brev",
+    "notes": "Anteckningar"
   },
 
   "navigation": {
@@ -98,6 +101,7 @@
     "openJobPosting": "Öppna jobbannonsen",
     "backToList": "Tillbaka till ansökningar",
     "noCoverLetter": "Inget personligt brev har lagts till",
+    "noNotes": "Inga anteckningar har lagts till",
 
     "statuses": {
       "saved": "Sparad",

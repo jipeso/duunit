@@ -54,6 +54,8 @@ test.describe('Applications', () => {
         .getByTestId('application-job-posting-url')
         .fill('https://example.com')
       await page.getByTestId('application-location').fill('Helsinki')
+      await page.getByTestId('application-deadline').fill('2026-02-15')
+      await page.getByTestId('application-salary').fill('4500 €/kk')
       await page.getByTestId('application-submit').click()
 
       await expect(page).toHaveURL('/applications')
@@ -65,6 +67,8 @@ test.describe('Applications', () => {
       await expect(row).toBeVisible()
       await expect(row.getByText('Test Developer')).toBeVisible()
       await expect(row.getByText('Helsinki')).toBeVisible()
+      await expect(row.getByText('4500 €/kk')).toBeVisible()
+      await expect(row.getByText('2/15/2026')).toBeVisible()
       await expect(row.getByText('Applied', { exact: true })).toBeVisible()
     })
 
@@ -133,7 +137,36 @@ test.describe('Applications', () => {
 
       await expect(page).toHaveURL('/applications')
       await expect(row.getByText('Helsinki')).toBeHidden()
-      await expect(row.getByText('—')).toBeVisible()
+      await expect(row.locator('[data-field="location"]')).toHaveText('—')
+    })
+
+    test('user can add and edit notes', async ({ page }) => {
+      await page.goto('/applications')
+      await createApplication(page, 'Test company', 'Test Developer')
+
+      await page.getByTestId('application-details-link').click()
+      await expect(page.getByText('No notes added')).toBeVisible()
+
+      await page.getByTestId('application-details-edit').click()
+      await page
+        .getByTestId('application-notes')
+        .fill('Phone interview with Anna\nWent well')
+      await page.getByTestId('application-submit').click()
+
+      await expect(page.getByTestId('application-details-notes')).toHaveText(
+        'Phone interview with Anna\nWent well'
+      )
+
+      await page.getByTestId('application-details-edit').click()
+      await expect(page.getByTestId('application-notes')).toHaveValue(
+        'Phone interview with Anna\nWent well'
+      )
+      await page.getByTestId('application-notes').fill('Second round booked')
+      await page.getByTestId('application-submit').click()
+
+      await expect(page.getByTestId('application-details-notes')).toHaveText(
+        'Second round booked'
+      )
     })
 
     test('user can change the status from the grid', async ({ page }) => {

@@ -37,9 +37,12 @@
     "position": "Position",
     "status": "Status",
     "appliedAt": "Applied on",
+    "deadline": "Application deadline",
     "jobPostingUrl": "Job posting URL",
     "location": "Location",
-    "coverLetter": "Cover letter"
+    "salary": "Salary",
+    "coverLetter": "Cover letter",
+    "notes": "Notes"
   },
 
   "navigation": {
@@ -98,6 +101,7 @@
     "openJobPosting": "Open job posting",
     "backToList": "Back to applications",
     "noCoverLetter": "No cover letter added",
+    "noNotes": "No notes added",
 
     "statuses": {
       "saved": "Saved",

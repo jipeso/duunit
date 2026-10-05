@@ -15,6 +15,13 @@
       "when": 1790927919549,
       "tag": "0001_stale_red_hulk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791211944128,
+      "tag": "0002_serious_night_nurse",
+      "breakpoints": true
     }
   ]
 }

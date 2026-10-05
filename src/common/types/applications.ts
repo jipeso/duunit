@@ -14,6 +14,7 @@ export const MIN_APPLIED_DATE = '2015-01-01'
 export const MIN_TEXT_LENGTH = 1
 export const MAX_TEXT_LENGTH = 100
 export const MAX_COVER_LETTER_LENGTH = 6000
+export const MAX_NOTES_LENGTH = 6000
 
 export const ApplicationStatusSchema = z.enum(APPLICATION_STATUSES)
 
@@ -48,7 +49,14 @@ export const NewApplicationSchema = z.object({
         .nullable()
     )
     .nullish(),
+  deadline: z
+    .string()
+    .transform(emptyToNull)
+    .pipe(z.iso.date().nullable())
+    .nullish(),
+  salary: optionalText(MAX_TEXT_LENGTH),
   coverLetter: optionalText(MAX_COVER_LETTER_LENGTH),
+  notes: optionalText(MAX_NOTES_LENGTH),
 })
 
 export const ApplicationResponseSchema = z.object({
@@ -59,7 +67,10 @@ export const ApplicationResponseSchema = z.object({
   jobPostingUrl: z.string().nullable(),
   location: z.string().nullable(),
   appliedAt: z.iso.date().nullable(),
+  deadline: z.iso.date().nullable(),
+  salary: z.string().nullable(),
   coverLetter: z.string().nullable(),
+  notes: z.string().nullable(),
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
 })
