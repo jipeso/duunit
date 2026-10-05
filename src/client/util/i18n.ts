@@ -20,7 +20,6 @@ void i18n
     supportedLngs: LANGUAGES,
     preload: LANGUAGES,
     debug: inDevelopment,
-    saveMissing: inDevelopment,
   })
 
 z.config({

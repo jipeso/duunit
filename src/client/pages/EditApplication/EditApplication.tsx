@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import { isAxiosError } from 'axios'
 import { type SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useParams } from 'react-router'
@@ -17,6 +15,7 @@ import useApplications from '../../hooks/useApplications'
 import useUpdateApplication from '../../hooks/useUpdateApplication'
 import { useNotification } from '../../components/Notification'
 import ApplicationForm, { toFormValues } from '../../components/ApplicationForm'
+import { isNotFoundError } from '../../util/apiClient'
 
 interface EditApplicationFormProps {
   application: ApplicationResponse
@@ -24,8 +23,7 @@ interface EditApplicationFormProps {
 
 const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
   const { t } = useTranslation()
-  const [globalError, setGlobalError] = useState<string | null>(null)
-  const { mutateAsync: updateApplication, isPending } = useUpdateApplication()
+  const { mutate: updateApplication, isPending, error } = useUpdateApplication()
   const { showSuccess } = useNotification()
   const navigate = useNavigate()
   const location = useLocation()
@@ -33,20 +31,16 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
     (location.state as { returnTo?: string } | null)?.returnTo ??
     '/applications'
 
-  const onSubmit: SubmitHandler<NewApplication> = async data => {
-    setGlobalError(null)
-
-    try {
-      await updateApplication({ id: application.id, values: data })
-      showSuccess(t('notifications.applicationUpdatedSuccess'))
-      void navigate(returnTo)
-    } catch (error) {
-      setGlobalError(
-        isAxiosError(error) && error.response?.status === 404
-          ? 'applications.notFound'
-          : 'common.errors.unexpected'
-      )
-    }
+  const onSubmit: SubmitHandler<NewApplication> = data => {
+    updateApplication(
+      { id: application.id, values: data },
+      {
+        onSuccess: () => {
+          showSuccess(t('notifications.applicationUpdatedSuccess'))
+          void navigate(returnTo)
+        },
+      }
+    )
   }
 
   return (
@@ -55,7 +49,14 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
       onSubmit={onSubmit}
       submitLabel={t('common.buttons.update')}
       isPending={isPending}
-      error={globalError}
+      error={
+        error &&
+        t(
+          isNotFoundError(error)
+            ? 'applications.notFound'
+            : 'common.errors.unexpected'
+        )
+      }
       returnTo={returnTo}
       requireChanges
     />

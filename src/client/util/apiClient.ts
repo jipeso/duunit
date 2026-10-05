@@ -19,4 +19,7 @@ apiClient.interceptors.response.use(undefined, (error: Error) => {
   return Promise.reject(error)
 })
 
+export const isNotFoundError = (error: unknown) =>
+  isAxiosError(error) && error.response?.status === 404
+
 export default apiClient

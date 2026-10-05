@@ -12,6 +12,7 @@ import type { ApplicationResponse } from '#common/types/applications.ts'
 import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
 import { useNotification } from '../../components/Notification'
 import useUpdateApplication from '../../hooks/useUpdateApplication'
+import { isNotFoundError } from '../../util/apiClient'
 import { createApplicationColumns } from './ApplicationColumns'
 
 interface ApplicationGridProps {
@@ -107,8 +108,14 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
         aria-label={t('applications.title')}
         disableRowSelectionOnClick
         processRowUpdate={processRowUpdate}
-        onProcessRowUpdateError={() => {
-          showError(t('common.errors.unexpected'))
+        onProcessRowUpdateError={(error: unknown) => {
+          showError(
+            t(
+              isNotFoundError(error)
+                ? 'applications.notFound'
+                : 'common.errors.unexpected'
+            )
+          )
         }}
         onCellClick={({ id, field, isEditable, cellMode }) => {
           if (isEditable && cellMode === 'view') {

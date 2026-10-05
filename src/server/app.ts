@@ -6,6 +6,7 @@ import { errorHandler } from './middleware/errorHandler.ts'
 import { inProduction, inTest, inDevelopment } from './util/config.ts'
 import { router } from './routes/index.ts'
 import { auth } from './util/auth.ts'
+import { AppError } from './util/AppError.ts'
 
 const app = express()
 
@@ -14,8 +15,8 @@ app.all('/api/auth/*splat', toNodeHandler(auth))
 app.use(express.json())
 
 app.use('/api', router)
-app.use('/api', (_: Request, res: Response) => {
-  res.sendStatus(404)
+app.use('/api', () => {
+  throw new AppError('NOT_FOUND', 404)
 })
 
 if (inDevelopment || inTest) {

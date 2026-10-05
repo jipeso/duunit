@@ -70,7 +70,7 @@ C4Component
         Component(mw, "requireAuth", "middleware/authentication.ts", "Resolves session cookie, sets req.user, or 401")
         Component(svc, "applicationService", "services/applicationService.ts", "CRUD, every query scoped by userId")
         Component(ctrl, "applicationController", "routes/applications/", "Validates input with Zod schemas from src/common/types")
-        Component(err, "errorHandler", "middleware/errorHandler.ts", "AppError to its status, ZodError to 400, else 500")
+        Component(err, "errorHandler", "middleware/errorHandler.ts", "Normalizes all errors to AppError: code + status, logs 5xx as error, 4xx as warn")
     }
 
     Rel(spa, auth, "Auth calls", "/api/auth/*")
@@ -150,7 +150,7 @@ sequenceDiagram
     MW->>BA: auth.api.getSession(request headers), in-process
     BA->>DB: Find session by token
     alt no valid session
-        MW-->>API: 401 error unauthorized
+        MW-->>API: 401 UNAUTHORIZED (AppError via errorHandler)
         API->>API: Interceptor clears query cache
         API-->>U: Full page load of /login
     else valid session
@@ -180,7 +180,7 @@ sequenceDiagram
     API->>API: requireAuth (see flow 1)
     API->>API: NewApplicationSchema.parse(req.body)
     alt body invalid
-        API-->>Q: 400 validation error + details (z.flattenError, via errorHandler)
+        API-->>Q: 400 VALIDATION_ERROR + message (via errorHandler)
         Q-->>FE: throws
         FE-->>U: Alert common.errors.unexpected
     else valid

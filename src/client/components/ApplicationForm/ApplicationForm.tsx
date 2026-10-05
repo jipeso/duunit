@@ -213,7 +213,7 @@ const ApplicationForm = ({
 
         {error && (
           <Alert severity='error' sx={{ borderRadius: 1 }}>
-            {t(error)}
+            {error}
           </Alert>
         )}
 

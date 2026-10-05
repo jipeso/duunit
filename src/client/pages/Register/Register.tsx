@@ -52,9 +52,11 @@ export const RegisterForm: React.FC = () => {
 
     if (error) {
       setGlobalError(
-        error.code === 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL'
-          ? 'register.errors.emailInUse'
-          : 'common.errors.unexpected'
+        t(
+          error.code === 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL'
+            ? 'register.errors.emailInUse'
+            : 'common.errors.unexpected'
+        )
       )
       return
     }
@@ -142,7 +144,7 @@ export const RegisterForm: React.FC = () => {
 
             {globalError && (
               <Alert severity='error' sx={{ borderRadius: 1 }}>
-                {t(globalError)}
+                {globalError}
               </Alert>
             )}
 

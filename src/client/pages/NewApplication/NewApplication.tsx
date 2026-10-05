@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
@@ -13,21 +12,17 @@ import ApplicationForm from '../../components/ApplicationForm'
 
 const NewApplication = () => {
   const { t } = useTranslation()
-  const [globalError, setGlobalError] = useState<string | null>(null)
-  const { mutateAsync: createApplication, isPending } = useCreateApplication()
+  const { mutate: createApplication, isPending, error } = useCreateApplication()
   const { showSuccess } = useNotification()
   const navigate = useNavigate()
 
-  const onSubmit: SubmitHandler<NewApplicationPayload> = async data => {
-    setGlobalError(null)
-
-    try {
-      await createApplication(data)
-      showSuccess(t('notifications.applicationCreatedSuccess'))
-      void navigate('/applications')
-    } catch {
-      setGlobalError('common.errors.unexpected')
-    }
+  const onSubmit: SubmitHandler<NewApplicationPayload> = data => {
+    createApplication(data, {
+      onSuccess: () => {
+        showSuccess(t('notifications.applicationCreatedSuccess'))
+        void navigate('/applications')
+      },
+    })
   }
 
   return (
@@ -52,7 +47,7 @@ const NewApplication = () => {
           onSubmit={onSubmit}
           submitLabel={t('common.buttons.create')}
           isPending={isPending}
-          error={globalError}
+          error={error && t('common.errors.unexpected')}
         />
       </Box>
     </Container>

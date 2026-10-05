@@ -11,4 +11,4 @@ Job application tracker. Express 5 + Drizzle/Postgres backend, React 19 + Vite +
 ## Conventions
 
 - Shared Zod schemas and types live in `src/common/types`; validate request bodies with them.
-- Errors are handled centrally in `src/server/middleware/errorHandler.ts` (`ZodError` → 400, `AppError(msg, status)`). Don't add try/catch in routes.
+- Errors are handled centrally in `src/server/middleware/errorHandler.ts`: throw `AppError(code, status)` and never send error responses yourself. Don't add try/catch in routes.

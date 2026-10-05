@@ -7,6 +7,7 @@ Production live in <https://duunit.site>
 ## Documentation
 
 [Timelogs](/docs/timelogs.md)
+[Architecture](/docs/architecture.md)
 
 ## Running the application locally
 

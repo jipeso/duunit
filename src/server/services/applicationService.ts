@@ -20,7 +20,7 @@ const createApplication = async (
     .returning()
 
   if (!addedApplication) {
-    throw new AppError('Failed to create application', 500)
+    throw new AppError('INTERNAL_ERROR', 500)
   }
 
   return toApplicationResponse(addedApplication)
@@ -49,7 +49,7 @@ const updateApplication = async (
     .returning()
 
   if (!updatedApplication) {
-    throw new AppError('Application not found', 404)
+    throw new AppError('APPLICATION_NOT_FOUND', 404)
   }
 
   return toApplicationResponse(updatedApplication)
@@ -67,7 +67,7 @@ const deleteApplication = async (
     .returning({ id: applications.id })
 
   if (!deletedApplication) {
-    throw new AppError('Application not found', 404)
+    throw new AppError('APPLICATION_NOT_FOUND', 404)
   }
 }
 

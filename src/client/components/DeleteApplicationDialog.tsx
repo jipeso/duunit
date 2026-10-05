@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 
 import type { ApplicationResponse } from '#common/types/applications.ts'
 import useDeleteApplication from '../hooks/useDeleteApplication'
+import { isNotFoundError } from '../util/apiClient'
 import ConfirmDialog from './common/ConfirmDialog'
 import { useNotification } from './Notification'
 
@@ -20,7 +21,7 @@ const DeleteApplicationDialog = ({
 }: Props) => {
   const { t } = useTranslation()
   const { showSuccess } = useNotification()
-  const { mutate, isPending, isError, reset } = useDeleteApplication()
+  const { mutate, isPending, error, reset } = useDeleteApplication()
 
   const close = () => {
     reset()
@@ -53,7 +54,14 @@ const DeleteApplicationDialog = ({
       onConfirm={confirm}
       onClose={close}
       isPending={isPending}
-      error={isError ? t('common.errors.unexpected') : null}
+      error={
+        error &&
+        t(
+          isNotFoundError(error)
+            ? 'applications.notFound'
+            : 'common.errors.unexpected'
+        )
+      }
     />
   )
 }

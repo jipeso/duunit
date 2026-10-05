@@ -3,8 +3,6 @@ import {
   ApplicationResponseSchema,
   type ApplicationResponse,
 } from '#common/types/applications.ts'
-import { AppError } from '../util/AppError.ts'
-import { logger } from '../util/logger.ts'
 
 export const toApplicationResponse = (
   app: DatabaseApplication
@@ -16,8 +14,7 @@ export const toApplicationResponse = (
   })
 
   if (!result.success) {
-    logger.error(`Invalid application row ${app.id}: ${result.error.message}`)
-    throw new AppError('internal server error', 500)
+    throw new Error(`Invalid application row ${app.id}: ${result.error.message}`)
   }
 
   return result.data
