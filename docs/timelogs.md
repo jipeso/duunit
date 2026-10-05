@@ -13,4 +13,6 @@
 | 29.9  | 8        | Frontend                            |
 | 30.9  | 5        | Auth refactor                       |
 | 1.10  | 9        | Frontend, bug fixing                |
-| Total | 81       |                                     |
+| 2.10  | 7        | Frontend + applications API         |
+| 3.10  | 4        | UI/UX updates                       |
+| Total | 92       |                                     |

@@ -1,6 +1,5 @@
 import express, { type Request, type Response } from 'express'
 import path from 'path'
-import compression from 'compression'
 import { toNodeHandler } from 'better-auth/node'
 
 import { errorHandler } from './middleware/errorHandler.ts'
@@ -13,7 +12,6 @@ const app = express()
 app.all('/api/auth/*splat', toNodeHandler(auth))
 
 app.use(express.json())
-app.use(compression())
 
 app.use('/api', router)
 app.use('/api', (_: Request, res: Response) => {

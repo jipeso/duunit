@@ -4,7 +4,7 @@ import type {
   NextFunction,
   ErrorRequestHandler,
 } from 'express'
-import { ZodError } from 'zod'
+import { z, ZodError } from 'zod'
 
 import { AppError } from '../util/AppError.ts'
 import { logger } from '../util/logger.ts'
@@ -25,7 +25,9 @@ export const errorHandler: ErrorRequestHandler = (
   if (err instanceof AppError) {
     res.status(err.status).json(err)
   } else if (err instanceof ZodError) {
-    res.status(400).json({ error: 'validation error' })
+    res
+      .status(400)
+      .json({ error: 'validation error', details: z.flattenError(err) })
   } else {
     res.status(500).json({ error: 'internal server error' })
   }
