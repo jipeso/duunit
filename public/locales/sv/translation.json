@@ -103,6 +103,8 @@
     "noCoverLetter": "Inget personligt brev har lagts till",
     "noNotes": "Inga anteckningar har lagts till",
     "timeline": "Tidslinje",
+    "deleteEvent": "Ta bort tidslinjepost",
+    "deleteEventConfirm": "Ta bort posten från tidslinjen? Det går inte att ångra.",
 
     "statuses": {
       "saved": "Sparad",

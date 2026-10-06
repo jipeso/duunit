@@ -64,4 +64,16 @@ router.delete('/:id', async (req: Request, res: Response) => {
   res.status(204).end()
 })
 
+router.delete('/:id/events/:eventId', async (req: Request, res: Response) => {
+  const applicationId = z.uuid().parse(req.params.id)
+  const eventId = z.uuid().parse(req.params.eventId)
+
+  await applicationService.deleteStatusEvent(
+    req.user.id,
+    applicationId,
+    eventId
+  )
+  res.status(204).end()
+})
+
 export default router

@@ -4,6 +4,8 @@ export type ErrorCode =
   | 'UNAUTHORIZED'
   | 'NOT_FOUND'
   | 'APPLICATION_NOT_FOUND'
+  | 'STATUS_EVENT_NOT_FOUND'
+  | 'LAST_STATUS_EVENT'
   | 'INTERNAL_ERROR'
 
 export class AppError extends Error {

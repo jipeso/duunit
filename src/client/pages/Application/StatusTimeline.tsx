@@ -1,5 +1,9 @@
+import { useState } from 'react'
 import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import Timeline from '@mui/lab/Timeline'
 import TimelineConnector from '@mui/lab/TimelineConnector'
 import TimelineContent from '@mui/lab/TimelineContent'
@@ -9,11 +13,29 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator'
 import { useTranslation } from 'react-i18next'
 
 import useStatusEvents from '../../hooks/useStatusEvents'
+import useDeleteStatusEvent from '../../hooks/useDeleteStatusEvent'
+import ConfirmDialog from '../../components/common/ConfirmDialog'
 import { statusColors } from '../../util/applications'
 
 const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
   const { t, i18n } = useTranslation()
   const { data: events, isError } = useStatusEvents(applicationId)
+  const { mutate, isPending, error, reset } = useDeleteStatusEvent()
+  const [eventIdToDelete, setEventIdToDelete] = useState<string | null>(null)
+
+  const closeDialog = () => {
+    reset()
+    setEventIdToDelete(null)
+  }
+
+  const confirmDelete = () => {
+    if (eventIdToDelete) {
+      mutate(
+        { applicationId, eventId: eventIdToDelete },
+        { onSuccess: closeDialog }
+      )
+    }
+  }
 
   return (
     <Box>
@@ -31,7 +53,7 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
           sx={{
             m: 0,
             p: 0,
-            [`& .${timelineItemClasses.root}:before`]: { flex: 0, p: 0 },
+            [`& .${timelineItemClasses.root}::before`]: { display: 'none' },
           }}
         >
           {events.map((event, index) => {
@@ -40,27 +62,50 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
             return (
               <TimelineItem key={event.id}>
                 <TimelineSeparator>
-                  <TimelineDot
-                    variant='outlined'
-                    color={color === 'default' ? 'grey' : color}
-                  />
+                  <TimelineDot color={color === 'default' ? 'grey' : color} />
                   {index < events.length - 1 && <TimelineConnector />}
                 </TimelineSeparator>
-                <TimelineContent>
-                  <Typography>
-                    {t(`applications.statuses.${event.status}`)}
-                  </Typography>
-                  <Typography variant='body2' color='text.secondary'>
-                    {new Date(event.changedAt).toLocaleDateString(
-                      i18n.language
-                    )}
-                  </Typography>
+                <TimelineContent sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Typography>
+                      {t(`applications.statuses.${event.status}`)}
+                    </Typography>
+                    <Typography variant='body2' color='text.secondary'>
+                      {new Date(event.changedAt).toLocaleDateString(
+                        i18n.language
+                      )}
+                    </Typography>
+                  </Box>
+                  {events.length > 1 && (
+                    <Tooltip title={t('common.buttons.delete')}>
+                      <IconButton
+                        size='small'
+                        aria-label={t('common.buttons.delete')}
+                        onClick={() => {
+                          setEventIdToDelete(event.id)
+                        }}
+                      >
+                        <DeleteOutlinedIcon fontSize='small' />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                 </TimelineContent>
               </TimelineItem>
             )
           })}
         </Timeline>
       )}
+
+      <ConfirmDialog
+        open={eventIdToDelete !== null}
+        title={t('applications.deleteEvent')}
+        message={t('applications.deleteEventConfirm')}
+        confirmLabel={t('common.buttons.delete')}
+        onConfirm={confirmDelete}
+        onClose={closeDialog}
+        isPending={isPending}
+        error={error && t('common.errors.unexpected')}
+      />
     </Box>
   )
 }

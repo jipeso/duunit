@@ -103,6 +103,8 @@
     "noCoverLetter": "Saatekirjettä ei ole lisätty",
     "noNotes": "Muistiinpanoja ei ole lisätty",
     "timeline": "Aikajana",
+    "deleteEvent": "Poista aikajanan merkintä",
+    "deleteEventConfirm": "Poistetaanko merkintä aikajanalta? Toimintoa ei voi perua.",
 
     "statuses": {
       "saved": "Tallennettu",
