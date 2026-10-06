@@ -80,6 +80,13 @@ export const UpdateApplicationSchema = NewApplicationSchema.partial().refine(
   { error: 'At least one field must be provided' }
 )
 
+export const StatusEventResponseSchema = z.object({
+  id: z.uuid(),
+  status: ApplicationStatusSchema,
+  changedAt: z.iso.datetime(),
+})
+
+export type StatusEventResponse = z.infer<typeof StatusEventResponseSchema>
 export type ApplicationStatus = z.infer<typeof ApplicationStatusSchema>
 export type NewApplication = z.infer<typeof NewApplicationSchema>
 export type NewApplicationInput = z.input<typeof NewApplicationSchema>

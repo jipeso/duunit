@@ -6,6 +6,7 @@ import {
   timestamp,
   date,
   boolean,
+  index,
 } from 'drizzle-orm/pg-core'
 
 import { ROLES } from '#common/types/users.ts'
@@ -90,4 +91,22 @@ export const applications = pgTable('applications', {
     .$onUpdate(() => new Date()),
 })
 
+export const applicationStatusEvents = pgTable(
+  'application_status_events',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    applicationId: uuid('application_id')
+      .notNull()
+      .references(() => applications.id, { onDelete: 'cascade' }),
+    status: applicationStatusEnum('status').notNull(),
+    changedAt: timestamp('changed_at').notNull().defaultNow(),
+  },
+  table => [
+    index('application_status_events_application_id_idx').on(
+      table.applicationId
+    ),
+  ]
+)
+
+export type DatabaseStatusEvent = typeof applicationStatusEvents.$inferSelect
 export type DatabaseApplication = typeof applications.$inferSelect

@@ -6,6 +6,7 @@ import applicationService from '../../services/applicationService.ts'
 import {
   type ApplicationResponse,
   NewApplicationSchema,
+  type StatusEventResponse,
   UpdateApplicationSchema,
 } from '#common/types/applications.ts'
 
@@ -14,11 +15,22 @@ const router = Router()
 router.use(requireAuth)
 
 router.get('/', async (req: Request, res: Response<ApplicationResponse[]>) => {
-  const applications = await applicationService.getApplicationsByUserId(
-    req.user.id
-  )
+  const applications = await applicationService.getApplications(req.user.id)
   res.json(applications)
 })
+
+router.get(
+  '/:id/events',
+  async (req: Request, res: Response<StatusEventResponse[]>) => {
+    const applicationId = z.uuid().parse(req.params.id)
+    const events = await applicationService.getStatusEvents(
+      req.user.id,
+      applicationId
+    )
+
+    res.json(events)
+  }
+)
 
 router.post('/', async (req: Request, res: Response<ApplicationResponse>) => {
   const application = NewApplicationSchema.parse(req.body)

@@ -22,6 +22,7 @@ import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
 import { useNotification } from '../../components/Notification'
 import { EMPTY_VALUE, statusColors } from '../../util/applications'
 import { parseDate } from '../../util/date'
+import StatusTimeline from './StatusTimeline'
 
 const Detail = ({
   label,
@@ -149,6 +150,8 @@ const ApplicationDetails = ({
           )}
         </Detail>
       </Stack>
+
+      <StatusTimeline applicationId={application.id} />
 
       <TextSection
         title={t('fields.notes')}

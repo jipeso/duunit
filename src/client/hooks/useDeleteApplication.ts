@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import apiClient from '../util/apiClient'
-
-const applicationsQueryKey = ['applications'] as const
+import { applicationsQueryKey } from './useApplications.ts'
 
 const mutationFn = async (id: string) => {
   await apiClient.delete(`/applications/${id}`)

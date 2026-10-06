@@ -15,4 +15,5 @@
 | 1.10  | 9        | Frontend, bug fixing                |
 | 2.10  | 7        | Frontend + applications API         |
 | 3.10  | 4        | UI/UX updates                       |
-| Total | 92       |                                     |
+| 5.10  | 8        | documentation + refactoring         |
+| Total | 100      |                                     |

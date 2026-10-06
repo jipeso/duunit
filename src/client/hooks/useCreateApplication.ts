@@ -5,8 +5,7 @@ import type {
   ApplicationResponse,
   NewApplication,
 } from '#common/types/applications.ts'
-
-const applicationsQueryKey = ['applications'] as const
+import { applicationsQueryKey } from './useApplications.ts'
 
 const mutationFn = async (
   values: NewApplication

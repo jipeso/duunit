@@ -1,7 +1,9 @@
-import type { DatabaseApplication } from '../db/schema.ts'
+import type { DatabaseApplication, DatabaseStatusEvent } from '../db/schema.ts'
 import {
   ApplicationResponseSchema,
   type ApplicationResponse,
+  StatusEventResponseSchema,
+  type StatusEventResponse,
 } from '#common/types/applications.ts'
 
 export const toApplicationResponse = (
@@ -14,7 +16,26 @@ export const toApplicationResponse = (
   })
 
   if (!result.success) {
-    throw new Error(`Invalid application row ${app.id}: ${result.error.message}`)
+    throw new Error(
+      `Invalid application row ${app.id}: ${result.error.message}`
+    )
+  }
+
+  return result.data
+}
+
+export const toStatusEventResponse = (
+  event: DatabaseStatusEvent
+): StatusEventResponse => {
+  const result = StatusEventResponseSchema.safeParse({
+    ...event,
+    changedAt: event.changedAt.toISOString(),
+  })
+
+  if (!result.success) {
+    throw new Error(
+      `Invalid status event row ${event.id}: ${result.error.message}`
+    )
   }
 
   return result.data
