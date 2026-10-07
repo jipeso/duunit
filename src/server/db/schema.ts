@@ -99,7 +99,10 @@ export const applicationStatusEvents = pgTable(
       .notNull()
       .references(() => applications.id, { onDelete: 'cascade' }),
     status: applicationStatusEnum('status').notNull(),
-    changedAt: timestamp('changed_at').notNull().defaultNow(),
+    occurredOn: date('occurred_on', { mode: 'string' }).notNull().defaultNow(),
+    createdAt: timestamp('created_at', { withTimezone: true })
+      .notNull()
+      .defaultNow(),
   },
   table => [
     index('application_status_events_application_id_idx').on(

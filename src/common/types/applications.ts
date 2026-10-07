@@ -83,7 +83,7 @@ export const UpdateApplicationSchema = NewApplicationSchema.partial().refine(
 export const StatusEventResponseSchema = z.object({
   id: z.uuid(),
   status: ApplicationStatusSchema,
-  changedAt: z.iso.datetime(),
+  occurredOn: z.iso.date(),
 })
 
 export type StatusEventResponse = z.infer<typeof StatusEventResponseSchema>

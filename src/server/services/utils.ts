@@ -27,10 +27,7 @@ export const toApplicationResponse = (
 export const toStatusEventResponse = (
   event: DatabaseStatusEvent
 ): StatusEventResponse => {
-  const result = StatusEventResponseSchema.safeParse({
-    ...event,
-    changedAt: event.changedAt.toISOString(),
-  })
+  const result = StatusEventResponseSchema.safeParse(event)
 
   if (!result.success) {
     throw new Error(

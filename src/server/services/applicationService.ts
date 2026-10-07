@@ -1,15 +1,43 @@
-import { eq, and, asc } from 'drizzle-orm'
+import { eq, and, asc, desc } from 'drizzle-orm'
 
-import { db } from '../db/index.ts'
+import { db, type Transaction } from '../db/index.ts'
 import { applications, applicationStatusEvents } from '../db/schema.ts'
 import type {
   ApplicationResponse,
+  ApplicationStatus,
   StatusEventResponse,
   NewApplication,
   UpdateApplication,
 } from '#common/types/applications.ts'
 import { AppError } from '../util/AppError.ts'
 import { toApplicationResponse, toStatusEventResponse } from './utils.ts'
+
+// Current date as YYYY-MM-DD in UTC
+const today = () => new Date().toISOString().slice(0, 10)
+
+const recordStatusChange = async (
+  tx: Transaction,
+  applicationId: string,
+  status: ApplicationStatus,
+  date = today()
+): Promise<void> => {
+  const [latest] = await tx
+    .select({ occurredOn: applicationStatusEvents.occurredOn })
+    .from(applicationStatusEvents)
+    .where(eq(applicationStatusEvents.applicationId, applicationId))
+    .orderBy(
+      desc(applicationStatusEvents.occurredOn),
+      desc(applicationStatusEvents.createdAt)
+    )
+    .limit(1)
+
+  const occurredOn =
+    latest && latest.occurredOn > date ? latest.occurredOn : date
+
+  await tx
+    .insert(applicationStatusEvents)
+    .values({ applicationId, status, occurredOn })
+}
 
 const createApplication = async (
   userId: string,
@@ -25,9 +53,13 @@ const createApplication = async (
       throw new AppError('INTERNAL_ERROR', 500)
     }
 
-    await tx
-      .insert(applicationStatusEvents)
-      .values({ applicationId: row.id, status: row.status })
+    // A new 'applied' application starts its timeline on the given applied date
+    await recordStatusChange(
+      tx,
+      row.id,
+      row.status,
+      row.status === 'applied' && row.appliedAt ? row.appliedAt : undefined
+    )
 
     return row
   })
@@ -73,9 +105,7 @@ const updateApplication = async (
     }
 
     if (row.status !== current.status) {
-      await tx
-        .insert(applicationStatusEvents)
-        .values({ applicationId: row.id, status: row.status })
+      await recordStatusChange(tx, row.id, row.status)
     }
 
     return row
@@ -119,7 +149,10 @@ const getStatusEvents = async (
     .select()
     .from(applicationStatusEvents)
     .where(eq(applicationStatusEvents.applicationId, applicationId))
-    .orderBy(asc(applicationStatusEvents.changedAt))
+    .orderBy(
+      asc(applicationStatusEvents.occurredOn),
+      asc(applicationStatusEvents.createdAt)
+    )
 
   return events.map(toStatusEventResponse)
 }
@@ -149,12 +182,16 @@ const deleteStatusEvent = async (
       })
       .from(applicationStatusEvents)
       .where(eq(applicationStatusEvents.applicationId, applicationId))
-      .orderBy(asc(applicationStatusEvents.changedAt))
+      .orderBy(
+        asc(applicationStatusEvents.occurredOn),
+        asc(applicationStatusEvents.createdAt)
+      )
 
     if (!events.some(event => event.id === eventId)) {
       throw new AppError('STATUS_EVENT_NOT_FOUND', 404)
     }
 
+    // The application's status is always the status of its latest event
     const latestRemaining = events.filter(event => event.id !== eventId).at(-1)
 
     if (!latestRemaining) {

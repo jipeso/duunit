@@ -16,6 +16,7 @@ import useStatusEvents from '../../hooks/useStatusEvents'
 import useDeleteStatusEvent from '../../hooks/useDeleteStatusEvent'
 import ConfirmDialog from '../../components/common/ConfirmDialog'
 import { statusColors } from '../../util/applications'
+import { parseDate } from '../../util/date'
 
 const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
   const { t, i18n } = useTranslation()
@@ -71,7 +72,7 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
                       {t(`applications.statuses.${event.status}`)}
                     </Typography>
                     <Typography variant='body2' color='text.secondary'>
-                      {new Date(event.changedAt).toLocaleDateString(
+                      {parseDate(event.occurredOn).toLocaleDateString(
                         i18n.language
                       )}
                     </Typography>

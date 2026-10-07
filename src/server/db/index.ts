@@ -42,3 +42,5 @@ export const runMigrations = async (): Promise<void> => {
   })
   logger.info('Migrations up to date')
 }
+
+export type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0]
