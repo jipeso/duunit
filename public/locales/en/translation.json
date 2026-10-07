@@ -107,6 +107,7 @@
     "timeline": "Timeline",
     "deleteEvent": "Delete timeline entry",
     "deleteEventConfirm": "Delete this entry from the timeline? This cannot be undone.",
+    "deleteLatestEventConfirm": "Delete this entry? The status will change back to {{status}}.",
     "editEventDate": "Edit date",
     "moreActions": "More actions",
 

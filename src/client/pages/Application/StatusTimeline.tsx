@@ -25,6 +25,7 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
   const { data: events, isError } = useStatusEvents(applicationId)
   const { mutate, isPending, error, reset } = useDeleteStatusEvent()
   const [eventIdToDelete, setEventIdToDelete] = useState<string | null>(null)
+  const [deleteMessage, setDeleteMessage] = useState('')
   const [eventIdToEdit, setEventIdToEdit] = useState<string | null>(null)
   const [menu, setMenu] = useState<{
     anchorEl: HTMLElement
@@ -46,6 +47,19 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
         { onSuccess: closeDialog }
       )
     }
+  }
+
+  const openDeleteDialog = (eventId: string) => {
+    // Deleting the latest event changes the status back to the previous one
+    const previousEvent = events?.at(-2)
+    setDeleteMessage(
+      previousEvent && eventId === events?.at(-1)?.id
+        ? t('applications.deleteLatestEventConfirm', {
+            status: t(`applications.statuses.${previousEvent.status}`),
+          })
+        : t('applications.deleteEventConfirm')
+    )
+    setEventIdToDelete(eventId)
   }
 
   return (
@@ -121,7 +135,9 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
         <MenuItem
           disabled={events?.length === 1}
           onClick={() => {
-            setEventIdToDelete(menu?.eventId ?? null)
+            if (menu) {
+              openDeleteDialog(menu.eventId)
+            }
             setMenu(null)
           }}
         >
@@ -144,7 +160,7 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
       <ConfirmDialog
         open={eventIdToDelete !== null}
         title={t('applications.deleteEvent')}
-        message={t('applications.deleteEventConfirm')}
+        message={deleteMessage}
         confirmLabel={t('common.buttons.delete')}
         onConfirm={confirmDelete}
         onClose={closeDialog}

@@ -1,4 +1,4 @@
-import { eq, and, asc, desc } from 'drizzle-orm'
+import { eq, and, asc, desc, inArray } from 'drizzle-orm'
 
 import { db, type Transaction } from '../db/index.ts'
 import { applications, applicationStatusEvents } from '../db/schema.ts'
@@ -194,8 +194,6 @@ const updateStatusEvent = async (
       throw new AppError('STATUS_EVENT_NOT_FOUND', 404)
     }
 
-    // The date must stay between its neighbours so the order (and with it the
-    // application's current status) can't change
     const previous = events[index - 1]
     const next = events[index + 1]
 
@@ -256,8 +254,15 @@ const deleteStatusEvent = async (
       throw new AppError('STATUS_EVENT_NOT_FOUND', 404)
     }
 
+    const remaining = events.filter(event => event.id !== eventId)
+    // Removing an event can leave the same status twice in a row
+    // (applied → interviewing → applied), so keep only the first of each run
+    const duplicateIds = remaining
+      .filter((event, i) => event.status === remaining[i - 1]?.status)
+      .map(event => event.id)
+
     // The application's status is always the status of its latest event
-    const latestRemaining = events.filter(event => event.id !== eventId).at(-1)
+    const latestRemaining = remaining.at(-1)
 
     if (!latestRemaining) {
       throw new AppError('LAST_STATUS_EVENT', 409)
@@ -265,7 +270,7 @@ const deleteStatusEvent = async (
 
     await tx
       .delete(applicationStatusEvents)
-      .where(eq(applicationStatusEvents.id, eventId))
+      .where(inArray(applicationStatusEvents.id, [eventId, ...duplicateIds]))
 
     if (latestRemaining.status !== application.status) {
       await tx

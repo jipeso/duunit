@@ -107,6 +107,7 @@
     "timeline": "Aikajana",
     "deleteEvent": "Poista aikajanan merkintä",
     "deleteEventConfirm": "Poistetaanko merkintä aikajanalta? Toimintoa ei voi perua.",
+    "deleteLatestEventConfirm": "Poistetaanko merkintä? Tilaksi palautuu {{status}}.",
     "editEventDate": "Muokkaa päivämäärää",
     "moreActions": "Lisää toimintoja",
 

@@ -16,8 +16,8 @@ import { today } from '../../util/date'
 interface Props {
   applicationId: string
   event: StatusEventResponse
-  min?: string
-  max?: string
+  min: string | undefined
+  max: string | undefined
   onClose: () => void
 }
 
@@ -32,7 +32,6 @@ const EditEventDateDialog = ({
   const { mutate, isPending, error } = useUpdateStatusEvent()
   const [occurredOn, setOccurredOn] = useState(event.occurredOn)
 
-  // The date has to stay between the neighbouring events and can't be in the future
   const upperLimit = max && max < today() ? max : today()
   const isValid =
     occurredOn !== '' && (!min || occurredOn >= min) && occurredOn <= upperLimit

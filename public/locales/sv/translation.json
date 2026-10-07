@@ -107,6 +107,7 @@
     "timeline": "Tidslinje",
     "deleteEvent": "Ta bort tidslinjepost",
     "deleteEventConfirm": "Ta bort posten från tidslinjen? Det går inte att ångra.",
+    "deleteLatestEventConfirm": "Ta bort posten? Statusen ändras tillbaka till {{status}}.",
     "editEventDate": "Redigera datum",
     "moreActions": "Fler åtgärder",
 
