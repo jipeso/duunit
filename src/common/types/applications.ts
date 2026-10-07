@@ -54,6 +54,16 @@ export const NewApplicationSchema = z.object({
     .transform(emptyToNull)
     .pipe(z.iso.date().nullable())
     .nullish(),
+  nextInterviewAt: z
+    .string()
+    .transform(emptyToNull)
+    .pipe(
+      z.iso
+        .datetime({ local: true })
+        .transform(value => new Date(value).toISOString())
+        .nullable()
+    )
+    .nullish(),
   salary: optionalText(MAX_TEXT_LENGTH),
   coverLetter: optionalText(MAX_COVER_LETTER_LENGTH),
   notes: optionalText(MAX_NOTES_LENGTH),
@@ -68,6 +78,7 @@ export const ApplicationResponseSchema = z.object({
   location: z.string().nullable(),
   appliedAt: z.iso.date().nullable(),
   deadline: z.iso.date().nullable(),
+  nextInterviewAt: z.iso.datetime().nullable(),
   salary: z.string().nullable(),
   coverLetter: z.string().nullable(),
   notes: z.string().nullable(),

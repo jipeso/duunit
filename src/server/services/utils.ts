@@ -13,6 +13,8 @@ export const toApplicationResponse = (
     ...app,
     createdAt: app.createdAt.toISOString(),
     updatedAt: app.updatedAt.toISOString(),
+    nextInterviewAt:
+      app.nextInterviewAt && new Date(app.nextInterviewAt).toISOString(),
   })
 
   if (!result.success) {

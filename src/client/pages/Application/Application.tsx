@@ -29,7 +29,7 @@ import useUpdateApplication from '../../hooks/useUpdateApplication'
 import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
 import { useNotification } from '../../components/Notification'
 import { EMPTY_VALUE, statusColors } from '../../util/applications'
-import { parseDate } from '../../util/date'
+import { DATE_TIME_FORMAT, parseDate } from '../../util/date'
 import StatusTimeline from './StatusTimeline'
 
 const Detail = ({
@@ -103,6 +103,7 @@ const ApplicationDetails = ({
     status,
     appliedAt,
     deadline,
+    nextInterviewAt,
     location,
     salary,
     jobPostingUrl,
@@ -191,6 +192,14 @@ const ApplicationDetails = ({
         <Detail label={t('fields.deadline')}>
           {deadline
             ? parseDate(deadline).toLocaleDateString(i18n.language)
+            : EMPTY_VALUE}
+        </Detail>
+        <Detail label={t('fields.nextInterviewAt')}>
+          {nextInterviewAt
+            ? new Date(nextInterviewAt).toLocaleString(
+                i18n.language,
+                DATE_TIME_FORMAT
+              )
             : EMPTY_VALUE}
         </Detail>
         <Detail label={t('fields.location')}>{location ?? EMPTY_VALUE}</Detail>

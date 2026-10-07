@@ -39,6 +39,7 @@
     "status": "Status",
     "appliedAt": "Applied on",
     "deadline": "Application deadline",
+    "nextInterviewAt": "Next interview",
     "jobPostingUrl": "Job posting URL",
     "location": "Location",
     "salary": "Salary",

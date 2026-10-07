@@ -28,8 +28,6 @@ const AUTOSIZE_OPTIONS: GridAutosizeOptions = {
   includeOutliers: true,
 }
 
-const INITIAL_SORT_MODEL = [{ field: 'appliedAt', sort: 'desc' as const }]
-
 const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
   const { t, i18n } = useTranslation()
   const apiRef = useGridApiRef()
@@ -126,11 +124,6 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
           height: '100%',
           width: '100%',
           border: 0,
-        }}
-        initialState={{
-          sorting: {
-            sortModel: INITIAL_SORT_MODEL,
-          },
         }}
       />
 

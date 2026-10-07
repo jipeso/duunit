@@ -20,7 +20,7 @@ import {
   type ApplicationResponse,
 } from '#common/types/applications.ts'
 import { EMPTY_VALUE, statusColors } from '../../util/applications'
-import { parseDate } from '../../util/date'
+import { DATE_TIME_FORMAT, parseDate } from '../../util/date'
 
 interface ApplicationActions {
   onEdit: (application: ApplicationResponse) => void
@@ -107,8 +107,9 @@ export const createApplicationColumns = (
       flex: 1,
       type: 'date',
       valueGetter: (_, row) =>
-        row.appliedAt ? parseDate(row.appliedAt) : new Date(row.createdAt),
-      valueFormatter: (value: Date) => value.toLocaleDateString(language),
+        row.appliedAt ? parseDate(row.appliedAt) : null,
+      valueFormatter: (value: Date | null) =>
+        value ? value.toLocaleDateString(language) : EMPTY_VALUE,
     },
     {
       field: 'deadline',
@@ -118,6 +119,16 @@ export const createApplicationColumns = (
       valueGetter: (_, row) => (row.deadline ? parseDate(row.deadline) : null),
       valueFormatter: (value: Date | null) =>
         value ? value.toLocaleDateString(language) : EMPTY_VALUE,
+    },
+    {
+      field: 'nextInterviewAt',
+      headerName: t('fields.nextInterviewAt'),
+      flex: 1,
+      type: 'dateTime',
+      valueGetter: (_, row) =>
+        row.nextInterviewAt ? new Date(row.nextInterviewAt) : null,
+      valueFormatter: (value: Date | null) =>
+        value ? value.toLocaleString(language, DATE_TIME_FORMAT) : EMPTY_VALUE,
     },
     {
       field: 'jobPostingUrl',

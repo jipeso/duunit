@@ -39,6 +39,7 @@
     "status": "Tila",
     "appliedAt": "Hakupäivä",
     "deadline": "Hakuaika päättyy",
+    "nextInterviewAt": "Seuraava haastattelu",
     "jobPostingUrl": "Työpaikkailmoituksen linkki",
     "location": "Sijainti",
     "salary": "Palkka",

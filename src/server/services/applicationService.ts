@@ -43,10 +43,16 @@ const createApplication = async (
   userId: string,
   application: NewApplication
 ): Promise<ApplicationResponse> => {
+  // An 'applied' application without a date is assumed to be applied today
+  const values =
+    application.status === 'applied' && !application.appliedAt
+      ? { ...application, appliedAt: today() }
+      : application
+
   const addedApplication = await db.transaction(async tx => {
     const [row] = await tx
       .insert(applications)
-      .values({ ...application, userId })
+      .values({ ...values, userId })
       .returning()
 
     if (!row) {
@@ -72,6 +78,7 @@ const getApplications = async (
 ): Promise<ApplicationResponse[]> => {
   const userApplications = await db.query.applications.findMany({
     where: eq(applications.userId, userId),
+    orderBy: desc(applications.createdAt),
   })
   return userApplications.map(toApplicationResponse)
 }
@@ -83,7 +90,10 @@ const updateApplication = async (
 ): Promise<ApplicationResponse> => {
   const updatedApplication = await db.transaction(async tx => {
     const [current] = await tx
-      .select({ status: applications.status })
+      .select({
+        status: applications.status,
+        appliedAt: applications.appliedAt,
+      })
       .from(applications)
       .where(
         and(eq(applications.id, applicationId), eq(applications.userId, userId))
@@ -94,9 +104,19 @@ const updateApplication = async (
       throw new AppError('APPLICATION_NOT_FOUND', 404)
     }
 
+    // Moving to 'applied' fills in an empty applied date with today, but never
+    // overwrites a stored date or one given in the same request
+    const values =
+      application.status === 'applied' &&
+      current.status !== 'applied' &&
+      current.appliedAt === null &&
+      !application.appliedAt
+        ? { ...application, appliedAt: today() }
+        : application
+
     const [row] = await tx
       .update(applications)
-      .set(application)
+      .set(values)
       .where(eq(applications.id, applicationId))
       .returning()
 

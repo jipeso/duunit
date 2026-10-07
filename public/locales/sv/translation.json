@@ -39,6 +39,7 @@
     "status": "Status",
     "appliedAt": "Ansökningsdatum",
     "deadline": "Sista ansökningsdag",
+    "nextInterviewAt": "Nästa intervju",
     "jobPostingUrl": "Länk till jobbannons",
     "location": "Plats",
     "salary": "Lön",

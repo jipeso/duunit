@@ -180,6 +180,20 @@ const ApplicationForm = ({
 
         <TextField
           fullWidth
+          id='nextInterviewAt'
+          type='datetime-local'
+          label={t('fields.nextInterviewAt')}
+          slotProps={{
+            inputLabel: { shrink: true },
+            htmlInput: { 'data-testid': 'application-next-interview-at' },
+          }}
+          {...register('nextInterviewAt')}
+          error={!!errors.nextInterviewAt}
+          helperText={errors.nextInterviewAt?.message}
+        />
+
+        <TextField
+          fullWidth
           id='jobPostingUrl'
           label={t('fields.jobPostingUrl')}
           slotProps={{
