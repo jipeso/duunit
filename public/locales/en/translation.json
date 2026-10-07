@@ -22,7 +22,8 @@
       "delete": "Delete",
       "cancel": "Cancel",
       "edit": "Edit",
-      "copyToClipboard": "Copy to clipboard"
+      "copyToClipboard": "Copy to clipboard",
+      "save": "Save"
     }
   },
 
@@ -42,7 +43,8 @@
     "location": "Location",
     "salary": "Salary",
     "coverLetter": "Cover letter",
-    "notes": "Notes"
+    "notes": "Notes",
+    "eventDate": "Date"
   },
 
   "navigation": {
@@ -105,6 +107,8 @@
     "timeline": "Timeline",
     "deleteEvent": "Delete timeline entry",
     "deleteEventConfirm": "Delete this entry from the timeline? This cannot be undone.",
+    "editEventDate": "Edit date",
+    "moreActions": "More actions",
 
     "statuses": {
       "saved": "Saved",

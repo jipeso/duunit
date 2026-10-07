@@ -22,7 +22,8 @@
       "delete": "Poista",
       "cancel": "Peruuta",
       "edit": "Muokkaa",
-      "copyToClipboard": "Kopioi leikepöydälle"
+      "copyToClipboard": "Kopioi leikepöydälle",
+      "save": "Tallenna"
     }
   },
 
@@ -42,7 +43,8 @@
     "location": "Sijainti",
     "salary": "Palkka",
     "coverLetter": "Saatekirje",
-    "notes": "Muistiinpanot"
+    "notes": "Muistiinpanot",
+    "eventDate": "Päivämäärä"
   },
 
   "navigation": {
@@ -105,6 +107,8 @@
     "timeline": "Aikajana",
     "deleteEvent": "Poista aikajanan merkintä",
     "deleteEventConfirm": "Poistetaanko merkintä aikajanalta? Toimintoa ei voi perua.",
+    "editEventDate": "Muokkaa päivämäärää",
+    "moreActions": "Lisää toimintoja",
 
     "statuses": {
       "saved": "Tallennettu",

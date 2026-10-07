@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
 import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -7,17 +7,25 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
 import Link from '@mui/material/Link'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useNavigate, useParams } from 'react-router'
 
-import type { ApplicationResponse } from '#common/types/applications.ts'
+import {
+  APPLICATION_STATUSES,
+  type ApplicationResponse,
+  type ApplicationStatus,
+} from '#common/types/applications.ts'
 import useApplications from '../../hooks/useApplications'
+import useUpdateApplication from '../../hooks/useUpdateApplication'
 import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
 import { useNotification } from '../../components/Notification'
 import { EMPTY_VALUE, statusColors } from '../../util/applications'
@@ -84,8 +92,11 @@ const ApplicationDetails = ({
 }) => {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
-  const { showSuccess } = useNotification()
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const { showSuccess, showError } = useNotification()
+  const { mutate: updateApplication } = useUpdateApplication()
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [statusMenuOpen, setStatusMenuOpen] = useState(false)
+  const statusChipRef = useRef<HTMLDivElement>(null)
   const {
     position,
     company,
@@ -106,6 +117,26 @@ const ApplicationDetails = ({
     }
   }
 
+  const changeStatus = (newStatus: ApplicationStatus) => {
+    setStatusMenuOpen(false)
+
+    if (newStatus === status) {
+      return
+    }
+
+    updateApplication(
+      { id: application.id, values: { status: newStatus } },
+      {
+        onSuccess: () => {
+          showSuccess(t('notifications.applicationUpdatedSuccess'))
+        },
+        onError: () => {
+          showError(t('common.errors.unexpected'))
+        },
+      }
+    )
+  }
+
   return (
     <Stack spacing={4}>
       <Box>
@@ -120,7 +151,35 @@ const ApplicationDetails = ({
           variant='outlined'
           color={statusColors[status]}
           label={t(`applications.statuses.${status}`)}
+          data-testid='application-details-status'
+          ref={statusChipRef}
+          onClick={() => {
+            setStatusMenuOpen(true)
+          }}
+          deleteIcon={<ArrowDropDownIcon />}
+          onDelete={() => {
+            setStatusMenuOpen(true)
+          }}
         />
+        <Menu
+          anchorEl={statusChipRef.current}
+          open={statusMenuOpen}
+          onClose={() => {
+            setStatusMenuOpen(false)
+          }}
+        >
+          {APPLICATION_STATUSES.map(option => (
+            <MenuItem
+              key={option}
+              selected={option === status}
+              onClick={() => {
+                changeStatus(option)
+              }}
+            >
+              {t(`applications.statuses.${option}`)}
+            </MenuItem>
+          ))}
+        </Menu>
       </Box>
 
       <Stack component='dl' spacing={1.5} sx={{ m: 0 }}>
@@ -202,7 +261,7 @@ const ApplicationDetails = ({
           color='error'
           data-testid='application-details-delete'
           onClick={() => {
-            setIsDeleteDialogOpen(true)
+            setDeleteDialogOpen(true)
           }}
         >
           {t('common.buttons.delete')}
@@ -211,9 +270,9 @@ const ApplicationDetails = ({
 
       <DeleteApplicationDialog
         application={application}
-        open={isDeleteDialogOpen}
+        open={deleteDialogOpen}
         onClose={() => {
-          setIsDeleteDialogOpen(false)
+          setDeleteDialogOpen(false)
         }}
         onDeleted={() => {
           void navigate('/applications')

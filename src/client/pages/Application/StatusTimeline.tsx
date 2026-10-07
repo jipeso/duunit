@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Timeline from '@mui/lab/Timeline'
 import TimelineConnector from '@mui/lab/TimelineConnector'
 import TimelineContent from '@mui/lab/TimelineContent'
@@ -15,6 +16,7 @@ import { useTranslation } from 'react-i18next'
 import useStatusEvents from '../../hooks/useStatusEvents'
 import useDeleteStatusEvent from '../../hooks/useDeleteStatusEvent'
 import ConfirmDialog from '../../components/common/ConfirmDialog'
+import EditEventDateDialog from './EditEventDateDialog'
 import { statusColors } from '../../util/applications'
 import { parseDate } from '../../util/date'
 
@@ -23,6 +25,14 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
   const { data: events, isError } = useStatusEvents(applicationId)
   const { mutate, isPending, error, reset } = useDeleteStatusEvent()
   const [eventIdToDelete, setEventIdToDelete] = useState<string | null>(null)
+  const [eventIdToEdit, setEventIdToEdit] = useState<string | null>(null)
+  const [menu, setMenu] = useState<{
+    anchorEl: HTMLElement
+    eventId: string
+  } | null>(null)
+
+  const editIndex = events?.findIndex(event => event.id === eventIdToEdit) ?? -1
+  const eventToEdit = events?.[editIndex]
 
   const closeDialog = () => {
     reset()
@@ -77,24 +87,58 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
                       )}
                     </Typography>
                   </Box>
-                  {events.length > 1 && (
-                    <Tooltip title={t('common.buttons.delete')}>
-                      <IconButton
-                        size='small'
-                        aria-label={t('common.buttons.delete')}
-                        onClick={() => {
-                          setEventIdToDelete(event.id)
-                        }}
-                      >
-                        <DeleteOutlinedIcon fontSize='small' />
-                      </IconButton>
-                    </Tooltip>
-                  )}
+                  <IconButton
+                    size='small'
+                    aria-label={t('applications.moreActions')}
+                    onClick={e => {
+                      setMenu({ anchorEl: e.currentTarget, eventId: event.id })
+                    }}
+                  >
+                    <MoreVertIcon fontSize='small' />
+                  </IconButton>
                 </TimelineContent>
               </TimelineItem>
             )
           })}
         </Timeline>
+      )}
+
+      <Menu
+        anchorEl={menu?.anchorEl}
+        open={menu !== null}
+        onClose={() => {
+          setMenu(null)
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            setEventIdToEdit(menu?.eventId ?? null)
+            setMenu(null)
+          }}
+        >
+          {t('applications.editEventDate')}
+        </MenuItem>
+        <MenuItem
+          disabled={events?.length === 1}
+          onClick={() => {
+            setEventIdToDelete(menu?.eventId ?? null)
+            setMenu(null)
+          }}
+        >
+          {t('common.buttons.delete')}
+        </MenuItem>
+      </Menu>
+
+      {events && eventToEdit && (
+        <EditEventDateDialog
+          applicationId={applicationId}
+          event={eventToEdit}
+          min={events[editIndex - 1]?.occurredOn}
+          max={events[editIndex + 1]?.occurredOn}
+          onClose={() => {
+            setEventIdToEdit(null)
+          }}
+        />
       )}
 
       <ConfirmDialog

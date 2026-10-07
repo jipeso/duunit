@@ -86,6 +86,10 @@ export const StatusEventResponseSchema = z.object({
   occurredOn: z.iso.date(),
 })
 
+export const UpdateStatusEventSchema = z.object({
+  occurredOn: z.iso.date(),
+})
+
 export type StatusEventResponse = z.infer<typeof StatusEventResponseSchema>
 export type ApplicationStatus = z.infer<typeof ApplicationStatusSchema>
 export type NewApplication = z.infer<typeof NewApplicationSchema>

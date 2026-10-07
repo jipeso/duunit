@@ -6,6 +6,7 @@ export type ErrorCode =
   | 'APPLICATION_NOT_FOUND'
   | 'STATUS_EVENT_NOT_FOUND'
   | 'LAST_STATUS_EVENT'
+  | 'EVENT_DATE_OUT_OF_ORDER'
   | 'INTERNAL_ERROR'
 
 export class AppError extends Error {

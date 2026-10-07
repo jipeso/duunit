@@ -157,6 +157,71 @@ const getStatusEvents = async (
   return events.map(toStatusEventResponse)
 }
 
+const updateStatusEvent = async (
+  userId: string,
+  applicationId: string,
+  eventId: string,
+  occurredOn: string
+): Promise<StatusEventResponse> => {
+  const updatedEvent = await db.transaction(async tx => {
+    const [application] = await tx
+      .select({ id: applications.id })
+      .from(applications)
+      .where(
+        and(eq(applications.id, applicationId), eq(applications.userId, userId))
+      )
+      .for('update')
+
+    if (!application) {
+      throw new AppError('APPLICATION_NOT_FOUND', 404)
+    }
+
+    const events = await tx
+      .select({
+        id: applicationStatusEvents.id,
+        occurredOn: applicationStatusEvents.occurredOn,
+      })
+      .from(applicationStatusEvents)
+      .where(eq(applicationStatusEvents.applicationId, applicationId))
+      .orderBy(
+        asc(applicationStatusEvents.occurredOn),
+        asc(applicationStatusEvents.createdAt)
+      )
+
+    const index = events.findIndex(event => event.id === eventId)
+
+    if (index === -1) {
+      throw new AppError('STATUS_EVENT_NOT_FOUND', 404)
+    }
+
+    // The date must stay between its neighbours so the order (and with it the
+    // application's current status) can't change
+    const previous = events[index - 1]
+    const next = events[index + 1]
+
+    if (
+      (previous && occurredOn < previous.occurredOn) ||
+      (next && occurredOn > next.occurredOn)
+    ) {
+      throw new AppError('EVENT_DATE_OUT_OF_ORDER', 400)
+    }
+
+    const [row] = await tx
+      .update(applicationStatusEvents)
+      .set({ occurredOn })
+      .where(eq(applicationStatusEvents.id, eventId))
+      .returning()
+
+    if (!row) {
+      throw new AppError('INTERNAL_ERROR', 500)
+    }
+
+    return row
+  })
+
+  return toStatusEventResponse(updatedEvent)
+}
+
 const deleteStatusEvent = async (
   userId: string,
   applicationId: string,
@@ -217,5 +282,6 @@ export default {
   updateApplication,
   deleteApplication,
   getStatusEvents,
+  updateStatusEvent,
   deleteStatusEvent,
 }

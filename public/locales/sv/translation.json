@@ -22,7 +22,8 @@
       "delete": "Ta bort",
       "cancel": "Avbryt",
       "edit": "Redigera",
-      "copyToClipboard": "Kopiera till urklipp"
+      "copyToClipboard": "Kopiera till urklipp",
+      "save": "Spara"
     }
   },
 
@@ -42,7 +43,8 @@
     "location": "Plats",
     "salary": "Lön",
     "coverLetter": "Personligt brev",
-    "notes": "Anteckningar"
+    "notes": "Anteckningar",
+    "eventDate": "Datum"
   },
 
   "navigation": {
@@ -105,6 +107,8 @@
     "timeline": "Tidslinje",
     "deleteEvent": "Ta bort tidslinjepost",
     "deleteEventConfirm": "Ta bort posten från tidslinjen? Det går inte att ångra.",
+    "editEventDate": "Redigera datum",
+    "moreActions": "Fler åtgärder",
 
     "statuses": {
       "saved": "Sparad",

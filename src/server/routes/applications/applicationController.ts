@@ -8,6 +8,7 @@ import {
   NewApplicationSchema,
   type StatusEventResponse,
   UpdateApplicationSchema,
+  UpdateStatusEventSchema,
 } from '#common/types/applications.ts'
 
 const router = Router()
@@ -54,6 +55,23 @@ router.patch(
       values
     )
     res.json(updatedApplication)
+  }
+)
+
+router.patch(
+  '/:id/events/:eventId',
+  async (req: Request, res: Response<StatusEventResponse>) => {
+    const applicationId = z.uuid().parse(req.params.id)
+    const eventId = z.uuid().parse(req.params.eventId)
+    const { occurredOn } = UpdateStatusEventSchema.parse(req.body)
+
+    const updatedEvent = await applicationService.updateStatusEvent(
+      req.user.id,
+      applicationId,
+      eventId,
+      occurredOn
+    )
+    res.json(updatedEvent)
   }
 )
 
