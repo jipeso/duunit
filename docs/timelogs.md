@@ -16,4 +16,7 @@
 | 2.10  | 7        | Frontend + applications API         |
 | 3.10  | 4        | UI/UX updates                       |
 | 5.10  | 8        | documentation + refactoring         |
-| Total | 100      |                                     |
+| 6.10  | 6        | Events API + Frontend               |
+| 7.10  | 8        | Events API + Frontend               |
+| 8.10  | 8        | Resumes API + Frontend              |
+| Total | 122      |                                     |

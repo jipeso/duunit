@@ -11,6 +11,8 @@
       "system": "System"
     },
 
+    "moreActions": "Fler åtgärder",
+
     "errors": {
       "unexpected": "Något gick fel. Försök igen.",
       "loadFailed": "Det gick inte att läsa in data. Försök igen."
@@ -45,7 +47,8 @@
     "salary": "Lön",
     "coverLetter": "Personligt brev",
     "notes": "Anteckningar",
-    "eventDate": "Datum"
+    "eventDate": "Datum",
+    "resume": "CV"
   },
 
   "navigation": {
@@ -56,7 +59,8 @@
     "admin": "Admin",
     "login": "Logga in",
     "logout": "Logga ut",
-    "applications": "Ansökningar"
+    "applications": "Ansökningar",
+    "resumes": "CV:n"
   },
 
   "home": {
@@ -87,7 +91,9 @@
     "applicationDeletedSuccess": "Ansökan har tagits bort.",
     "coverLetterCopied": "Det personliga brevet har kopierats till urklipp.",
     "nameUpdatedSuccess": "Ditt namn har uppdaterats.",
-    "passwordUpdatedSuccess": "Ditt lösenord har ändrats."
+    "passwordUpdatedSuccess": "Ditt lösenord har ändrats.",
+    "resumeUploadedSuccess": "CV:t har laddats upp.",
+    "resumeDeletedSuccess": "CV:t har tagits bort."
   },
 
   "applications": {
@@ -110,7 +116,6 @@
     "deleteEventConfirm": "Ta bort posten från tidslinjen? Det går inte att ångra.",
     "deleteLatestEventConfirm": "Ta bort posten? Statusen ändras tillbaka till {{status}}.",
     "editEventDate": "Redigera datum",
-    "moreActions": "Fler åtgärder",
 
     "statuses": {
       "saved": "Sparad",
@@ -121,6 +126,20 @@
       "accepted": "Accepterad",
       "withdrawn": "Återkallad"
     }
+  },
+
+  "resumes": {
+    "title": "CV:n",
+    "upload": "Ladda upp PDF",
+    "download": "Ladda ner",
+    "search": "Sök",
+    "empty": "Du har inte laddat upp några CV:n ännu",
+    "noMatches": "Inga matchande CV:n",
+    "limitReached": "Du kan ha högst {{max}} CV:n.",
+    "none": "Inget",
+    "delete": "Ta bort CV",
+    "deleteConfirm": "Ta bort {{fileName}}? Det tas också bort från ansökningar som det är kopplat till. Detta kan inte ångras.",
+    "tooLarge": "Filen är för stor. Maxstorleken är 2 MB."
   },
 
   "register": {

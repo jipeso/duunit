@@ -7,10 +7,14 @@ import {
   date,
   boolean,
   index,
+  customType,
 } from 'drizzle-orm/pg-core'
 
 import { ROLES } from '#common/types/users.ts'
 import { APPLICATION_STATUSES } from '#common/types/applications.ts'
+
+// drizzle-orm 0.x has no built-in type for bytea (added in v1)
+const bytea = customType<{ data: Buffer }>({ dataType: () => 'bytea' })
 
 export const roleEnum = pgEnum('role', ROLES)
 export const applicationStatusEnum = pgEnum(
@@ -69,6 +73,20 @@ export const verifications = pgTable('verifications', {
   updatedAt: timestamp('updated_at').notNull(),
 })
 
+export const resumes = pgTable(
+  'resumes',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    fileName: text('file_name').notNull(),
+    data: bytea('data').notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+  },
+  table => [index('resumes_user_id_idx').on(table.userId)]
+)
+
 export const applications = pgTable('applications', {
   id: uuid('id').defaultRandom().primaryKey(),
   userId: uuid('user_id')
@@ -88,6 +106,9 @@ export const applications = pgTable('applications', {
   salary: text('salary'),
   coverLetter: text('cover_letter'),
   notes: text('notes'),
+  resumeId: uuid('resume_id').references(() => resumes.id, {
+    onDelete: 'set null',
+  }),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at')
     .notNull()
@@ -117,3 +138,4 @@ export const applicationStatusEvents = pgTable(
 
 export type DatabaseStatusEvent = typeof applicationStatusEvents.$inferSelect
 export type DatabaseApplication = typeof applications.$inferSelect
+export type DatabaseResume = typeof resumes.$inferSelect

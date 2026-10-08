@@ -20,8 +20,8 @@ C4Container
     Boundary(duunit, "", "") {
         Container(spa, "Single-page app", "React 19, Vite, MUI, TanStack Query", "Runs in the browser. src/client")
         Container(proxy, "Reverse proxy", "Caddy", "HTTPS, compression. deploy/Caddyfile")
-        ContainerDb(db, "Database", "PostgreSQL 18", "users, sessions, accounts, verifications, applications, application_status_events")
-        Container(api, "API application", "Node, Express 5, Better Auth, Drizzle", "/api/auth/*, /api/applications, built SPA. src/server")
+        ContainerDb(db, "Database", "PostgreSQL 18", "users, sessions, accounts, verifications, applications, application_status_events, resumes")
+        Container(api, "API application", "Node, Express 5, Better Auth, Drizzle", "/api/auth/*, /api/applications, /api/resumes, built SPA. src/server")
     }
 
     Boundary(ext, "", "") {

@@ -11,6 +11,8 @@
       "system": "Järjestelmä"
     },
 
+    "moreActions": "Lisää toimintoja",
+
     "errors": {
       "unexpected": "Jokin meni pieleen. Yritä uudelleen.",
       "loadFailed": "Tietojen lataaminen epäonnistui. Yritä uudelleen."
@@ -45,7 +47,8 @@
     "salary": "Palkka",
     "coverLetter": "Saatekirje",
     "notes": "Muistiinpanot",
-    "eventDate": "Päivämäärä"
+    "eventDate": "Päivämäärä",
+    "resume": "Ansioluettelo"
   },
 
   "navigation": {
@@ -56,7 +59,8 @@
     "admin": "Ylläpito",
     "login": "Kirjaudu sisään",
     "logout": "Kirjaudu ulos",
-    "applications": "Hakemukset"
+    "applications": "Hakemukset",
+    "resumes": "Ansioluettelot"
   },
 
   "home": {
@@ -87,7 +91,9 @@
     "applicationDeletedSuccess": "Hakemus on poistettu.",
     "coverLetterCopied": "Saatekirje kopioitu leikepöydälle.",
     "nameUpdatedSuccess": "Nimesi on päivitetty.",
-    "passwordUpdatedSuccess": "Salasanasi on vaihdettu."
+    "passwordUpdatedSuccess": "Salasanasi on vaihdettu.",
+    "resumeUploadedSuccess": "Ansioluettelo on ladattu.",
+    "resumeDeletedSuccess": "Ansioluettelo on poistettu."
   },
 
   "applications": {
@@ -110,7 +116,6 @@
     "deleteEventConfirm": "Poistetaanko merkintä aikajanalta? Toimintoa ei voi perua.",
     "deleteLatestEventConfirm": "Poistetaanko merkintä? Tilaksi palautuu {{status}}.",
     "editEventDate": "Muokkaa päivämäärää",
-    "moreActions": "Lisää toimintoja",
 
     "statuses": {
       "saved": "Tallennettu",
@@ -121,6 +126,20 @@
       "accepted": "Hyväksytty",
       "withdrawn": "Peruttu"
     }
+  },
+
+  "resumes": {
+    "title": "Ansioluettelot",
+    "upload": "Lataa PDF",
+    "download": "Lataa",
+    "search": "Hae",
+    "empty": "Et ole vielä ladannut ansioluetteloita",
+    "noMatches": "Ei hakua vastaavia ansioluetteloita",
+    "limitReached": "Voit tallentaa enintään {{max}} ansioluetteloa.",
+    "none": "Ei mitään",
+    "delete": "Poista ansioluettelo",
+    "deleteConfirm": "Poistetaanko {{fileName}}? Se poistetaan myös hakemuksista, joihin se on liitetty. Toimintoa ei voi perua.",
+    "tooLarge": "Tiedosto on liian suuri. Enimmäiskoko on 2 Mt."
   },
 
   "register": {

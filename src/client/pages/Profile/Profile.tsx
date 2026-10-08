@@ -58,7 +58,7 @@ const Profile = () => {
   }
 
   return (
-    <Container maxWidth='sm' sx={{ mt: 8 }}>
+    <Container maxWidth='sm' sx={{ mt: 4, mb: 8 }}>
       <Paper variant='outlined' sx={{ p: 3 }}>
         <Typography variant='h5' gutterBottom>
           {t('profile.details')}
@@ -75,19 +75,27 @@ const Profile = () => {
                 <IconButton
                   size='small'
                   aria-label={t('common.buttons.edit')}
-                  onClick={() => { setName(user.name); }}
+                  onClick={() => {
+                    setName(user.name)
+                  }}
                 >
                   <EditIcon fontSize='small' />
                 </IconButton>
               </Stack>
             ) : (
-              <Stack direction='row' spacing={1} sx={{ alignItems: 'flex-start' }}>
+              <Stack
+                direction='row'
+                spacing={1}
+                sx={{ alignItems: 'flex-start' }}
+              >
                 <TextField
                   autoFocus
                   fullWidth
                   size='small'
                   value={name}
-                  onChange={e => { setName(e.target.value); }}
+                  onChange={e => {
+                    setName(e.target.value)
+                  }}
                   onKeyDown={e => {
                     if (e.key === 'Enter') void saveName()
                     if (e.key === 'Escape') cancelName()
@@ -121,10 +129,18 @@ const Profile = () => {
           <Divider />
 
           {changingPassword ? (
-            <ChangePasswordForm onDone={() => { setChangingPassword(false); }} />
+            <ChangePasswordForm
+              onDone={() => {
+                setChangingPassword(false)
+              }}
+            />
           ) : (
             <Box>
-              <Button onClick={() => { setChangingPassword(true); }}>
+              <Button
+                onClick={() => {
+                  setChangingPassword(true)
+                }}
+              >
                 {t('profile.updatePassword')}
               </Button>
             </Box>

@@ -43,6 +43,13 @@
       "when": 1791368948741,
       "tag": "0005_gigantic_umar",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1791467894366,
+      "tag": "0006_nice_paibok",
+      "breakpoints": true
     }
   ]
 }

@@ -11,6 +11,8 @@
       "system": "System"
     },
 
+    "moreActions": "More actions",
+
     "errors": {
       "unexpected": "Something went wrong. Please try again.",
       "loadFailed": "Failed to load data. Please try again."
@@ -45,7 +47,8 @@
     "salary": "Salary",
     "coverLetter": "Cover letter",
     "notes": "Notes",
-    "eventDate": "Date"
+    "eventDate": "Date",
+    "resume": "Resume"
   },
 
   "navigation": {
@@ -56,7 +59,8 @@
     "admin": "Admin",
     "login": "Login",
     "logout": "Logout",
-    "applications": "Applications"
+    "applications": "Applications",
+    "resumes": "Resumes"
   },
 
   "home": {
@@ -87,7 +91,9 @@
     "applicationDeletedSuccess": "Application has been deleted.",
     "coverLetterCopied": "Cover letter copied to clipboard.",
     "nameUpdatedSuccess": "Your name has been updated.",
-    "passwordUpdatedSuccess": "Your password has been changed."
+    "passwordUpdatedSuccess": "Your password has been changed.",
+    "resumeUploadedSuccess": "Resume has been uploaded.",
+    "resumeDeletedSuccess": "Resume has been deleted."
   },
 
   "applications": {
@@ -110,7 +116,6 @@
     "deleteEventConfirm": "Delete this entry from the timeline? This cannot be undone.",
     "deleteLatestEventConfirm": "Delete this entry? The status will change back to {{status}}.",
     "editEventDate": "Edit date",
-    "moreActions": "More actions",
 
     "statuses": {
       "saved": "Saved",
@@ -121,6 +126,20 @@
       "accepted": "Accepted",
       "withdrawn": "Withdrawn"
     }
+  },
+
+  "resumes": {
+    "title": "Resumes",
+    "upload": "Upload PDF",
+    "download": "Download",
+    "search": "Search",
+    "empty": "You have not uploaded any resumes yet",
+    "noMatches": "No matching resumes",
+    "limitReached": "You can have at most {{max}} resumes.",
+    "none": "None",
+    "delete": "Delete resume",
+    "deleteConfirm": "Delete {{fileName}}? It will be removed from any applications it is attached to. This cannot be undone.",
+    "tooLarge": "The file is too large. The maximum size is 2 MB."
   },
 
   "register": {

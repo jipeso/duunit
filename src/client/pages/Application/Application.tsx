@@ -26,9 +26,11 @@ import {
 } from '#common/types/applications.ts'
 import useApplications from '../../hooks/useApplications'
 import useUpdateApplication from '../../hooks/useUpdateApplication'
+import useResumes from '../../hooks/useResumes'
 import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
 import { useNotification } from '../../components/Notification'
 import { EMPTY_VALUE, statusColors } from '../../util/applications'
+import { resumeFileUrl } from '../../util/resumes'
 import { DATE_TIME_FORMAT, parseDate } from '../../util/date'
 import StatusTimeline from './StatusTimeline'
 
@@ -94,6 +96,7 @@ const ApplicationDetails = ({
   const navigate = useNavigate()
   const { showSuccess, showError } = useNotification()
   const { mutate: updateApplication } = useUpdateApplication()
+  const { data: resumes } = useResumes()
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [statusMenuOpen, setStatusMenuOpen] = useState(false)
   const statusChipRef = useRef<HTMLDivElement>(null)
@@ -109,7 +112,9 @@ const ApplicationDetails = ({
     jobPostingUrl,
     notes,
     coverLetter,
+    resumeId,
   } = application
+  const resume = resumes?.find(({ id }) => id === resumeId)
 
   const copyCoverLetter = async () => {
     if (coverLetter) {
@@ -140,7 +145,24 @@ const ApplicationDetails = ({
 
   return (
     <Stack spacing={4}>
-      <Box>
+      <Box sx={{ overflowWrap: 'anywhere' }}>
+        <Stack direction='row' sx={{ mb: 2, justifyContent: 'space-between' }}>
+          <Button
+            component={RouterLink}
+            to='/applications'
+            startIcon={<ArrowBackIcon />}
+          >
+            {t('applications.backToList')}
+          </Button>
+          <Button
+            component={RouterLink}
+            to={`/applications/${application.id}/edit`}
+            state={{ returnTo: `/applications/${application.id}` }}
+            data-testid='application-details-edit'
+          >
+            {t('common.buttons.edit')}
+          </Button>
+        </Stack>
         <Typography component='h1' variant='h5'>
           {position}
         </Typography>
@@ -217,6 +239,19 @@ const ApplicationDetails = ({
             EMPTY_VALUE
           )}
         </Detail>
+        <Detail label={t('fields.resume')}>
+          {resume ? (
+            <Link
+              href={resumeFileUrl(resume.id)}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              {resume.fileName}
+            </Link>
+          ) : (
+            EMPTY_VALUE
+          )}
+        </Detail>
       </Stack>
 
       <StatusTimeline applicationId={application.id} />
@@ -248,24 +283,7 @@ const ApplicationDetails = ({
         }
       />
 
-      <Stack direction='row' spacing={1}>
-        <Button
-          component={RouterLink}
-          to='/applications'
-          startIcon={<ArrowBackIcon />}
-          sx={{ mr: 'auto' }}
-        >
-          {t('applications.backToList')}
-        </Button>
-        <Button
-          component={RouterLink}
-          to={`/applications/${application.id}/edit`}
-          state={{ returnTo: `/applications/${application.id}` }}
-          variant='outlined'
-          data-testid='application-details-edit'
-        >
-          {t('common.buttons.edit')}
-        </Button>
+      <Stack direction='row' sx={{ justifyContent: 'flex-end' }}>
         <Button
           color='error'
           data-testid='application-details-delete'

@@ -20,4 +20,5 @@ export const toFormValues = (
   salary: application.salary ?? '',
   coverLetter: application.coverLetter ?? '',
   notes: application.notes ?? '',
+  resumeId: application.resumeId ?? '',
 })

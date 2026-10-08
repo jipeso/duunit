@@ -5,6 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import MenuItem from '@mui/material/MenuItem'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslation } from 'react-i18next'
@@ -21,6 +22,7 @@ import {
   type NewApplicationInput,
 } from '#common/types/applications.ts'
 import { parseDate } from '../../util/date'
+import useResumes from '../../hooks/useResumes'
 
 interface ApplicationFormProps {
   defaultValues: Partial<NewApplicationInput>
@@ -43,6 +45,7 @@ const ApplicationForm = ({
 }: ApplicationFormProps) => {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
+  const { data: resumes = [] } = useResumes()
 
   const {
     register,
@@ -190,6 +193,40 @@ const ApplicationForm = ({
           {...register('nextInterviewAt')}
           error={!!errors.nextInterviewAt}
           helperText={errors.nextInterviewAt?.message}
+        />
+
+        <Controller
+          name='resumeId'
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              value={field.value ?? ''}
+              select
+              fullWidth
+              id='resumeId'
+              label={t('fields.resume')}
+              slotProps={{
+                htmlInput: { 'data-testid': 'application-resume' },
+                select: {
+                  MenuProps: {
+                    slotProps: {
+                      paper: { sx: { maxHeight: 320, maxWidth: 400 } },
+                    },
+                  },
+                },
+              }}
+              error={!!errors.resumeId}
+              helperText={errors.resumeId?.message}
+            >
+              <MenuItem value=''>{t('resumes.none')}</MenuItem>
+              {resumes.map(resume => (
+                <MenuItem key={resume.id} value={resume.id}>
+                  <Typography noWrap>{resume.fileName}</Typography>
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
         />
 
         <TextField

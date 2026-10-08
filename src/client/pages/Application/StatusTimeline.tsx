@@ -103,7 +103,7 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
                   </Box>
                   <IconButton
                     size='small'
-                    aria-label={t('applications.moreActions')}
+                    aria-label={t('common.moreActions')}
                     onClick={e => {
                       setMenu({ anchorEl: e.currentTarget, eventId: event.id })
                     }}

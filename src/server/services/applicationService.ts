@@ -1,7 +1,7 @@
 import { eq, and, asc, desc, inArray } from 'drizzle-orm'
 
 import { db, type Transaction } from '../db/index.ts'
-import { applications, applicationStatusEvents } from '../db/schema.ts'
+import { applications, applicationStatusEvents, resumes } from '../db/schema.ts'
 import type {
   ApplicationResponse,
   ApplicationStatus,
@@ -39,6 +39,23 @@ const recordStatusChange = async (
     .values({ applicationId, status, occurredOn })
 }
 
+const checkResumeOwner = async (
+  tx: Transaction,
+  userId: string,
+  resumeId: string | null | undefined
+): Promise<void> => {
+  if (!resumeId) return
+
+  const [resume] = await tx
+    .select({ id: resumes.id })
+    .from(resumes)
+    .where(and(eq(resumes.id, resumeId), eq(resumes.userId, userId)))
+
+  if (!resume) {
+    throw new AppError('RESUME_NOT_FOUND', 404)
+  }
+}
+
 const createApplication = async (
   userId: string,
   application: NewApplication
@@ -50,6 +67,8 @@ const createApplication = async (
       : application
 
   const addedApplication = await db.transaction(async tx => {
+    await checkResumeOwner(tx, userId, application.resumeId)
+
     const [row] = await tx
       .insert(applications)
       .values({ ...values, userId })
@@ -103,6 +122,8 @@ const updateApplication = async (
     if (!current) {
       throw new AppError('APPLICATION_NOT_FOUND', 404)
     }
+
+    await checkResumeOwner(tx, userId, application.resumeId)
 
     // Moving to 'applied' fills in an empty applied date with today, but never
     // overwrites a stored date or one given in the same request

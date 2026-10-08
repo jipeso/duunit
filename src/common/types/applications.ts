@@ -67,6 +67,11 @@ export const NewApplicationSchema = z.object({
   salary: optionalText(MAX_TEXT_LENGTH),
   coverLetter: optionalText(MAX_COVER_LETTER_LENGTH),
   notes: optionalText(MAX_NOTES_LENGTH),
+  resumeId: z
+    .string()
+    .transform(emptyToNull)
+    .pipe(z.uuid().nullable())
+    .nullish(),
 })
 
 export const ApplicationResponseSchema = z.object({
@@ -82,6 +87,7 @@ export const ApplicationResponseSchema = z.object({
   salary: z.string().nullable(),
   coverLetter: z.string().nullable(),
   notes: z.string().nullable(),
+  resumeId: z.uuid().nullable(),
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
 })
