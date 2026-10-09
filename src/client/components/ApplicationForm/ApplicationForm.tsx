@@ -13,14 +13,12 @@ import { useNavigate } from 'react-router'
 
 import {
   APPLICATION_STATUSES,
-  MAX_COVER_LETTER_LENGTH,
-  MAX_TEXT_LENGTH,
-  MAX_NOTES_LENGTH,
   MIN_APPLIED_DATE,
   NewApplicationSchema,
   type NewApplication,
   type NewApplicationInput,
 } from '#common/types/applications.ts'
+import { MAX_TEXT_LENGTH, MAX_LONG_TEXT_LENGTH } from '#common/types/common.ts'
 import { parseDate } from '../../util/date'
 import useResumes from '../../hooks/useResumes'
 
@@ -284,13 +282,15 @@ const ApplicationForm = ({
           slotProps={{
             htmlInput: {
               'data-testid': 'application-notes',
-              maxLength: MAX_NOTES_LENGTH,
+              maxLength: MAX_LONG_TEXT_LENGTH,
               style: { resize: 'vertical', maxHeight: '40vh' },
             },
           }}
           {...register('notes')}
           error={!!errors.notes}
-          helperText={errors.notes?.message ?? counter(notes, MAX_NOTES_LENGTH)}
+          helperText={
+            errors.notes?.message ?? counter(notes, MAX_LONG_TEXT_LENGTH)
+          }
         />
 
         <TextField
@@ -302,7 +302,7 @@ const ApplicationForm = ({
           slotProps={{
             htmlInput: {
               'data-testid': 'application-cover-letter',
-              maxLength: MAX_COVER_LETTER_LENGTH,
+              maxLength: MAX_LONG_TEXT_LENGTH,
               style: { resize: 'vertical', maxHeight: '40vh' },
             },
           }}
@@ -310,7 +310,7 @@ const ApplicationForm = ({
           error={!!errors.coverLetter}
           helperText={
             errors.coverLetter?.message ??
-            counter(coverLetter, MAX_COVER_LETTER_LENGTH)
+            counter(coverLetter, MAX_LONG_TEXT_LENGTH)
           }
         />
 

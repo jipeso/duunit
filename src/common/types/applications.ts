@@ -1,5 +1,13 @@
 import { z } from 'zod'
 
+import {
+  requiredText,
+  optionalText,
+  emptyToNull,
+  MAX_TEXT_LENGTH,
+  MAX_LONG_TEXT_LENGTH,
+} from './common.ts'
+
 export const APPLICATION_STATUSES = [
   'saved',
   'applied',
@@ -11,21 +19,8 @@ export const APPLICATION_STATUSES = [
 ] as const
 
 export const MIN_APPLIED_DATE = '2015-01-01'
-export const MIN_TEXT_LENGTH = 1
-export const MAX_TEXT_LENGTH = 100
-export const MAX_COVER_LETTER_LENGTH = 6000
-export const MAX_NOTES_LENGTH = 6000
 
 export const ApplicationStatusSchema = z.enum(APPLICATION_STATUSES)
-
-const emptyToNull = (value: string) =>
-  value.trim() === '' ? null : value.trim()
-
-const requiredText = (max: number) =>
-  z.string().trim().min(MIN_TEXT_LENGTH).max(max)
-
-const optionalText = (max: number) =>
-  z.string().trim().max(max).transform(emptyToNull).nullish()
 
 export const NewApplicationSchema = z.object({
   company: requiredText(MAX_TEXT_LENGTH),
@@ -65,8 +60,8 @@ export const NewApplicationSchema = z.object({
     )
     .nullish(),
   salary: optionalText(MAX_TEXT_LENGTH),
-  coverLetter: optionalText(MAX_COVER_LETTER_LENGTH),
-  notes: optionalText(MAX_NOTES_LENGTH),
+  coverLetter: optionalText(MAX_LONG_TEXT_LENGTH),
+  notes: optionalText(MAX_LONG_TEXT_LENGTH),
   resumeId: z
     .string()
     .transform(emptyToNull)
