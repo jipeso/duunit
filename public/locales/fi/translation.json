@@ -130,15 +130,16 @@
 
   "resumes": {
     "title": "Ansioluettelot",
+    "subtitle": "Lataa ansioluettelosi ja liitä ne hakemuksiisi",
+    "backToList": "Takaisin ansioluetteloihin",
+    "notFound": "Ansioluetteloa ei löytynyt",
     "upload": "Lataa PDF",
     "download": "Lataa",
-    "search": "Hae",
     "empty": "Et ole vielä ladannut ansioluetteloita",
-    "noMatches": "Ei hakua vastaavia ansioluetteloita",
-    "limitReached": "Voit tallentaa enintään {{max}} ansioluetteloa.",
     "none": "Ei mitään",
     "delete": "Poista ansioluettelo",
     "deleteConfirm": "Poistetaanko {{fileName}}? Se poistetaan myös hakemuksista, joihin se on liitetty. Toimintoa ei voi perua.",
+    "notPdf": "Vain PDF-tiedostot ovat sallittuja.",
     "tooLarge": "Tiedosto on liian suuri. Enimmäiskoko on 2 Mt."
   },
 

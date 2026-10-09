@@ -130,15 +130,16 @@
 
   "resumes": {
     "title": "Resumes",
+    "subtitle": "Upload your resumes and attach them to your applications",
+    "backToList": "Back to resumes",
+    "notFound": "Resume not found",
     "upload": "Upload PDF",
     "download": "Download",
-    "search": "Search",
     "empty": "You have not uploaded any resumes yet",
-    "noMatches": "No matching resumes",
-    "limitReached": "You can have at most {{max}} resumes.",
     "none": "None",
     "delete": "Delete resume",
     "deleteConfirm": "Delete {{fileName}}? It will be removed from any applications it is attached to. This cannot be undone.",
+    "notPdf": "Only PDF files are allowed.",
     "tooLarge": "The file is too large. The maximum size is 2 MB."
   },
 

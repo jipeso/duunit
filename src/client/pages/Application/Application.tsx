@@ -30,7 +30,6 @@ import useResumes from '../../hooks/useResumes'
 import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
 import { useNotification } from '../../components/Notification'
 import { EMPTY_VALUE, statusColors } from '../../util/applications'
-import { resumeFileUrl } from '../../util/resumes'
 import { DATE_TIME_FORMAT, parseDate } from '../../util/date'
 import StatusTimeline from './StatusTimeline'
 
@@ -241,11 +240,7 @@ const ApplicationDetails = ({
         </Detail>
         <Detail label={t('fields.resume')}>
           {resume ? (
-            <Link
-              href={resumeFileUrl(resume.id)}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
+            <Link component={RouterLink} to={`/resumes/${resume.id}`}>
               {resume.fileName}
             </Link>
           ) : (

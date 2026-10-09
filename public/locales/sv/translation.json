@@ -130,15 +130,16 @@
 
   "resumes": {
     "title": "CV:n",
+    "subtitle": "Ladda upp dina CV:n och bifoga dem till dina ansökningar",
+    "backToList": "Tillbaka till CV:n",
+    "notFound": "CV:t hittades inte",
     "upload": "Ladda upp PDF",
     "download": "Ladda ner",
-    "search": "Sök",
     "empty": "Du har inte laddat upp några CV:n ännu",
-    "noMatches": "Inga matchande CV:n",
-    "limitReached": "Du kan ha högst {{max}} CV:n.",
     "none": "Inget",
     "delete": "Ta bort CV",
     "deleteConfirm": "Ta bort {{fileName}}? Det tas också bort från ansökningar som det är kopplat till. Detta kan inte ångras.",
+    "notPdf": "Endast PDF-filer är tillåtna.",
     "tooLarge": "Filen är för stor. Maxstorleken är 2 MB."
   },
 

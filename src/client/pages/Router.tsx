@@ -10,6 +10,7 @@ import Application from './Application'
 import NewApplication from './NewApplication'
 import EditApplication from './EditApplication'
 import Resumes from './Resumes'
+import Resume from './Resume'
 import AuthRoute from '../components/AuthRoute'
 
 const Router = () => {
@@ -26,6 +27,7 @@ const Router = () => {
         <Route path='/applications/new' element={<NewApplication />} />
         <Route path='/applications/:id/edit' element={<EditApplication />} />
         <Route path='/resumes' element={<Resumes />} />
+        <Route path='/resumes/:id' element={<Resume />} />
       </Route>
       <Route element={<AuthRoute access='admin' />}>
         <Route path='/admin' element={<Admin />} />
