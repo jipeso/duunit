@@ -48,7 +48,8 @@
     "coverLetter": "Cover letter",
     "notes": "Notes",
     "eventDate": "Date",
-    "resume": "Resume"
+    "resume": "Resume",
+    "description": "Job description"
   },
 
   "navigation": {
@@ -60,7 +61,8 @@
     "login": "Login",
     "logout": "Logout",
     "applications": "Applications",
-    "resumes": "Resumes"
+    "resumes": "Resumes",
+    "jobAnalysis": "Job analysis"
   },
 
   "home": {
@@ -141,6 +143,16 @@
     "deleteConfirm": "Delete {{fileName}}? It will be removed from any applications it is attached to. This cannot be undone.",
     "notPdf": "Only PDF files are allowed.",
     "tooLarge": "The file is too large. The maximum size is 2 MB."
+  },
+
+  "jobAnalysis": {
+    "title": "Job analysis",
+    "subtitle": "Paste a job description to pick out the details for your application and the key tasks and requirements of the job.",
+    "disclaimer": "The analysis is experimental, results may vary.",
+    "analyze": "Analyse",
+    "createApplication": "Create application",
+    "tasks": "Key tasks",
+    "requirements": "Key requirements"
   },
 
   "register": {

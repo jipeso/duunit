@@ -19,4 +19,6 @@
 | 6.10  | 6        | Events API + Frontend               |
 | 7.10  | 8        | Events API + Frontend               |
 | 8.10  | 8        | Resumes API + Frontend              |
-| Total | 122      |                                     |
+| 9.10  | 6        | Planning + Analysis functionality   |
+| 12.10 | 4        | LLM testing                         |
+| Total | 132      |                                     |

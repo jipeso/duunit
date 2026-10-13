@@ -3,9 +3,12 @@ import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { type SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 
-import { type NewApplication as NewApplicationPayload } from '#common/types/applications.ts'
+import {
+  type NewApplication as NewApplicationPayload,
+  type NewApplicationInput,
+} from '#common/types/applications.ts'
 import useCreateApplication from '../../hooks/useCreateApplication'
 import { useNotification } from '../../components/Notification'
 import ApplicationForm from '../../components/ApplicationForm'
@@ -15,6 +18,12 @@ const NewApplication = () => {
   const { mutate: createApplication, isPending, error } = useCreateApplication()
   const { showSuccess } = useNotification()
   const navigate = useNavigate()
+  const location = useLocation()
+  const state = location.state as {
+    defaultValues?: Partial<NewApplicationInput>
+    returnTo?: string
+  } | null
+  const returnTo = state?.returnTo ?? '/applications'
 
   const onSubmit: SubmitHandler<NewApplicationPayload> = data => {
     createApplication(data, {
@@ -43,11 +52,12 @@ const NewApplication = () => {
         </Typography>
 
         <ApplicationForm
-          defaultValues={{ status: 'applied' }}
+          defaultValues={{ status: 'applied', ...state?.defaultValues }}
           onSubmit={onSubmit}
           submitLabel={t('common.buttons.create')}
           isPending={isPending}
           error={error && t('common.errors.unexpected')}
+          returnTo={returnTo}
         />
       </Box>
     </Container>

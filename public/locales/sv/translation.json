@@ -48,7 +48,8 @@
     "coverLetter": "Personligt brev",
     "notes": "Anteckningar",
     "eventDate": "Datum",
-    "resume": "CV"
+    "resume": "CV",
+    "description": "Platsannons"
   },
 
   "navigation": {
@@ -60,7 +61,8 @@
     "login": "Logga in",
     "logout": "Logga ut",
     "applications": "Ansökningar",
-    "resumes": "CV:n"
+    "resumes": "CV:n",
+    "jobAnalysis": "Jobbanalys"
   },
 
   "home": {
@@ -141,6 +143,16 @@
     "deleteConfirm": "Ta bort {{fileName}}? Det tas också bort från ansökningar som det är kopplat till. Detta kan inte ångras.",
     "notPdf": "Endast PDF-filer är tillåtna.",
     "tooLarge": "Filen är för stor. Maxstorleken är 2 MB."
+  },
+
+  "jobAnalysis": {
+    "title": "Jobbanalys",
+    "subtitle": "Klistra in en platsannons för att plocka ut uppgifterna till din ansökan samt de viktigaste arbetsuppgifterna och kraven.",
+    "disclaimer": "Analysen är experimentell, resultaten kan variera.",
+    "analyze": "Analysera",
+    "createApplication": "Skapa ansökan",
+    "tasks": "Viktigaste arbetsuppgifter",
+    "requirements": "Viktigaste krav"
   },
 
   "register": {

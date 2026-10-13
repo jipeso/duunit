@@ -48,7 +48,8 @@
     "coverLetter": "Saatekirje",
     "notes": "Muistiinpanot",
     "eventDate": "Päivämäärä",
-    "resume": "Ansioluettelo"
+    "resume": "Ansioluettelo",
+    "description": "Työpaikkailmoitus"
   },
 
   "navigation": {
@@ -60,7 +61,8 @@
     "login": "Kirjaudu sisään",
     "logout": "Kirjaudu ulos",
     "applications": "Hakemukset",
-    "resumes": "Ansioluettelot"
+    "resumes": "Ansioluettelot",
+    "jobAnalysis": "Työpaikka-analyysi"
   },
 
   "home": {
@@ -141,6 +143,16 @@
     "deleteConfirm": "Poistetaanko {{fileName}}? Se poistetaan myös hakemuksista, joihin se on liitetty. Toimintoa ei voi perua.",
     "notPdf": "Vain PDF-tiedostot ovat sallittuja.",
     "tooLarge": "Tiedosto on liian suuri. Enimmäiskoko on 2 Mt."
+  },
+
+  "jobAnalysis": {
+    "title": "Työpaikka-analyysi",
+    "subtitle": "Liitä työpaikkailmoitus, niin siitä poimitaan hakemuksesi tiedot sekä työn tärkeimmät tehtävät ja vaatimukset.",
+    "disclaimer": "Analyysi on kokeellinen, tulokset voivat vaihdella.",
+    "analyze": "Analysoi",
+    "createApplication": "Luo hakemus",
+    "tasks": "Tärkeimmät tehtävät",
+    "requirements": "Tärkeimmät vaatimukset"
   },
 
   "register": {

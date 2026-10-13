@@ -18,6 +18,7 @@ import HomeIcon from '@mui/icons-material/Home'
 import PersonIcon from '@mui/icons-material/Person'
 import WorkIcon from '@mui/icons-material/Work'
 import DescriptionIcon from '@mui/icons-material/Description'
+import ManageSearchIcon from '@mui/icons-material/ManageSearch'
 import LoginIcon from '@mui/icons-material/Login'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
@@ -55,6 +56,12 @@ const Navbar = () => {
       label: t('navigation.resumes'),
       to: '/resumes',
       icon: <DescriptionIcon />,
+      show: isLoggedIn,
+    },
+    {
+      label: t('navigation.jobAnalysis'),
+      to: '/job-analysis',
+      icon: <ManageSearchIcon />,
       show: isLoggedIn,
     },
     {
