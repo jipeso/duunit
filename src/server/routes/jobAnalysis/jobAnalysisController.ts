@@ -13,7 +13,11 @@ router.use(requireAuth)
 
 router.post('/', async (req: Request, res: Response<DescriptionAnalysis>) => {
   const values = AnalyzeDescriptionSchema.parse(req.body)
-  const analysis = await jobAnalysisService.analyzeDescription(values)
+  const analysis = await jobAnalysisService.analyzeDescription(
+    req.user.id,
+    values
+  )
+
   res.json(analysis)
 })
 

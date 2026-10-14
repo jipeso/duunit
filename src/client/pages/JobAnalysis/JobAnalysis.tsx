@@ -14,11 +14,15 @@ import { useNavigate } from 'react-router'
 import type { NewApplicationInput } from '#common/types/applications.ts'
 import {
   AnalyzeDescriptionSchema,
+  MAX_ANALYSES_PER_DAY,
   MAX_DESCRIPTION_LENGTH,
   type AnalyzeDescription,
 } from '#common/types/jobAnalysis.ts'
 import useAnalyzeDescription from '../../hooks/useAnalyzeDescription'
-import { isUnprocessableError } from '../../util/apiClient'
+import {
+  isTooManyRequestsError,
+  isUnprocessableError,
+} from '../../util/apiClient'
 import { EMPTY_VALUE } from '../../util/applications'
 import { parseDate } from '../../util/date'
 
@@ -104,11 +108,13 @@ const JobAnalysis = () => {
 
         {error && (
           <Alert severity='error'>
-            {t(
-              isUnprocessableError(error)
-                ? 'jobAnalysis.notJobDescription'
-                : 'common.errors.unexpected'
-            )}
+            {isTooManyRequestsError(error)
+              ? t('jobAnalysis.limitReached', { count: MAX_ANALYSES_PER_DAY })
+              : t(
+                  isUnprocessableError(error)
+                    ? 'jobAnalysis.notJobDescription'
+                    : 'common.errors.unexpected'
+                )}
           </Alert>
         )}
 

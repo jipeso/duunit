@@ -1,11 +1,15 @@
 import { z } from 'zod'
+import { and, eq, gt, sql } from 'drizzle-orm'
 
+import { db } from '../db/index.ts'
+import { jobAnalyses, users } from '../db/schema.ts'
 import { AppError } from '../util/AppError.ts'
 import { LLM_URL, LLM_API_KEY, LLM_MODEL } from '../util/config.ts'
 import {
   type AnalyzeDescription,
   type DescriptionAnalysis,
   DescriptionAnalysisSchema,
+  MAX_ANALYSES_PER_DAY,
 } from '#common/types/jobAnalysis.ts'
 
 const TIMEOUT_MS = 30_000
@@ -31,15 +35,41 @@ const CompletionSchema = z.object({
   choices: z.tuple([
     z.object({
       finish_reason: z.string().nullable(),
-      native_finish_reason: z.string().nullish(),
       message: z.object({ content: z.string() }),
     }),
   ]),
 })
 
-const analyzeDescription = async ({
-  description,
-}: AnalyzeDescription): Promise<DescriptionAnalysis> => {
+const reserveAnalysis = async (userId: string): Promise<void> => {
+  await db.transaction(async tx => {
+    await tx
+      .select({ id: users.id })
+      .from(users)
+      .where(eq(users.id, userId))
+      .for('update')
+
+    const recentAnalyses = await tx.$count(
+      jobAnalyses,
+      and(
+        eq(jobAnalyses.userId, userId),
+        gt(jobAnalyses.createdAt, sql`now() - interval '1 day'`)
+      )
+    )
+
+    if (recentAnalyses >= MAX_ANALYSES_PER_DAY) {
+      throw new AppError('ANALYSIS_LIMIT_REACHED', 429)
+    }
+
+    await tx.insert(jobAnalyses).values({ userId })
+  })
+}
+
+const analyzeDescription = async (
+  userId: string,
+  { description }: AnalyzeDescription
+): Promise<DescriptionAnalysis> => {
+  await reserveAnalysis(userId)
+
   const today = new Date().toISOString().slice(0, 10)
 
   const response = await fetch(new URL('chat/completions', LLM_URL), {
@@ -84,9 +114,7 @@ const analyzeDescription = async ({
   const [choice] = completion.data.choices
 
   if (choice.finish_reason !== 'stop') {
-    throw new Error(
-      `LLM response incomplete: ${String(choice.finish_reason)} (${String(choice.native_finish_reason)})`
-    )
+    throw new Error(`LLM response incomplete: ${String(choice.finish_reason)}`)
   }
 
   const result = DescriptionAnalysisSchema.safeParse(

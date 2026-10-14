@@ -25,4 +25,7 @@ export const isNotFoundError = (error: unknown) =>
 export const isUnprocessableError = (error: unknown) =>
   isAxiosError(error) && error.response?.status === 422
 
+export const isTooManyRequestsError = (error: unknown) =>
+  isAxiosError(error) && error.response?.status === 429
+
 export default apiClient

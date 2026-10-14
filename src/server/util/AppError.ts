@@ -11,6 +11,7 @@ export type ErrorCode =
   | 'RESUME_LIMIT_REACHED'
   | 'INVALID_FILE'
   | 'NOT_JOB_DESCRIPTION'
+  | 'ANALYSIS_LIMIT_REACHED'
   | 'INTERNAL_ERROR'
 
 export class AppError extends Error {

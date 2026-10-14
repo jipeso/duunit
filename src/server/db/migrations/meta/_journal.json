@@ -50,6 +50,13 @@
       "when": 1791467894366,
       "tag": "0006_nice_paibok",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1791988042452,
+      "tag": "0007_bizarre_colleen_wing",
+      "breakpoints": true
     }
   ]
 }

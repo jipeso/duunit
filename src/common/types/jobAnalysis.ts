@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { requiredText, MAX_TEXT_LENGTH } from './common.ts'
 
 export const MAX_DESCRIPTION_LENGTH = 10000
+export const MAX_ANALYSES_PER_DAY = 20
 
 const MAX_LIST_ITEMS = 5
 

@@ -136,6 +136,25 @@ export const applicationStatusEvents = pgTable(
   ]
 )
 
+export const jobAnalyses = pgTable(
+  'job_analyses',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at', { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  table => [
+    index('job_analyses_user_id_created_at_idx').on(
+      table.userId,
+      table.createdAt
+    ),
+  ]
+)
+
 export type DatabaseStatusEvent = typeof applicationStatusEvents.$inferSelect
 export type DatabaseApplication = typeof applications.$inferSelect
 export type DatabaseResume = typeof resumes.$inferSelect
