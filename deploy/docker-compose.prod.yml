@@ -5,7 +5,9 @@ services:
       DATABASE_URL: 'postgres://postgres:${POSTGRES_PASSWORD}@db:5432/postgres'
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
       BETTER_AUTH_URL: https://duunit.site
-      LLM_URL: http://llm:8080/v1/
+      LLM_URL: ${LLM_URL}
+      LLM_API_KEY: ${LLM_API_KEY}
+      LLM_MODEL: ${LLM_MODEL}
     ports:
       - 127.0.0.1:3000:3000
   db:
@@ -14,12 +16,5 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql
-  llm:
-    image: ghcr.io/ggml-org/llama.cpp:server
-    command:
-      ['-hf', 'unsloth/Qwen3.5-0.8B-GGUF:Q4_K_M', '-c', '6144', '--no-mmproj']
-    volumes:
-      - llm_models:/root/.cache
 volumes:
   postgres_data:
-  llm_models:

@@ -9,7 +9,9 @@ services:
       DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
       BETTER_AUTH_SECRET: dev-secret-at-least-32-characters-long
       BETTER_AUTH_URL: http://localhost:5000
-      LLM_URL: http://llm:8080/v1/
+      LLM_URL: ${LLM_URL}
+      LLM_API_KEY: ${LLM_API_KEY}
+      LLM_MODEL: ${LLM_MODEL}
     ports:
       - 5000:5000
     container_name: duunit_dev
@@ -20,13 +22,5 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql
     container_name: duunit_dev_db
-  llm:
-    image: ghcr.io/ggml-org/llama.cpp:server
-    command:
-      ['-hf', 'unsloth/Qwen3.5-0.8B-GGUF:Q4_K_M', '-c', '6144', '--no-mmproj']
-    volumes:
-      - llm_models:/root/.cache
-    container_name: duunit_dev_llm
 volumes:
   postgres_data:
-  llm_models:

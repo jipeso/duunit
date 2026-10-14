@@ -1,13 +1,12 @@
 import { z } from 'zod'
 
-import { LLM_URL } from '../util/config.ts'
+import { LLM_URL, LLM_API_KEY, LLM_MODEL } from '../util/config.ts'
 import {
   type AnalyzeDescription,
   type DescriptionAnalysis,
   DescriptionAnalysisSchema,
 } from '#common/types/jobAnalysis.ts'
 
-const MAX_OUTPUT_TOKENS = 400
 const TEMPERATURE = 0.3
 
 const systemPrompt = (
@@ -38,16 +37,23 @@ const analyzeDescription = async (
 
   const response = await fetch(new URL('chat/completions', LLM_URL), {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${LLM_API_KEY}`,
+    },
     signal,
     body: JSON.stringify({
+      model: LLM_MODEL,
       temperature: TEMPERATURE,
-      max_tokens: MAX_OUTPUT_TOKENS,
+      reasoning: { effort: 'low' },
       response_format: {
         type: 'json_schema',
-        json_schema: { schema: z.toJSONSchema(DescriptionAnalysisSchema) },
+        json_schema: {
+          name: 'job_analysis',
+          strict: true,
+          schema: z.toJSONSchema(DescriptionAnalysisSchema),
+        },
       },
-      chat_template_kwargs: { enable_thinking: false },
       messages: [
         { role: 'system', content: systemPrompt(today) },
         { role: 'user', content: description },
