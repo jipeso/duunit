@@ -148,11 +148,12 @@
   "jobAnalysis": {
     "title": "Työpaikka-analyysi",
     "subtitle": "Liitä työpaikkailmoitus, niin siitä poimitaan hakemuksesi tiedot sekä työn tärkeimmät tehtävät ja vaatimukset.",
-    "disclaimer": "Analyysi on kokeellinen, tulokset voivat vaihdella.",
+    "disclaimer": "Analyysi on luotu tekoälyllä, tulokset voivat vaihdella.",
     "analyze": "Analysoi",
     "createApplication": "Luo hakemus",
     "tasks": "Tärkeimmät tehtävät",
-    "requirements": "Tärkeimmät vaatimukset"
+    "requirements": "Tärkeimmät vaatimukset",
+    "notJobDescription": "Teksti ei näytä työpaikkailmoitukselta. Liitä työpaikkailmoituksen teksti ja yritä uudelleen."
   },
 
   "register": {

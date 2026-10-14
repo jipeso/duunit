@@ -13,16 +13,7 @@ router.use(requireAuth)
 
 router.post('/', async (req: Request, res: Response<DescriptionAnalysis>) => {
   const values = AnalyzeDescriptionSchema.parse(req.body)
-
-  const controller = new AbortController()
-  res.on('close', () => {
-    controller.abort()
-  })
-
-  const analysis = await jobAnalysisService.analyzeDescription(
-    values,
-    controller.signal
-  )
+  const analysis = await jobAnalysisService.analyzeDescription(values)
   res.json(analysis)
 })
 

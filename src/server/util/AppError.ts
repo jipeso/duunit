@@ -10,6 +10,7 @@ export type ErrorCode =
   | 'RESUME_NOT_FOUND'
   | 'RESUME_LIMIT_REACHED'
   | 'INVALID_FILE'
+  | 'NOT_JOB_DESCRIPTION'
   | 'INTERNAL_ERROR'
 
 export class AppError extends Error {

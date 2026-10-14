@@ -22,4 +22,7 @@ apiClient.interceptors.response.use(undefined, (error: Error) => {
 export const isNotFoundError = (error: unknown) =>
   isAxiosError(error) && error.response?.status === 404
 
+export const isUnprocessableError = (error: unknown) =>
+  isAxiosError(error) && error.response?.status === 422
+
 export default apiClient

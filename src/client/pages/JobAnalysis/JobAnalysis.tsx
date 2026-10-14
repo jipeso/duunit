@@ -1,13 +1,12 @@
 import Alert from '@mui/material/Alert'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
+import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -17,34 +16,18 @@ import {
   AnalyzeDescriptionSchema,
   MAX_DESCRIPTION_LENGTH,
   type AnalyzeDescription,
-  type DescriptionAnalysis,
 } from '#common/types/jobAnalysis.ts'
 import useAnalyzeDescription from '../../hooks/useAnalyzeDescription'
+import { isUnprocessableError } from '../../util/apiClient'
 import { EMPTY_VALUE } from '../../util/applications'
 import { parseDate } from '../../util/date'
 
-const toNotes = (title: string, items: string[]) =>
-  [`${title}:`, ...items.map(item => `- ${item}`)].join('\n')
-
-const toList = (items: string[]) =>
-  items.length > 0 ? (
-    <Box component='ul' sx={{ m: 0, pl: 2.5 }}>
-      {items.map(item => (
-        <li key={item}>{item}</li>
-      ))}
-    </Box>
-  ) : null
+const bullets = (items: string[]) => items.map(item => `- ${item}`).join('\n')
 
 const JobAnalysis = () => {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
-  const {
-    mutate: analyzeDescription,
-    data,
-    isPending,
-    isError,
-    cancel,
-  } = useAnalyzeDescription()
+  const { mutate: analyze, data, isPending, error } = useAnalyzeDescription()
 
   const {
     register,
@@ -53,167 +36,162 @@ const JobAnalysis = () => {
     formState: { errors },
   } = useForm<AnalyzeDescription>({
     resolver: zodResolver(AnalyzeDescriptionSchema),
-    mode: 'onTouched',
-    reValidateMode: 'onSubmit',
     defaultValues: { description: '' },
   })
 
-  const description = watch('description')
+  const descriptionLength = watch('description').length
 
-  const onSubmit: SubmitHandler<AnalyzeDescription> = values => {
-    analyzeDescription(values)
-  }
+  const submit = handleSubmit(values => {
+    analyze(values)
+  })
 
-  const createApplication = (analysis: DescriptionAnalysis) => {
-    const defaultValues: Partial<NewApplicationInput> = {
-      position: analysis.position,
-      company: analysis.company,
-      location: analysis.location ?? '',
-      salary: analysis.salary ?? '',
-      deadline: analysis.deadline ?? '',
-      notes: [
-        toNotes(t('jobAnalysis.tasks'), analysis.tasks),
-        toNotes(t('jobAnalysis.requirements'), analysis.requirements),
-      ].join('\n\n'),
-    }
-
-    void navigate('/applications/new', {
-      state: { defaultValues, returnTo: '/job-analysis' },
-    })
-  }
+  const fields = [
+    [t('fields.position'), data?.position],
+    [t('fields.company'), data?.company],
+    [t('fields.location'), data?.location],
+    [t('fields.salary'), data?.salary],
+    [
+      t('fields.deadline'),
+      data?.deadline &&
+        parseDate(data.deadline).toLocaleDateString(i18n.language),
+    ],
+    [t('jobAnalysis.tasks'), data && bullets(data.tasks)],
+    [t('jobAnalysis.requirements'), data && bullets(data.requirements)],
+  ]
 
   return (
     <Container maxWidth='sm' sx={{ mt: 4, mb: 8 }}>
       <Stack spacing={2} sx={{ mb: 4 }}>
-        <Typography
-          component='h1'
-          variant='h5'
-          color='text.primary'
-          gutterBottom
-        >
+        <Typography component='h1' variant='h5'>
           {t('jobAnalysis.title')}
         </Typography>
-
         <Typography variant='body2' color='text.secondary'>
           {t('jobAnalysis.subtitle')}
         </Typography>
-
         <Typography variant='caption' color='text.secondary'>
           {t('jobAnalysis.disclaimer')}
         </Typography>
       </Stack>
 
-      <Box
+      <Stack
         component='form'
-        onSubmit={event => {
-          void handleSubmit(onSubmit)(event)
-        }}
+        onSubmit={e => void submit(e)}
         noValidate
-        sx={{ width: '100%', mb: 5 }}
+        spacing={3}
+        sx={{ mb: 5 }}
       >
-        <Stack spacing={3}>
-          <TextField
-            required
-            fullWidth
-            multiline
-            rows={8}
-            id='description'
-            label={t('fields.description')}
-            slotProps={{
-              htmlInput: {
-                'data-testid': 'job-analysis-description',
-                maxLength: MAX_DESCRIPTION_LENGTH,
-                style: { resize: 'vertical', maxHeight: '40vh' },
-              },
-            }}
-            {...register('description')}
-            error={!!errors.description}
-            helperText={
-              errors.description?.message ??
-              `${String(description.length)}/${String(MAX_DESCRIPTION_LENGTH)}`
-            }
-          />
+        <TextField
+          required
+          fullWidth
+          multiline
+          rows={8}
+          id='description'
+          label={t('fields.description')}
+          slotProps={{
+            htmlInput: {
+              'data-testid': 'job-analysis-description',
+              maxLength: MAX_DESCRIPTION_LENGTH,
+              style: { resize: 'vertical', maxHeight: '40vh' },
+            },
+          }}
+          {...register('description')}
+          error={!!errors.description}
+          helperText={
+            errors.description?.message ??
+            `${String(descriptionLength)}/${String(MAX_DESCRIPTION_LENGTH)}`
+          }
+        />
 
-          {isError && (
-            <Alert severity='error' sx={{ borderRadius: 1 }}>
-              {t('common.errors.unexpected')}
-            </Alert>
-          )}
+        {error && (
+          <Alert severity='error'>
+            {t(
+              isUnprocessableError(error)
+                ? 'jobAnalysis.notJobDescription'
+                : 'common.errors.unexpected'
+            )}
+          </Alert>
+        )}
 
-          <Button
-            type={isPending ? 'button' : 'submit'}
-            data-testid='job-analysis-analyze'
-            fullWidth
-            variant={isPending ? 'outlined' : 'contained'}
-            onClick={isPending ? cancel : undefined}
-            startIcon={
-              isPending && <CircularProgress size={18} color='inherit' />
-            }
-            disableElevation
-            sx={{ py: 1.5, textTransform: 'none', fontSize: '1rem' }}
-          >
-            {isPending ? t('common.buttons.cancel') : t('jobAnalysis.analyze')}
-          </Button>
-        </Stack>
-      </Box>
+        <Button
+          type='submit'
+          data-testid='job-analysis-analyze'
+          fullWidth
+          variant='contained'
+          loading={isPending}
+          disableElevation
+          sx={{ py: 1 }}
+        >
+          {t('jobAnalysis.analyze')}
+        </Button>
+      </Stack>
+
+      {(isPending || data) && (
+        <Paper
+          variant='outlined'
+          data-testid='job-analysis-result'
+          sx={{ p: 2, mb: 2 }}
+        >
+          <Stack component='dl' spacing={2} sx={{ m: 0 }}>
+            {fields.map(([label, value]) => (
+              <div key={label}>
+                <Typography
+                  component='dt'
+                  variant='body2'
+                  color='text.secondary'
+                >
+                  {label}
+                </Typography>
+                <Typography
+                  component='dd'
+                  sx={{
+                    m: 0,
+                    whiteSpace: 'pre-line',
+                    overflowWrap: 'anywhere',
+                  }}
+                >
+                  {isPending ? (
+                    <Skeleton />
+                  ) : value?.length ? (
+                    value
+                  ) : (
+                    EMPTY_VALUE
+                  )}
+                </Typography>
+              </div>
+            ))}
+          </Stack>
+        </Paper>
+      )}
 
       {data && (
-        <Stack spacing={2}>
-          <Paper
-            variant='outlined'
-            data-testid='job-analysis-result'
-            sx={{ p: 2 }}
-          >
-            <Stack component='dl' spacing={2} sx={{ m: 0 }}>
-              {[
-                { label: t('fields.position'), value: data.position },
-                { label: t('fields.company'), value: data.company },
-                { label: t('fields.location'), value: data.location },
-                { label: t('fields.salary'), value: data.salary },
-                {
-                  label: t('fields.deadline'),
-                  value:
-                    data.deadline &&
-                    parseDate(data.deadline).toLocaleDateString(i18n.language),
-                },
-                { label: t('jobAnalysis.tasks'), value: toList(data.tasks) },
-                {
-                  label: t('jobAnalysis.requirements'),
-                  value: toList(data.requirements),
-                },
-              ].map(({ label, value }) => (
-                <Box key={label}>
-                  <Typography
-                    component='dt'
-                    variant='body2'
-                    color='text.secondary'
-                  >
-                    {label}
-                  </Typography>
-                  <Typography
-                    component='dd'
-                    sx={{ m: 0, overflowWrap: 'anywhere' }}
-                  >
-                    {value ?? EMPTY_VALUE}
-                  </Typography>
-                </Box>
-              ))}
-            </Stack>
-          </Paper>
-
-          <Button
-            data-testid='job-analysis-create-application'
-            fullWidth
-            variant='contained'
-            onClick={() => {
-              createApplication(data)
-            }}
-            disableElevation
-            sx={{ py: 1.5, textTransform: 'none', fontSize: '1rem' }}
-          >
-            {t('jobAnalysis.createApplication')}
-          </Button>
-        </Stack>
+        <Button
+          data-testid='job-analysis-create-application'
+          fullWidth
+          variant='contained'
+          onClick={() => {
+            const defaultValues: Partial<NewApplicationInput> = {
+              position: data.position,
+              company: data.company,
+              location: data.location ?? '',
+              salary: data.salary ?? '',
+              deadline: data.deadline ?? '',
+              notes: [
+                `${t('jobAnalysis.tasks')}:`,
+                bullets(data.tasks),
+                '',
+                `${t('jobAnalysis.requirements')}:`,
+                bullets(data.requirements),
+              ].join('\n'),
+            }
+            void navigate('/applications/new', {
+              state: { defaultValues, returnTo: '/job-analysis' },
+            })
+          }}
+          disableElevation
+          sx={{ py: 1 }}
+        >
+          {t('jobAnalysis.createApplication')}
+        </Button>
       )}
     </Container>
   )

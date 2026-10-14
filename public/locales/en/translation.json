@@ -148,11 +148,12 @@
   "jobAnalysis": {
     "title": "Job analysis",
     "subtitle": "Paste a job description to pick out the details for your application and the key tasks and requirements of the job.",
-    "disclaimer": "The analysis is experimental, results may vary.",
+    "disclaimer": "The analysis is created by an AI, results may vary.",
     "analyze": "Analyse",
     "createApplication": "Create application",
     "tasks": "Key tasks",
-    "requirements": "Key requirements"
+    "requirements": "Key requirements",
+    "notJobDescription": "This doesn't look like a job description. Paste the text of a job ad and try again."
   },
 
   "register": {

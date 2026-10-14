@@ -148,11 +148,12 @@
   "jobAnalysis": {
     "title": "Jobbanalys",
     "subtitle": "Klistra in en platsannons för att plocka ut uppgifterna till din ansökan samt de viktigaste arbetsuppgifterna och kraven.",
-    "disclaimer": "Analysen är experimentell, resultaten kan variera.",
+    "disclaimer": "Analysen är skapad av en AI, resultaten kan variera.",
     "analyze": "Analysera",
     "createApplication": "Skapa ansökan",
     "tasks": "Viktigaste arbetsuppgifter",
-    "requirements": "Viktigaste krav"
+    "requirements": "Viktigaste krav",
+    "notJobDescription": "Texten ser inte ut som en platsannons. Klistra in texten från en platsannons och försök igen."
   },
 
   "register": {
