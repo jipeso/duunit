@@ -17,6 +17,7 @@ import { nameField } from '#common/types/common.ts'
 import { authClient } from '../../util/authClient'
 import { useNotification } from '../../components/Notification'
 import ChangePasswordForm from './ChangePasswordForm'
+import DeleteAccountForm from './DeleteAccountForm'
 
 const Profile = () => {
   const { t } = useTranslation()
@@ -25,6 +26,7 @@ const Profile = () => {
   const [name, setName] = useState<string | null>(null)
   const [nameError, setNameError] = useState<string>()
   const [changingPassword, setChangingPassword] = useState(false)
+  const [deletingAccount, setDeletingAccount] = useState(false)
 
   if (!session) return null
 
@@ -142,6 +144,27 @@ const Profile = () => {
                 }}
               >
                 {t('profile.updatePassword')}
+              </Button>
+            </Box>
+          )}
+
+          <Divider />
+
+          {deletingAccount ? (
+            <DeleteAccountForm
+              onDone={() => {
+                setDeletingAccount(false)
+              }}
+            />
+          ) : (
+            <Box>
+              <Button
+                color='error'
+                onClick={() => {
+                  setDeletingAccount(true)
+                }}
+              >
+                {t('profile.deleteAccount')}
               </Button>
             </Box>
           )}

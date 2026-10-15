@@ -82,7 +82,12 @@
   "profile": {
     "details": "Käyttäjätiedot",
     "updatePassword": "Päivitä salasana",
-    "wrongPassword": "Nykyinen salasana on väärä."
+    "wrongPassword": "Nykyinen salasana on väärä.",
+    "deleteAccount": "Poista tili",
+    "deleteAccountWarning": "Tilin poistaminen poistaa pysyvästi kaikki hakemuksesi, CV:si ja työpaikka-analyysisi. Toimintoa ei voi perua.",
+    "deleteAccountConfirmTitle": "Poistetaanko tili?",
+    "deleteAccountConfirmMessage": "Tilisi ja kaikki sen tiedot poistetaan pysyvästi.",
+    "adminCannotDelete": "Ylläpitäjä ei voi poistaa tiliään."
   },
 
   "notifications": {
@@ -96,7 +101,8 @@
     "nameUpdatedSuccess": "Nimesi on päivitetty.",
     "passwordUpdatedSuccess": "Salasanasi on vaihdettu.",
     "resumeUploadedSuccess": "Ansioluettelo on ladattu.",
-    "resumeDeletedSuccess": "Ansioluettelo on poistettu."
+    "resumeDeletedSuccess": "Ansioluettelo on poistettu.",
+    "accountDeletedSuccess": "Tilisi on poistettu."
   },
 
   "applications": {

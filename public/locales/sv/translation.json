@@ -82,7 +82,12 @@
   "profile": {
     "details": "Användaruppgifter",
     "updatePassword": "Uppdatera lösenord",
-    "wrongPassword": "Nuvarande lösenord är felaktigt."
+    "wrongPassword": "Nuvarande lösenord är felaktigt.",
+    "deleteAccount": "Radera konto",
+    "deleteAccountWarning": "Om du raderar ditt konto tas alla dina ansökningar, CV:n och jobbanalyser bort permanent. Detta kan inte ångras.",
+    "deleteAccountConfirmTitle": "Radera kontot?",
+    "deleteAccountConfirmMessage": "Ditt konto och all dess data raderas permanent.",
+    "adminCannotDelete": "Administratörer kan inte radera sitt konto."
   },
 
   "notifications": {
@@ -96,7 +101,8 @@
     "nameUpdatedSuccess": "Ditt namn har uppdaterats.",
     "passwordUpdatedSuccess": "Ditt lösenord har ändrats.",
     "resumeUploadedSuccess": "CV:t har laddats upp.",
-    "resumeDeletedSuccess": "CV:t har tagits bort."
+    "resumeDeletedSuccess": "CV:t har tagits bort.",
+    "accountDeletedSuccess": "Ditt konto har raderats."
   },
 
   "applications": {

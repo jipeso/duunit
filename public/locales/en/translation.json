@@ -82,7 +82,12 @@
   "profile": {
     "details": "User details",
     "updatePassword": "Update password",
-    "wrongPassword": "Current password is incorrect."
+    "wrongPassword": "Current password is incorrect.",
+    "deleteAccount": "Delete account",
+    "deleteAccountWarning": "Deleting your account permanently removes all your applications, resumes and job analyses. This cannot be undone.",
+    "deleteAccountConfirmTitle": "Delete account?",
+    "deleteAccountConfirmMessage": "Your account and all its data will be permanently deleted.",
+    "adminCannotDelete": "Admins cannot delete their account."
   },
 
   "notifications": {
@@ -96,7 +101,8 @@
     "nameUpdatedSuccess": "Your name has been updated.",
     "passwordUpdatedSuccess": "Your password has been changed.",
     "resumeUploadedSuccess": "Resume has been uploaded.",
-    "resumeDeletedSuccess": "Resume has been deleted."
+    "resumeDeletedSuccess": "Resume has been deleted.",
+    "accountDeletedSuccess": "Your account has been deleted."
   },
 
   "applications": {

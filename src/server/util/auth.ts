@@ -1,5 +1,6 @@
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { APIError } from 'better-auth/api'
 
 import { db } from '../db/index.ts'
 import { ROLES } from '#common/types/users.ts'
@@ -18,6 +19,18 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       role: { type: [...ROLES], input: false, defaultValue: 'user' },
+    },
+    deleteUser: {
+      enabled: true,
+      beforeDelete: user => {
+        if ('role' in user && user.role === 'admin') {
+          throw APIError.from('BAD_REQUEST', {
+            code: 'ADMIN_CANNOT_DELETE',
+            message: 'Admins cannot delete their account',
+          })
+        }
+        return Promise.resolve()
+      },
     },
   },
   advanced: {

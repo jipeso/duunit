@@ -195,6 +195,31 @@ test.describe('Authentication', () => {
     })
   })
 
+  test.describe('Delete account', () => {
+    test('user can delete their account', async ({ page }) => {
+      await createUser('Test User', 'test@example.com', TEST_PASSWORD)
+
+      await page.goto('/login')
+      await loginWith(page, 'test@example.com', TEST_PASSWORD)
+      await expect(page).toHaveURL('/')
+
+      await page.goto('/profile')
+      await page.getByRole('button', { name: 'Delete account' }).click()
+      await page.getByTestId('delete-account-password').fill(TEST_PASSWORD)
+      await page.getByRole('button', { name: 'Delete account' }).click()
+      await page.getByTestId('confirm-dialog-confirm').click()
+
+      await expect(
+        page.getByText('Your account has been deleted.')
+      ).toBeVisible()
+      await expect(page).toHaveURL('/')
+
+      await page.goto('/login')
+      await loginWith(page, 'test@example.com', TEST_PASSWORD)
+      await expect(page.getByText('Invalid email or password.')).toBeVisible()
+    })
+  })
+
   test.describe('Guest routes', () => {
     test('logged in user is redirected away from login and register', async ({
       page,

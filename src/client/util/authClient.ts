@@ -16,3 +16,9 @@ export const signOut = async () => {
   await authClient.signOut()
   queryClient.clear()
 }
+
+export const deleteAccount = async (password: string) => {
+  const result = await authClient.deleteUser({ password })
+  if (!result.error) queryClient.clear()
+  return result
+}
