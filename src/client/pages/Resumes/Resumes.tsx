@@ -1,7 +1,6 @@
 import type { ChangeEvent } from 'react'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
@@ -19,6 +18,7 @@ import { MAX_RESUME_BYTES, MAX_RESUMES } from '#common/types/resumes.ts'
 import useResumes from '../../hooks/useResumes'
 import useUploadResume from '../../hooks/useUploadResume'
 import { useNotification } from '../../components/Notification'
+import PageLoader from '../../components/common/PageLoader'
 
 const LIST_MAX_HEIGHT = 600
 
@@ -29,7 +29,7 @@ const Resumes = () => {
   const { mutate: upload, isPending: isUploading } = useUploadResume()
 
   if (isPending) {
-    return <CircularProgress />
+    return <PageLoader />
   }
 
   const selectFile = (event: ChangeEvent<HTMLInputElement>) => {

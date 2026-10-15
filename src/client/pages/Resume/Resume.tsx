@@ -4,7 +4,6 @@ import { useParams, Link as RouterLink, useNavigate } from 'react-router'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import CircularProgress from '@mui/material/CircularProgress'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -13,6 +12,7 @@ import Stack from '@mui/material/Stack'
 import DeleteResumeDialog from '../../components/DeleteResumeDialog'
 import useResumes from '../../hooks/useResumes'
 import { resumeFileUrl } from '../../util/resumes'
+import PageLoader from '../../components/common/PageLoader'
 import type { ResumeResponse } from '#common/types/resumes.ts'
 
 const PANEL_HEIGHT = '65vh'
@@ -89,7 +89,7 @@ const Resume = () => {
   const { data: resumes, isPending, isError } = useResumes()
 
   if (isPending) {
-    return <CircularProgress />
+    return <PageLoader />
   }
 
   const resume = resumes?.find(r => r.id === id)

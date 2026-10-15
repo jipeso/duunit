@@ -1,6 +1,5 @@
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
@@ -10,13 +9,14 @@ import { useTranslation } from 'react-i18next'
 
 import useApplications from '../../hooks/useApplications'
 import ApplicationGrid from './ApplicationGrid'
+import PageLoader from '../../components/common/PageLoader'
 
 const Applications = () => {
   const { t } = useTranslation()
   const { data: applications, isPending, isError } = useApplications()
 
   if (isPending) {
-    return <CircularProgress />
+    return <PageLoader />
   }
 
   const rows = applications ?? []

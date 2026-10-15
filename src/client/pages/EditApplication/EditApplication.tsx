@@ -1,6 +1,5 @@
 import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
-import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { type SubmitHandler } from 'react-hook-form'
@@ -16,6 +15,7 @@ import useUpdateApplication from '../../hooks/useUpdateApplication'
 import { useNotification } from '../../components/Notification'
 import ApplicationForm, { toFormValues } from '../../components/ApplicationForm'
 import { isNotFoundError } from '../../util/apiClient'
+import PageLoader from '../../components/common/PageLoader'
 
 interface EditApplicationFormProps {
   application: ApplicationResponse
@@ -69,7 +69,7 @@ const EditApplication = () => {
   const { data: applications, isPending, isError } = useApplications()
 
   if (isPending) {
-    return <CircularProgress />
+    return <PageLoader />
   }
 
   const application = applications?.find(app => app.id === id)

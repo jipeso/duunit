@@ -3,7 +3,6 @@ import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Chip from '@mui/material/Chip'
-import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
 import Link from '@mui/material/Link'
@@ -32,6 +31,7 @@ import { useNotification } from '../../components/Notification'
 import { EMPTY_VALUE, statusColors } from '../../util/applications'
 import { DATE_TIME_FORMAT, parseDate } from '../../util/date'
 import StatusTimeline from './StatusTimeline'
+import PageLoader from '../../components/common/PageLoader'
 
 const Detail = ({
   label,
@@ -310,7 +310,7 @@ const Application = () => {
   const { data: applications, isPending, isError } = useApplications()
 
   if (isPending) {
-    return <CircularProgress />
+    return <PageLoader />
   }
 
   const application = applications?.find(app => app.id === id)

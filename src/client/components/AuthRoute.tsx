@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router'
-import CircularProgress from '@mui/material/CircularProgress'
 
 import { authClient } from '../util/authClient'
+import PageLoader from './common/PageLoader'
 
 interface Props {
   access: 'guest' | 'user' | 'admin'
@@ -10,7 +10,7 @@ interface Props {
 const AuthRoute = ({ access }: Props) => {
   const { data: session, isPending } = authClient.useSession()
 
-  if (isPending) return <CircularProgress />
+  if (isPending) return <PageLoader />
 
   const allowed = {
     guest: !session,
