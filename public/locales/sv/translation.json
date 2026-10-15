@@ -190,6 +190,20 @@
     "passwordUnchanged": "Det nya lösenordet måste skilja sig från det nuvarande"
   },
 
+  "admin": {
+    "title": "Administration",
+    "users": "Användare",
+    "applications": "Ansökningar",
+    "analyses": "Analyser",
+    "totalApplications": "Totalt antal ansökningar",
+    "totalAnalyses": "Totalt antal analyser",
+    "name": "Namn",
+    "email": "E-post",
+    "role": "Roll",
+    "joined": "Gick med",
+    "resumes": "CV:n"
+  },
+
   "privacy": {
     "title": "Integritetspolicy",
     "updated": "Senast uppdaterad: 15.10.2026",

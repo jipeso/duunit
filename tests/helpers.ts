@@ -7,6 +7,10 @@ export const resetDatabase = async () => {
   await axios.delete(`${baseUrl}/test/reset`)
 }
 
+export const makeAdmin = async (email: string) => {
+  await axios.put(`${baseUrl}/test/users/${email}/admin`)
+}
+
 export const createUser = async (
   name: string,
   email: string,

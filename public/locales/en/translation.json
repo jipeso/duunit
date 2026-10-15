@@ -190,6 +190,20 @@
     "passwordUnchanged": "New password must be different from the current one"
   },
 
+  "admin": {
+    "title": "Admin",
+    "users": "Users",
+    "applications": "Applications",
+    "analyses": "Analyses",
+    "totalApplications": "Total applications",
+    "totalAnalyses": "Total analyses",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "joined": "Joined",
+    "resumes": "Resumes"
+  },
+
   "privacy": {
     "title": "Privacy policy",
     "updated": "Last updated: 15 October 2026",

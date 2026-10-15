@@ -2,6 +2,7 @@ export type ErrorCode =
   | 'VALIDATION_ERROR'
   | 'BAD_REQUEST'
   | 'UNAUTHORIZED'
+  | 'FORBIDDEN'
   | 'NOT_FOUND'
   | 'APPLICATION_NOT_FOUND'
   | 'STATUS_EVENT_NOT_FOUND'

@@ -20,3 +20,11 @@ export const requireAuth = async (
   req.user = session.user
   next()
 }
+
+export const requireAdmin = (req: Request, _: Response, next: NextFunction) => {
+  if (req.user.role !== 'admin') {
+    throw new AppError('FORBIDDEN', 403)
+  }
+
+  next()
+}

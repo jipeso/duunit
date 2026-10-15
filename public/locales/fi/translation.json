@@ -190,6 +190,20 @@
     "passwordUnchanged": "Uuden salasanan on oltava eri kuin nykyinen"
   },
 
+  "admin": {
+    "title": "Ylläpito",
+    "users": "Käyttäjät",
+    "applications": "Hakemukset",
+    "analyses": "Analyysit",
+    "totalApplications": "Yhteensä hakemuksia",
+    "totalAnalyses": "Yhteensä analyysejä",
+    "name": "Nimi",
+    "email": "Sähköposti",
+    "role": "Rooli",
+    "joined": "Liittynyt",
+    "resumes": "Ansioluettelot"
+  },
+
   "privacy": {
     "title": "Tietosuojaseloste",
     "updated": "Päivitetty: 15.10.2026",

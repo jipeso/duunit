@@ -223,5 +223,16 @@ test.describe('Authentication', () => {
       await page.goto('/admin')
       await expect(page).toHaveURL('/')
     })
+
+    test('regular user cannot access admin', async ({ page }) => {
+      await createUser('Test User', 'test@example.com', TEST_PASSWORD)
+
+      await page.goto('/login')
+      await loginWith(page, 'test@example.com', TEST_PASSWORD)
+      await expect(page).toHaveURL('/')
+
+      await page.goto('/admin')
+      await expect(page).toHaveURL('/')
+    })
   })
 })
