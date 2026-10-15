@@ -11,6 +11,8 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
+import useScrollTrigger from '@mui/material/useScrollTrigger'
+import Slide from '@mui/material/Slide'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsIcon from '@mui/icons-material/Settings'
 import CloseIcon from '@mui/icons-material/Close'
@@ -34,6 +36,7 @@ const Navbar = () => {
   const { t } = useTranslation()
   const isMobile = useIsMobile()
   const { data: session } = authClient.useSession()
+  const trigger = useScrollTrigger()
 
   const isLoggedIn = !!session
   const isAdmin = session?.user.role === 'admin'
@@ -146,19 +149,21 @@ const Navbar = () => {
   return (
     <>
       {isMobile && !menuOpen && (
-        <IconButton
-          sx={{
-            position: 'fixed',
-            top: 8,
-            left: 8,
-            zIndex: 1400,
-          }}
-          onClick={() => {
-            setMenuOpen(true)
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
+        <Slide appear={false} direction='down' in={!trigger}>
+          <IconButton
+            sx={{
+              position: 'fixed',
+              top: 8,
+              left: 8,
+              zIndex: 1400,
+            }}
+            onClick={() => {
+              setMenuOpen(true)
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Slide>
       )}
 
       <Drawer
