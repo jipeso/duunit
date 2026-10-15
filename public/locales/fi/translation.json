@@ -75,7 +75,8 @@
     "gsStep3": "<a>Luo uusi hakemus</a>",
     "gsStep4": "Tarkastele <a>hakemuksiasi</a>",
     "builtUsing": "Sovellus on rakennettu Reactilla, MUI:lla ja Vitellä. Taustalla Node.js, PostgreSQL ja Drizzle ORM.",
-    "sourceCode": "Lähdekoodi löytyy <a>GitHubista</a>"
+    "sourceCode": "Lähdekoodi löytyy <a>GitHubista</a>",
+    "privacy": "Lue <a>tietosuojaseloste</a>."
   },
 
   "profile": {
@@ -163,7 +164,8 @@
     "errors": {
       "emailInUse": "Tämä sähköpostiosoite on jo käytössä."
     },
-    "alreadyHaveAccount": "Onko sinulla jo tili?"
+    "alreadyHaveAccount": "Onko sinulla jo tili?",
+    "privacyNotice": "Luomalla tilin hyväksyt tietojesi käsittelyn <a>tietosuojaselosteen</a> mukaisesti."
   },
 
   "login": {
@@ -186,5 +188,40 @@
     "tooEarly": "{{field}}: päivämäärän on oltava {{date}} jälkeen",
     "passwordsDoNotMatch": "Salasanat eivät täsmää",
     "passwordUnchanged": "Uuden salasanan on oltava eri kuin nykyinen"
+  },
+
+  "privacy": {
+    "title": "Tietosuojaseloste",
+    "updated": "Päivitetty: 15.10.2026",
+    "sections": {
+      "controller": {
+        "title": "Rekisterinpitäjä",
+        "body": "Duunit-sovellusta ylläpitää Joni Pesonen, joka vastaa henkilötiedoistasi. Yhteystiedot: <email>jipesonen@gmail.com</email>"
+      },
+      "data": {
+        "title": "Mitä tietoja keräämme",
+        "body": "• Tilin tiedot: nimi, sähköpostiosoite ja salasana (tallennetaan vain turvallisena tiivisteenä)\n• Sovellukseen tallentamasi tiedot: hakemukset, muistiinpanot, saatekirjeet ja ladatut CV:t\n• Työpaikka-analyysiin lähettämäsi työpaikkailmoitukset\n• Tekniset tiedot: kirjautumisistuntojen ja palvelinlokien IP-osoite ja selaintiedot"
+      },
+      "purpose": {
+        "title": "Miksi käsittelemme tietoja",
+        "body": "Tietojasi käytetään vain palvelun tarjoamiseen (GDPR 6 art. 1 b, sopimus). Niitä ei käytetä markkinointiin, myydä eikä luovuteta mainontaan. Teknisiä tietoja käytetään palvelun turvallisuuden ja toimivuuden varmistamiseen."
+      },
+      "recipients": {
+        "title": "Ketkä muut käsittelevät tietoja",
+        "body": "• Palvelinympäristö: Amazon Web Services, EU-alueella.\n• Työpaikka-analyysi: lähettämäsi työpaikkailmoitus välitetään OpenRouterille (Yhdysvallat), joka välittää sen tekoälymallin tarjoajalle. CV:itäsi tai muita tietojasi ei lähetetä. Vältä henkilötietojen lisäämistä lähettämääsi tekstiin. Siirrot EU:n ulkopuolelle perustuvat GDPR:n edellyttämiin suojatoimiin, kuten EU:n vakiosopimuslausekkeisiin."
+      },
+      "cookies": {
+        "title": "Evästeet",
+        "body": "Duunit käyttää yhtä evästettä kirjautumisen ylläpitämiseen sekä selaimen tallennustilaa kielen ja teeman muistamiseen. Analytiikka-, mainos- tai seurantaevästeitä ei käytetä, joten suostumusta ei tarvita."
+      },
+      "retention": {
+        "title": "Kuinka kauan säilytämme tietoja",
+        "body": "Tilisi tietoja säilytetään, kunnes tili poistetaan. Poistamasi hakemukset ja CV:t poistetaan heti. Palvelinlokit kierrätetään ja poistetaan automaattisesti."
+      },
+      "rights": {
+        "title": "Oikeutesi",
+        "body": "Sinulla on oikeus tarkastaa, oikaista, poistaa ja siirtää tietosi sekä vastustaa niiden käsittelyä. Voit tarkastella ja muokata tietojasi sovelluksessa sekä ladata kopion niistä tai poistaa tilisi ja kaikki sen tiedot profiilisivulla.\nVoit myös tehdä valituksen <ombudsman>tietosuojavaltuutetulle</ombudsman>."
+      }
+    }
   }
 }

@@ -75,7 +75,8 @@
     "gsStep3": "<a>Create a new application</a>",
     "gsStep4": "View <a>your applications</a>",
     "builtUsing": "Built with React, MUI and Vite. On the backend: Node.js, PostgreSQL and Drizzle ORM.",
-    "sourceCode": "Source code is available on <a>GitHub</a>"
+    "sourceCode": "Source code is available on <a>GitHub</a>",
+    "privacy": "Read our <a>privacy policy</a>."
   },
 
   "profile": {
@@ -163,7 +164,8 @@
     "errors": {
       "emailInUse": "That email address is already in use."
     },
-    "alreadyHaveAccount": "Already have an account?"
+    "alreadyHaveAccount": "Already have an account?",
+    "privacyNotice": "By creating an account you agree to the processing of your data as described in the <a>privacy policy</a>."
   },
 
   "login": {
@@ -186,5 +188,40 @@
     "tooEarly": "{{field}} must be after {{date}}",
     "passwordsDoNotMatch": "Passwords do not match",
     "passwordUnchanged": "New password must be different from the current one"
+  },
+
+  "privacy": {
+    "title": "Privacy policy",
+    "updated": "Last updated: 15 October 2026",
+    "sections": {
+      "controller": {
+        "title": "Controller",
+        "body": "Duunit is maintained by Joni Pesonen, who is responsible for your personal data. Contact: <email>jipesonen@gmail.com</email>"
+      },
+      "data": {
+        "title": "What data we collect",
+        "body": "• Your account details: name, email address and password (stored only as a secure hash)\n• What you save in the app: applications, notes, cover letters and uploaded resumes\n• Job descriptions you submit for job analysis\n• Technical data: IP address and browser information of your login sessions and in server logs"
+      },
+      "purpose": {
+        "title": "Why we process it",
+        "body": "Your data is used only to provide the service you signed up for (GDPR Art. 6(1)(b), contract). It is not used for marketing, not sold and not shared for advertising. Technical data is used to keep the service secure and working."
+      },
+      "recipients": {
+        "title": "Who else processes it",
+        "body": "• Hosting: Amazon Web Services, in an EU region.\n• Job analysis: the job description you submit is sent to OpenRouter (USA), which forwards it to an AI model provider. Your resumes and other data are not sent. Avoid including personal data in the text you submit. Transfers outside the EU rely on safeguards required by GDPR, such as the EU Standard Contractual Clauses."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": "Duunit uses one cookie to keep you logged in, and your browser's storage to remember your language and theme. There are no analytics, advertising or tracking cookies, so no consent is needed."
+      },
+      "retention": {
+        "title": "How long we keep it",
+        "body": "Your account data is kept until your account is deleted. Applications and resumes you delete are removed immediately. Server logs are rotated and deleted automatically."
+      },
+      "rights": {
+        "title": "Your rights",
+        "body": "You have the right to access, correct, delete and export your data, and to object to its processing. You can view and edit your data in the app, and download a copy of it or delete your account and all its data on your profile page.\nYou can also file a complaint with the <ombudsman>Data Protection Ombudsman</ombudsman>."
+      }
+    }
   }
 }

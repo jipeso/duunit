@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, Link as RouterLink } from 'react-router'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -141,6 +141,15 @@ export const RegisterForm: React.FC = () => {
               error={!!errors.confirmPassword}
               helperText={errors.confirmPassword?.message}
             />
+
+            <Typography variant='body2' color='text.secondary'>
+              <Trans
+                i18nKey='register.privacyNotice'
+                components={{
+                  a: <Link component={RouterLink} to='/privacy' />,
+                }}
+              />
+            </Typography>
 
             {globalError && (
               <Alert severity='error' sx={{ borderRadius: 1 }}>

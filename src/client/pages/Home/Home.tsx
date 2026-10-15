@@ -77,6 +77,13 @@ const Home = () => {
           }}
         />
       </Typography>
+
+      <Typography color='text.secondary' gutterBottom>
+        <Trans
+          i18nKey='home.privacy'
+          components={{ a: <Link component={RouterLink} to='/privacy' /> }}
+        />
+      </Typography>
     </Container>
   )
 }

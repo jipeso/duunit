@@ -10,6 +10,10 @@ services:
       LLM_MODEL: ${LLM_MODEL}
     ports:
       - 127.0.0.1:3000:3000
+    logging:
+      options:
+        max-size: 10m
+        max-file: '3'
   db:
     image: postgres:18.4-alpine
     environment:

@@ -75,7 +75,8 @@
     "gsStep3": "<a>Skapa en ny ansökan</a>",
     "gsStep4": "Visa <a> dina ansökningar</a>",
     "builtUsing": "Appen är byggd med React, MUI och Vite. I backend: Node.js, PostgreSQL och Drizzle ORM.",
-    "sourceCode": "Källkoden finns tillgänglig på <a>GitHub</a>"
+    "sourceCode": "Källkoden finns tillgänglig på <a>GitHub</a>",
+    "privacy": "Läs vår <a>integritetspolicy</a>."
   },
 
   "profile": {
@@ -163,7 +164,8 @@
     "errors": {
       "emailInUse": "Den e-postadressen används redan."
     },
-    "alreadyHaveAccount": "Har du redan ett konto?"
+    "alreadyHaveAccount": "Har du redan ett konto?",
+    "privacyNotice": "Genom att skapa ett konto godkänner du att dina uppgifter behandlas enligt <a>integritetspolicyn</a>."
   },
 
   "login": {
@@ -186,5 +188,40 @@
     "tooEarly": "{{field}} måste vara efter {{date}}",
     "passwordsDoNotMatch": "Lösenorden matchar inte",
     "passwordUnchanged": "Det nya lösenordet måste skilja sig från det nuvarande"
+  },
+
+  "privacy": {
+    "title": "Integritetspolicy",
+    "updated": "Senast uppdaterad: 15.10.2026",
+    "sections": {
+      "controller": {
+        "title": "Personuppgiftsansvarig",
+        "body": "Duunit underhålls av Joni Pesonen, som ansvarar för dina personuppgifter. Kontakt: <email>jipesonen@gmail.com</email>"
+      },
+      "data": {
+        "title": "Vilka uppgifter vi samlar in",
+        "body": "• Kontouppgifter: namn, e-postadress och lösenord (lagras endast som en säker hash)\n• Det du sparar i appen: ansökningar, anteckningar, personliga brev och uppladdade CV:n\n• Jobbannonser som du skickar till jobbanalysen\n• Tekniska uppgifter: IP-adress och webbläsarinformation för inloggningssessioner och i serverloggar"
+      },
+      "purpose": {
+        "title": "Varför vi behandlar dem",
+        "body": "Dina uppgifter används endast för att tillhandahålla tjänsten (GDPR art. 6.1 b, avtal). De används inte för marknadsföring, säljs inte och delas inte för reklam. Tekniska uppgifter används för att hålla tjänsten säker och fungerande."
+      },
+      "recipients": {
+        "title": "Vilka andra som behandlar dem",
+        "body": "• Drift: Amazon Web Services, i en EU-region.\n• Jobbanalys: jobbannonsen du skickar skickas till OpenRouter (USA), som vidarebefordrar den till en leverantör av AI-modeller. Dina CV:n och övriga uppgifter skickas inte. Undvik att ta med personuppgifter i texten du skickar. Överföringar utanför EU bygger på skyddsåtgärder som krävs enligt GDPR, såsom EU:s standardavtalsklausuler."
+      },
+      "cookies": {
+        "title": "Kakor",
+        "body": "Duunit använder en kaka för att hålla dig inloggad och webbläsarens lagring för att komma ihåg ditt språk och tema. Det finns inga analys-, reklam- eller spårningskakor, så inget samtycke behövs."
+      },
+      "retention": {
+        "title": "Hur länge vi sparar dem",
+        "body": "Dina kontouppgifter sparas tills ditt konto raderas. Ansökningar och CV:n som du raderar tas bort omedelbart. Serverloggar roteras och raderas automatiskt."
+      },
+      "rights": {
+        "title": "Dina rättigheter",
+        "body": "Du har rätt att få tillgång till, rätta, radera och exportera dina uppgifter samt att invända mot behandlingen. Du kan se och redigera dina uppgifter i appen samt ladda ner en kopia av dem eller radera ditt konto och alla dess uppgifter på din profilsida.\nDu kan också lämna in ett klagomål till <ombudsman>dataombudsmannen</ombudsman>."
+      }
+    }
   }
 }

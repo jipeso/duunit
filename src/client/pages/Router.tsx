@@ -12,6 +12,7 @@ import EditApplication from './EditApplication'
 import Resumes from './Resumes'
 import Resume from './Resume'
 import JobAnalysis from './JobAnalysis'
+import Privacy from './Privacy'
 import AuthRoute from '../components/AuthRoute'
 
 const Router = () => {
@@ -34,6 +35,7 @@ const Router = () => {
       <Route element={<AuthRoute access='admin' />}>
         <Route path='/admin' element={<Admin />} />
       </Route>
+      <Route path='/privacy' element={<Privacy />} />
       <Route path='*' element={<Home />} />
     </Routes>
   )
