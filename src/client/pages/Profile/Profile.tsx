@@ -58,7 +58,7 @@ const Profile = () => {
   }
 
   return (
-    <Container maxWidth='sm' sx={{ mt: 4, mb: 8 }}>
+    <Container maxWidth='sm'>
       <Paper variant='outlined' sx={{ p: 3 }}>
         <Typography variant='h5' gutterBottom>
           {t('profile.details')}

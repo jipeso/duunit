@@ -4,3 +4,4 @@ export const inDevelopment = mode === 'development'
 export const inTest = mode === 'test'
 
 export const DRAWER_WIDTH = 240
+export const DRAWER_WIDTH_COLLAPSED = 57

@@ -95,7 +95,7 @@ const Resume = () => {
   const resume = resumes?.find(r => r.id === id)
 
   return (
-    <Container maxWidth='sm' sx={{ mt: 4, mb: 8 }}>
+    <Container maxWidth='sm'>
       {resume ? (
         <ResumeDetails key={resume.id} resume={resume} />
       ) : (

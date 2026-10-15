@@ -66,7 +66,7 @@ export const RegisterForm: React.FC = () => {
   }
 
   return (
-    <Container maxWidth='sm' sx={{ mt: 8 }}>
+    <Container maxWidth='sm'>
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >

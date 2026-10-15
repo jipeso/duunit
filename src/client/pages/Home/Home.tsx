@@ -10,15 +10,15 @@ const Home = () => {
   const { t } = useTranslation()
 
   return (
-    <Container maxWidth='sm' sx={{ mt: 8 }}>
-      <Typography component='h1' variant='h4' gutterBottom>
+    <Container maxWidth='sm'>
+      <Typography component='h1' variant='h5' gutterBottom>
         {t('home.title')}
       </Typography>
       <Typography variant='body1' color='text.secondary' gutterBottom>
         {t('home.description')}
       </Typography>
 
-      <Typography variant='h5' component='h2' gutterBottom sx={{ mt: 4 }}>
+      <Typography variant='h6' component='h2' gutterBottom sx={{ mt: 4 }}>
         {t('home.gettingStarted')}
       </Typography>
 

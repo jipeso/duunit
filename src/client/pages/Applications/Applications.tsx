@@ -22,7 +22,7 @@ const Applications = () => {
   const rows = applications ?? []
 
   return (
-    <Container maxWidth='md' sx={{ mt: 4 }}>
+    <Container maxWidth='md'>
       <Stack spacing={2} sx={{ mb: 4 }}>
         <Typography
           component='h1'

@@ -1,15 +1,11 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router'
+import { matchPath, useLocation } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import Slide from '@mui/material/Slide'
@@ -23,21 +19,32 @@ import DescriptionIcon from '@mui/icons-material/Description'
 import ManageSearchIcon from '@mui/icons-material/ManageSearch'
 import LoginIcon from '@mui/icons-material/Login'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 
+import NavItem from './NavItem'
 import Settings from '../Settings'
 import useIsMobile from '../../hooks/useIsMobile'
 import { authClient } from '../../util/authClient'
-import { DRAWER_WIDTH } from '../../util/config'
+import { DRAWER_WIDTH, DRAWER_WIDTH_COLLAPSED } from '../../util/config'
 
-const Navbar = () => {
+interface NavbarProps {
+  collapsed: boolean
+  onToggleCollapse: () => void
+}
+
+const Navbar = ({ collapsed, onToggleCollapse }: NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { t } = useTranslation()
+  const { pathname } = useLocation()
   const isMobile = useIsMobile()
   const { data: session } = authClient.useSession()
   const trigger = useScrollTrigger()
 
+  const isCollapsed = collapsed && !isMobile
+  const width = isCollapsed ? DRAWER_WIDTH_COLLAPSED : DRAWER_WIDTH
   const isLoggedIn = !!session
   const isAdmin = session?.user.role === 'admin'
 
@@ -89,59 +96,50 @@ const Navbar = () => {
 
   const drawerContent = (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      {isMobile && (
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
+      <Toolbar disableGutters sx={{ px: 1 }}>
+        {isMobile ? (
           <IconButton
-            size='small'
             onClick={() => {
               setMenuOpen(false)
             }}
           >
             <CloseIcon />
           </IconButton>
-        </Box>
-      )}
+        ) : (
+          <IconButton onClick={onToggleCollapse}>
+            {isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        )}
+      </Toolbar>
 
-      <Toolbar />
-
-      <List>
+      <List sx={{ pt: 3, display: 'flex', flexDirection: 'column', gap: 1 }}>
         {links.map(link => (
-          <ListItem key={link.label} disablePadding>
-            <ListItemButton
-              component={NavLink}
-              to={link.to}
-              onClick={() => {
-                setMenuOpen(false)
-              }}
-              sx={{
-                '&.active': {
-                  textDecoration: 'underline',
-                  textUnderlineOffset: '5px',
-                  textDecorationThickness: '2px',
-                },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 36 }}>{link.icon}</ListItemIcon>
-              <ListItemText primary={link.label} />
-            </ListItemButton>
-          </ListItem>
+          <NavItem
+            key={link.to}
+            icon={link.icon}
+            label={link.label}
+            collapsed={isCollapsed}
+            to={link.to}
+            selected={
+              !!matchPath({ path: link.to, end: link.to === '/' }, pathname)
+            }
+            onClick={() => {
+              setMenuOpen(false)
+            }}
+          />
         ))}
       </List>
       <Divider />
       <List>
-        <ListItem disablePadding>
-          <ListItemButton
-            onClick={() => {
-              setMenuOpen(false)
-              setSettingsOpen(true)
-            }}
-          >
-            <ListItemIcon sx={{ minWidth: 36 }}>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary={t('navigation.settings')} />
-          </ListItemButton>
-        </ListItem>
+        <NavItem
+          icon={<SettingsIcon />}
+          label={t('navigation.settings')}
+          collapsed={isCollapsed}
+          onClick={() => {
+            setMenuOpen(false)
+            setSettingsOpen(true)
+          }}
+        />
       </List>
     </Box>
   )
@@ -186,11 +184,12 @@ const Navbar = () => {
           },
         }}
         sx={{
-          width: DRAWER_WIDTH,
+          width,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: DRAWER_WIDTH,
+            width,
             boxSizing: 'border-box',
+            overflowX: 'hidden',
           },
         }}
       >

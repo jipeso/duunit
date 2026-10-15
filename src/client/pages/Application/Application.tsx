@@ -316,7 +316,7 @@ const Application = () => {
   const application = applications?.find(app => app.id === id)
 
   return (
-    <Container maxWidth='sm' sx={{ mt: 4, mb: 8 }}>
+    <Container maxWidth='sm'>
       {application ? (
         <ApplicationDetails key={application.id} application={application} />
       ) : (

@@ -64,7 +64,7 @@ const JobAnalysis = () => {
   ]
 
   return (
-    <Container maxWidth='sm' sx={{ mt: 4, mb: 8 }}>
+    <Container maxWidth='sm'>
       <Stack spacing={2} sx={{ mb: 4 }}>
         <Typography component='h1' variant='h5'>
           {t('jobAnalysis.title')}
