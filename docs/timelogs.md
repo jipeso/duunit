@@ -23,5 +23,5 @@
 | 12.10 | 4        | Local LLM testing                   |
 | 13.10 | 5        | Frontend                            |
 | 14.10 | 5        | Refactoring                         |
-| 15.10 | 9        | UX improvements + GDPR requirements |
+| 15.10 | 9        | UX, GDPR, Admin page                |
 | Total | 151      |                                     |
