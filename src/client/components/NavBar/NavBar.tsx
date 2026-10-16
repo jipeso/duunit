@@ -99,6 +99,7 @@ const Navbar = ({ collapsed, onToggleCollapse }: NavbarProps) => {
       <Toolbar disableGutters sx={{ px: 1 }}>
         {isMobile ? (
           <IconButton
+            aria-label={t('navigation.closeMenu')}
             onClick={() => {
               setMenuOpen(false)
             }}
@@ -106,7 +107,12 @@ const Navbar = ({ collapsed, onToggleCollapse }: NavbarProps) => {
             <CloseIcon />
           </IconButton>
         ) : (
-          <IconButton onClick={onToggleCollapse}>
+          <IconButton
+            aria-label={t(
+              isCollapsed ? 'navigation.expandMenu' : 'navigation.collapseMenu'
+            )}
+            onClick={onToggleCollapse}
+          >
             {isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         )}
@@ -155,6 +161,7 @@ const Navbar = ({ collapsed, onToggleCollapse }: NavbarProps) => {
               left: 8,
               zIndex: 1400,
             }}
+            aria-label={t('navigation.openMenu')}
             onClick={() => {
               setMenuOpen(true)
             }}

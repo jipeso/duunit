@@ -62,7 +62,11 @@
     "logout": "Kirjaudu ulos",
     "applications": "Hakemukset",
     "resumes": "Ansioluettelot",
-    "jobAnalysis": "Työpaikka-analyysi"
+    "jobAnalysis": "Työpaikka-analyysi",
+    "openMenu": "Avaa valikko",
+    "closeMenu": "Sulje valikko",
+    "expandMenu": "Laajenna valikko",
+    "collapseMenu": "Pienennä valikko"
   },
 
   "home": {
@@ -80,7 +84,16 @@
   },
 
   "profile": {
-    "details": "Käyttäjätiedot",
+    "account": "Tili",
+    "accountCreated": "Tili luotu",
+    "security": "Tietoturva",
+    "passwordDescription": "Vaihda salasana, jolla kirjaudut sisään.",
+    "yourData": "Tietosi",
+    "downloadDataDescription": "Lataa kopio kaikista tiedoistasi JSON-tiedostona.",
+    "deleteAccountDescription": "Poista tilisi ja kaikki sen tiedot pysyvästi.",
+    "downloadData": "Lataa tietoni",
+    "downloadDataConfirmTitle": "Ladataanko tietosi?",
+    "downloadDataConfirmMessage": "Tiedosto sisältää tilisi tiedot, hakemukset, CV-tiedot ja kirjautumisistunnot. Säilytä se turvallisessa paikassa.",
     "updatePassword": "Päivitä salasana",
     "wrongPassword": "Nykyinen salasana on väärä.",
     "deleteAccount": "Poista tili",

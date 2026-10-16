@@ -62,7 +62,11 @@
     "logout": "Logga ut",
     "applications": "Ansökningar",
     "resumes": "CV:n",
-    "jobAnalysis": "Jobbanalys"
+    "jobAnalysis": "Jobbanalys",
+    "openMenu": "Öppna menyn",
+    "closeMenu": "Stäng menyn",
+    "expandMenu": "Expandera menyn",
+    "collapseMenu": "Minimera menyn"
   },
 
   "home": {
@@ -80,7 +84,16 @@
   },
 
   "profile": {
-    "details": "Användaruppgifter",
+    "account": "Konto",
+    "accountCreated": "Konto skapat",
+    "security": "Säkerhet",
+    "passwordDescription": "Byt lösenordet du loggar in med.",
+    "yourData": "Dina uppgifter",
+    "downloadDataDescription": "Ladda ner en kopia av alla dina uppgifter som en JSON-fil.",
+    "deleteAccountDescription": "Radera ditt konto och all dess data permanent.",
+    "downloadData": "Ladda ner mina uppgifter",
+    "downloadDataConfirmTitle": "Ladda ner dina uppgifter?",
+    "downloadDataConfirmMessage": "Filen innehåller dina kontouppgifter, ansökningar, CV-uppgifter och inloggningssessioner. Förvara den på ett säkert ställe.",
     "updatePassword": "Uppdatera lösenord",
     "wrongPassword": "Nuvarande lösenord är felaktigt.",
     "deleteAccount": "Radera konto",

@@ -62,7 +62,11 @@
     "logout": "Logout",
     "applications": "Applications",
     "resumes": "Resumes",
-    "jobAnalysis": "Job analysis"
+    "jobAnalysis": "Job analysis",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "expandMenu": "Expand menu",
+    "collapseMenu": "Collapse menu"
   },
 
   "home": {
@@ -80,7 +84,16 @@
   },
 
   "profile": {
-    "details": "User details",
+    "account": "Account",
+    "accountCreated": "Account created",
+    "security": "Security",
+    "passwordDescription": "Change the password you use to log in.",
+    "yourData": "Your data",
+    "downloadDataDescription": "Get a copy of all your data as a JSON file.",
+    "deleteAccountDescription": "Permanently delete your account and all its data.",
+    "downloadData": "Download my data",
+    "downloadDataConfirmTitle": "Download your data?",
+    "downloadDataConfirmMessage": "The file contains your account details, applications, resume details and login sessions. Keep it somewhere safe.",
     "updatePassword": "Update password",
     "wrongPassword": "Current password is incorrect.",
     "deleteAccount": "Delete account",

@@ -1,5 +1,5 @@
 import Alert from '@mui/material/Alert'
-import Button from '@mui/material/Button'
+import Button, { type ButtonProps } from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -13,6 +13,7 @@ interface Props {
   title: string
   message: string
   confirmLabel: string
+  confirmColor?: ButtonProps['color']
   onConfirm: () => void
   onClose: () => void
   isPending?: boolean
@@ -24,6 +25,7 @@ const ConfirmDialog = ({
   title,
   message,
   confirmLabel,
+  confirmColor = 'error',
   onConfirm,
   onClose,
   isPending = false,
@@ -63,7 +65,7 @@ const ConfirmDialog = ({
         <Button
           onClick={onConfirm}
           disabled={isPending}
-          color='error'
+          color={confirmColor}
           variant='contained'
           disableElevation
           data-testid='confirm-dialog-confirm'

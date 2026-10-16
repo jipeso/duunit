@@ -2,9 +2,7 @@ import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
-import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
-import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
@@ -16,17 +14,21 @@ import { useTranslation } from 'react-i18next'
 import { nameField } from '#common/types/common.ts'
 import { authClient } from '../../util/authClient'
 import { useNotification } from '../../components/Notification'
+import ConfirmDialog from '../../components/common/ConfirmDialog'
 import ChangePasswordForm from './ChangePasswordForm'
 import DeleteAccountForm from './DeleteAccountForm'
+import ProfileAction from './ProfileAction'
+import ProfileSection from './ProfileSection'
 
 const Profile = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { showSuccess } = useNotification()
   const { data: session } = authClient.useSession()
   const [name, setName] = useState<string | null>(null)
   const [nameError, setNameError] = useState<string>()
   const [changingPassword, setChangingPassword] = useState(false)
   const [deletingAccount, setDeletingAccount] = useState(false)
+  const [confirmingDownload, setConfirmingDownload] = useState(false)
 
   if (!session) return null
 
@@ -61,12 +63,12 @@ const Profile = () => {
 
   return (
     <Container maxWidth='sm'>
-      <Paper variant='outlined' sx={{ p: 3 }}>
-        <Typography variant='h5' gutterBottom>
-          {t('profile.details')}
-        </Typography>
+      <Typography component='h1' variant='h5' gutterBottom>
+        {t('navigation.profile')}
+      </Typography>
 
-        <Stack spacing={2}>
+      <Stack spacing={3}>
+        <ProfileSection title={t('profile.account')}>
           <Box>
             <Typography variant='body2' color='text.secondary'>
               {t('fields.name')}
@@ -128,8 +130,17 @@ const Profile = () => {
             <Typography variant='body1'>{user.email}</Typography>
           </Box>
 
-          <Divider />
+          <Box>
+            <Typography variant='body2' color='text.secondary'>
+              {t('profile.accountCreated')}
+            </Typography>
+            <Typography variant='body1'>
+              {user.createdAt.toLocaleDateString(i18n.language)}
+            </Typography>
+          </Box>
+        </ProfileSection>
 
+        <ProfileSection title={t('profile.security')}>
           {changingPassword ? (
             <ChangePasswordForm
               onDone={() => {
@@ -137,18 +148,32 @@ const Profile = () => {
               }}
             />
           ) : (
-            <Box>
+            <ProfileAction description={t('profile.passwordDescription')}>
               <Button
+                variant='outlined'
+                sx={{ flexShrink: 0 }}
                 onClick={() => {
                   setChangingPassword(true)
                 }}
               >
                 {t('profile.updatePassword')}
               </Button>
-            </Box>
+            </ProfileAction>
           )}
+        </ProfileSection>
 
-          <Divider />
+        <ProfileSection title={t('profile.yourData')}>
+          <ProfileAction description={t('profile.downloadDataDescription')}>
+            <Button
+              variant='outlined'
+              sx={{ flexShrink: 0 }}
+              onClick={() => {
+                setConfirmingDownload(true)
+              }}
+            >
+              {t('profile.downloadData')}
+            </Button>
+          </ProfileAction>
 
           {deletingAccount ? (
             <DeleteAccountForm
@@ -157,19 +182,36 @@ const Profile = () => {
               }}
             />
           ) : (
-            <Box>
+            <ProfileAction description={t('profile.deleteAccountDescription')}>
               <Button
+                variant='outlined'
                 color='error'
+                sx={{ flexShrink: 0 }}
                 onClick={() => {
                   setDeletingAccount(true)
                 }}
               >
                 {t('profile.deleteAccount')}
               </Button>
-            </Box>
+            </ProfileAction>
           )}
-        </Stack>
-      </Paper>
+        </ProfileSection>
+      </Stack>
+
+      <ConfirmDialog
+        open={confirmingDownload}
+        title={t('profile.downloadDataConfirmTitle')}
+        message={t('profile.downloadDataConfirmMessage')}
+        confirmLabel={t('profile.downloadData')}
+        confirmColor='primary'
+        onConfirm={() => {
+          setConfirmingDownload(false)
+          window.location.assign('/api/account/export')
+        }}
+        onClose={() => {
+          setConfirmingDownload(false)
+        }}
+      />
     </Container>
   )
 }
