@@ -11,9 +11,7 @@ router.get('/export', async (req: Request, res: Response) => {
   const data = await accountService.exportData(req.user.id)
   const date = data.exportedAt.toISOString().slice(0, 10)
 
-  res
-    .attachment(`duunit-data-${date}.json`)
-    .send(JSON.stringify(data, null, 2))
+  res.attachment(`duunit-data-${date}.json`).send(JSON.stringify(data, null, 2))
 })
 
 export default router

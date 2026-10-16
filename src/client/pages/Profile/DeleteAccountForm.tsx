@@ -87,7 +87,9 @@ const DeleteAccountForm = ({ onDone }: { onDone: () => void }) => {
           {...register('password')}
           error={!!errors.password}
           helperText={errors.password?.message}
-          slotProps={{ htmlInput: { 'data-testid': 'delete-account-password' } }}
+          slotProps={{
+            htmlInput: { 'data-testid': 'delete-account-password' },
+          }}
         />
 
         {errors.root && <Alert severity='error'>{errors.root.message}</Alert>}

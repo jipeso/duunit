@@ -30,7 +30,8 @@
     "test:setup": "docker compose down && docker compose -f docker-compose.ci.yml rm -vf && docker compose -f docker-compose.ci.yml up -d --build",
     "test:e2e": "playwright test",
     "lint": "concurrently --kill-others-on-fail -raw \"npm run typecheck\" \"eslint --flag unstable_native_nodejs_ts_config\"",
-    "typecheck": "tsc --build"
+    "typecheck": "tsc --build",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

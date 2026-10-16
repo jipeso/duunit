@@ -51,11 +51,7 @@ router.post(
       throw new AppError('INVALID_FILE', 400)
     }
 
-    const resume = await resumeService.createResume(
-      req.user.id,
-      fileName,
-      data
-    )
+    const resume = await resumeService.createResume(req.user.id, fileName, data)
     res.status(201).json(resume)
   }
 )
