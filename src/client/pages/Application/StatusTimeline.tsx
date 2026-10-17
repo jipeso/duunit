@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
+import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
+import CheckIcon from '@mui/icons-material/Check'
+import CloseIcon from '@mui/icons-material/Close'
+import EditIcon from '@mui/icons-material/Edit'
 import Timeline from '@mui/lab/Timeline'
 import TimelineConnector from '@mui/lab/TimelineConnector'
 import TimelineContent from '@mui/lab/TimelineContent'
@@ -13,53 +14,47 @@ import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem'
 import TimelineSeparator from '@mui/lab/TimelineSeparator'
 import { useTranslation } from 'react-i18next'
 
-import useStatusEvents from '../../hooks/useStatusEvents'
-import useDeleteStatusEvent from '../../hooks/useDeleteStatusEvent'
-import ConfirmDialog from '../../components/common/ConfirmDialog'
-import EditEventDateDialog from './EditEventDateDialog'
+import {
+  APPLICATION_STATUSES,
+  STATUS_DATE_FIELD,
+  type ApplicationResponse,
+} from '#common/types/applications.ts'
+import useUpdateApplication from '../../hooks/useUpdateApplication'
+import { useNotification } from '../../components/Notification'
 import { statusColors } from '../../util/applications'
-import { parseDate } from '../../util/date'
+import { parseDate, today } from '../../util/date'
 
-const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
+const StatusTimeline = ({
+  application,
+}: {
+  application: ApplicationResponse
+}) => {
   const { t, i18n } = useTranslation()
-  const { data: events, isError } = useStatusEvents(applicationId)
-  const { mutate, isPending, error, reset } = useDeleteStatusEvent()
-  const [eventIdToDelete, setEventIdToDelete] = useState<string | null>(null)
-  const [deleteMessage, setDeleteMessage] = useState('')
-  const [eventIdToEdit, setEventIdToEdit] = useState<string | null>(null)
-  const [menu, setMenu] = useState<{
-    anchorEl: HTMLElement
-    eventId: string
-  } | null>(null)
+  const { showError } = useNotification()
+  const { mutate, isPending } = useUpdateApplication()
+  const [editing, setEditing] = useState<string | null>(null)
+  const [date, setDate] = useState('')
 
-  const editIndex = events?.findIndex(event => event.id === eventIdToEdit) ?? -1
-  const eventToEdit = events?.[editIndex]
+  const entries = APPLICATION_STATUSES.flatMap(status => {
+    const field = STATUS_DATE_FIELD[status]
+    const entryDate = field && application[field]
+    return entryDate && (field !== 'closedOn' || status === application.status)
+      ? [{ field, status, date: entryDate }]
+      : []
+  })
 
-  const closeDialog = () => {
-    reset()
-    setEventIdToDelete(null)
-  }
-
-  const confirmDelete = () => {
-    if (eventIdToDelete) {
-      mutate(
-        { applicationId, eventId: eventIdToDelete },
-        { onSuccess: closeDialog }
-      )
-    }
-  }
-
-  const openDeleteDialog = (eventId: string) => {
-    // Deleting the latest event changes the status back to the previous one
-    const previousEvent = events?.at(-2)
-    setDeleteMessage(
-      previousEvent && eventId === events?.at(-1)?.id
-        ? t('applications.deleteLatestEventConfirm', {
-            status: t(`applications.statuses.${previousEvent.status}`),
-          })
-        : t('applications.deleteEventConfirm')
+  const save = (field: string) => {
+    mutate(
+      { id: application.id, values: { [field]: date } },
+      {
+        onSuccess: () => {
+          setEditing(null)
+        },
+        onError: () => {
+          showError(t('common.errors.unexpected'))
+        },
+      }
     )
-    setEventIdToDelete(eventId)
   }
 
   return (
@@ -67,12 +62,11 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
       <Typography component='h2' variant='h6' sx={{ mb: 1 }}>
         {t('applications.timeline')}
       </Typography>
-      {isError && (
+      {entries.length === 0 ? (
         <Typography variant='body2' color='text.secondary'>
-          {t('common.errors.loadFailed')}
+          {t('applications.notSent')}
         </Typography>
-      )}
-      {events && (
+      ) : (
         <Timeline
           data-testid='application-timeline'
           sx={{
@@ -81,92 +75,99 @@ const StatusTimeline = ({ applicationId }: { applicationId: string }) => {
             [`& .${timelineItemClasses.root}::before`]: { display: 'none' },
           }}
         >
-          {events.map((event, index) => {
-            const color = statusColors[event.status]
+          {entries.map((entry, index) => {
+            const color = statusColors[entry.status]
 
             return (
-              <TimelineItem key={event.id}>
+              <TimelineItem key={entry.field}>
                 <TimelineSeparator>
                   <TimelineDot color={color === 'default' ? 'grey' : color} />
-                  {index < events.length - 1 && <TimelineConnector />}
+                  {index < entries.length - 1 && <TimelineConnector />}
                 </TimelineSeparator>
-                <TimelineContent sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Typography>
-                      {t(`applications.statuses.${event.status}`)}
-                    </Typography>
-                    <Typography variant='body2' color='text.secondary'>
-                      {parseDate(event.occurredOn).toLocaleDateString(
-                        i18n.language
-                      )}
-                    </Typography>
-                  </Box>
-                  <IconButton
-                    size='small'
-                    aria-label={t('common.moreActions')}
-                    onClick={e => {
-                      setMenu({ anchorEl: e.currentTarget, eventId: event.id })
-                    }}
-                  >
-                    <MoreVertIcon fontSize='small' />
-                  </IconButton>
+                <TimelineContent>
+                  <Typography>
+                    {t(`applications.statuses.${entry.status}`)}
+                  </Typography>
+                  {editing === entry.field ? (
+                    <Box
+                      component='form'
+                      onSubmit={event => {
+                        event.preventDefault()
+                        save(entry.field)
+                      }}
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 0.5,
+                        mt: 0.5,
+                      }}
+                    >
+                      <TextField
+                        type='date'
+                        size='small'
+                        required
+                        autoFocus
+                        value={date}
+                        onChange={event => {
+                          setDate(event.target.value)
+                        }}
+                        disabled={isPending}
+                        slotProps={{
+                          htmlInput: {
+                            min: entries[index - 1]?.date,
+                            max: entries[index + 1]?.date ?? today(),
+                            'aria-label': t('fields.date'),
+                            'data-testid': 'timeline-date-input',
+                          },
+                        }}
+                      />
+                      <IconButton
+                        type='submit'
+                        size='small'
+                        aria-label={t('common.buttons.save')}
+                        disabled={isPending}
+                        data-testid='timeline-date-save'
+                      >
+                        <CheckIcon fontSize='small' />
+                      </IconButton>
+                      <IconButton
+                        size='small'
+                        aria-label={t('common.buttons.cancel')}
+                        onClick={() => {
+                          setEditing(null)
+                        }}
+                        disabled={isPending}
+                      >
+                        <CloseIcon fontSize='small' />
+                      </IconButton>
+                    </Box>
+                  ) : (
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Typography variant='body2' color='text.secondary'>
+                        {parseDate(entry.date).toLocaleDateString(
+                          i18n.language
+                        )}
+                      </Typography>
+                      <IconButton
+                        size='small'
+                        aria-label={t('applications.editDate')}
+                        onClick={() => {
+                          setEditing(entry.field)
+                          setDate(entry.date)
+                        }}
+                        data-testid={`timeline-edit-${entry.status}`}
+                        sx={{ ml: 0.5 }}
+                      >
+                        <EditIcon sx={{ fontSize: 16 }} />
+                      </IconButton>
+                    </Box>
+                  )}
                 </TimelineContent>
               </TimelineItem>
             )
           })}
         </Timeline>
       )}
-
-      <Menu
-        anchorEl={menu?.anchorEl}
-        open={menu !== null}
-        onClose={() => {
-          setMenu(null)
-        }}
-      >
-        <MenuItem
-          onClick={() => {
-            setEventIdToEdit(menu?.eventId ?? null)
-            setMenu(null)
-          }}
-        >
-          {t('applications.editEventDate')}
-        </MenuItem>
-        <MenuItem
-          disabled={events?.length === 1}
-          onClick={() => {
-            if (menu) {
-              openDeleteDialog(menu.eventId)
-            }
-            setMenu(null)
-          }}
-        >
-          {t('common.buttons.delete')}
-        </MenuItem>
-      </Menu>
-
-      {events && eventToEdit && (
-        <EditEventDateDialog
-          applicationId={applicationId}
-          event={eventToEdit}
-          min={events[editIndex - 1]?.occurredOn}
-          max={events[editIndex + 1]?.occurredOn}
-          onClose={() => {
-            setEventIdToEdit(null)
-          }}
-        />
-      )}
-
-      <ConfirmDialog
-        open={eventIdToDelete !== null}
-        title={t('applications.deleteEvent')}
-        message={deleteMessage}
-        confirmLabel={t('common.buttons.delete')}
-        onConfirm={confirmDelete}
-        onClose={closeDialog}
-        isPending={isPending}
-        error={error && t('common.errors.unexpected')}
-      />
     </Box>
   )
 }

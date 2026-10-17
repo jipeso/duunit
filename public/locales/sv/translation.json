@@ -11,8 +11,6 @@
       "system": "System"
     },
 
-    "moreActions": "Fler åtgärder",
-
     "errors": {
       "unexpected": "Något gick fel. Försök igen.",
       "loadFailed": "Det gick inte att läsa in data. Försök igen."
@@ -39,7 +37,8 @@
     "company": "Företag",
     "position": "Befattning",
     "status": "Status",
-    "appliedAt": "Ansökningsdatum",
+    "appliedOn": "Ansökningsdatum",
+    "createdAt": "Tillagd",
     "deadline": "Sista ansökningsdag",
     "nextInterviewAt": "Nästa intervju",
     "jobPostingUrl": "Länk till jobbannons",
@@ -47,7 +46,7 @@
     "salary": "Lön",
     "coverLetter": "Personligt brev",
     "notes": "Anteckningar",
-    "eventDate": "Datum",
+    "date": "Datum",
     "resume": "CV",
     "description": "Platsannons"
   },
@@ -134,18 +133,22 @@
     "noCoverLetter": "Inget personligt brev har lagts till",
     "noNotes": "Inga anteckningar har lagts till",
     "timeline": "Tidslinje",
-    "deleteEvent": "Ta bort tidslinjepost",
-    "deleteEventConfirm": "Ta bort posten från tidslinjen? Det går inte att ångra.",
-    "deleteLatestEventConfirm": "Ta bort posten? Statusen ändras tillbaka till {{status}}.",
-    "editEventDate": "Redigera datum",
+    "notSent": "Inte skickad ännu",
+    "editDate": "Redigera datum",
 
+    "statusGroups": {
+      "notSent": "Inte skickad",
+      "inProgress": "Pågående",
+      "closed": "Avslutad"
+    },
     "statuses": {
       "saved": "Sparad",
       "applied": "Sökt",
       "interviewing": "Intervju",
       "offer": "Erbjudande",
-      "rejected": "Avslagen",
       "accepted": "Accepterad",
+      "rejected": "Avslagen",
+      "no_response": "Inget svar",
       "withdrawn": "Återkallad"
     }
   },
@@ -205,6 +208,7 @@
     "invalid": "{{field}} ogiltigt värde",
     "required": "{{field}} måste fyllas i",
     "tooEarly": "{{field}} måste vara efter {{date}}",
+    "inFuture": "{{field}} kan inte vara i framtiden",
     "passwordsDoNotMatch": "Lösenorden matchar inte",
     "passwordUnchanged": "Det nya lösenordet måste skilja sig från det nuvarande"
   },

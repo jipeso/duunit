@@ -1,1 +1,0 @@
-ALTER TABLE "applications" ADD COLUMN "next_interview_at" timestamp with time zone;

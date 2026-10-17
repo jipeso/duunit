@@ -6,7 +6,6 @@ import type {
   UpdateApplication,
 } from '#common/types/applications.ts'
 import { applicationsQueryKey } from './useApplications.ts'
-import { statusEventsQueryKey } from './useStatusEvents.ts'
 
 interface UpdateApplicationProps {
   id: string
@@ -39,9 +38,6 @@ const useUpdateApplication = () => {
               : application
           )
       )
-      void queryClient.invalidateQueries({
-        queryKey: statusEventsQueryKey(updatedApplication.id),
-      })
     },
   })
 }

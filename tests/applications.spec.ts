@@ -49,7 +49,7 @@ test.describe('Applications', () => {
 
       await page.getByTestId('application-company').fill('Test company')
       await page.getByTestId('application-position').fill('Test Developer')
-      await page.getByTestId('application-applied-at').fill('2026-01-01')
+      await page.getByTestId('application-applied-on').fill('2026-01-01')
       await page
         .getByTestId('application-job-posting-url')
         .fill('https://example.com')
@@ -75,7 +75,7 @@ test.describe('Applications', () => {
     test('application form shows validation errors', async ({ page }) => {
       await page.goto('/applications/new')
 
-      await page.getByTestId('application-applied-at').fill('2009-12-31')
+      await page.getByTestId('application-applied-on').fill('2009-12-31')
       await page.getByTestId('application-job-posting-url').fill('not-a-url')
       await page.getByTestId('application-submit').click()
 
@@ -243,6 +243,32 @@ test.describe('Applications', () => {
 
       await expect(dialog).toBeHidden()
       await expect(row).toBeVisible()
+    })
+
+    test('timeline follows status changes', async ({ page }) => {
+      await page.goto('/applications')
+      await createApplication(page, 'Test company', 'Test Developer')
+      await page.getByTestId('application-details-link').click()
+      const timeline = page.getByTestId('application-timeline')
+
+      await page.getByTestId('application-details-status').click()
+      await page.getByRole('menuitem', { name: 'Interviewing' }).click()
+
+      await expect(timeline.getByText('Applied')).toBeVisible()
+      await expect(timeline.getByText('Interviewing')).toBeVisible()
+    })
+
+    test('saved application has no applied date', async ({ page }) => {
+      await page.goto('/applications/new')
+      await page.getByTestId('application-company').fill('Test company')
+      await page.getByTestId('application-position').fill('Test Developer')
+      await page.getByRole('combobox', { name: /Status/ }).click()
+      await page.getByRole('option', { name: 'Saved' }).click()
+      await expect(page.getByTestId('application-applied-on')).toBeDisabled()
+      await page.getByRole('button', { name: 'Create' }).click()
+
+      await page.getByTestId('application-details-link').click()
+      await expect(page.getByText('Not sent yet')).toBeVisible()
     })
 
     test('user can delete an application', async ({ page }) => {

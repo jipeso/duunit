@@ -6,9 +6,7 @@ import applicationService from '../../services/applicationService.ts'
 import {
   type ApplicationResponse,
   NewApplicationSchema,
-  type StatusEventResponse,
   UpdateApplicationSchema,
-  UpdateStatusEventSchema,
 } from '#common/types/applications.ts'
 
 const router = Router()
@@ -19,19 +17,6 @@ router.get('/', async (req: Request, res: Response<ApplicationResponse[]>) => {
   const applications = await applicationService.getApplications(req.user.id)
   res.json(applications)
 })
-
-router.get(
-  '/:id/events',
-  async (req: Request, res: Response<StatusEventResponse[]>) => {
-    const applicationId = z.uuid().parse(req.params.id)
-    const events = await applicationService.getStatusEvents(
-      req.user.id,
-      applicationId
-    )
-
-    res.json(events)
-  }
-)
 
 router.post('/', async (req: Request, res: Response<ApplicationResponse>) => {
   const application = NewApplicationSchema.parse(req.body)
@@ -58,39 +43,10 @@ router.patch(
   }
 )
 
-router.patch(
-  '/:id/events/:eventId',
-  async (req: Request, res: Response<StatusEventResponse>) => {
-    const applicationId = z.uuid().parse(req.params.id)
-    const eventId = z.uuid().parse(req.params.eventId)
-    const { occurredOn } = UpdateStatusEventSchema.parse(req.body)
-
-    const updatedEvent = await applicationService.updateStatusEvent(
-      req.user.id,
-      applicationId,
-      eventId,
-      occurredOn
-    )
-    res.json(updatedEvent)
-  }
-)
-
 router.delete('/:id', async (req: Request, res: Response) => {
   const applicationId = z.uuid().parse(req.params.id)
 
   await applicationService.deleteApplication(req.user.id, applicationId)
-  res.status(204).end()
-})
-
-router.delete('/:id/events/:eventId', async (req: Request, res: Response) => {
-  const applicationId = z.uuid().parse(req.params.id)
-  const eventId = z.uuid().parse(req.params.eventId)
-
-  await applicationService.deleteStatusEvent(
-    req.user.id,
-    applicationId,
-    eventId
-  )
   res.status(204).end()
 })
 

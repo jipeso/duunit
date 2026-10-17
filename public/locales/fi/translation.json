@@ -11,8 +11,6 @@
       "system": "Järjestelmä"
     },
 
-    "moreActions": "Lisää toimintoja",
-
     "errors": {
       "unexpected": "Jokin meni pieleen. Yritä uudelleen.",
       "loadFailed": "Tietojen lataaminen epäonnistui. Yritä uudelleen."
@@ -39,7 +37,8 @@
     "company": "Yritys",
     "position": "Tehtävä",
     "status": "Tila",
-    "appliedAt": "Hakupäivä",
+    "appliedOn": "Hakupäivä",
+    "createdAt": "Lisätty",
     "deadline": "Hakuaika päättyy",
     "nextInterviewAt": "Seuraava haastattelu",
     "jobPostingUrl": "Työpaikkailmoituksen linkki",
@@ -47,7 +46,7 @@
     "salary": "Palkka",
     "coverLetter": "Saatekirje",
     "notes": "Muistiinpanot",
-    "eventDate": "Päivämäärä",
+    "date": "Päivämäärä",
     "resume": "Ansioluettelo",
     "description": "Työpaikkailmoitus"
   },
@@ -134,18 +133,22 @@
     "noCoverLetter": "Saatekirjettä ei ole lisätty",
     "noNotes": "Muistiinpanoja ei ole lisätty",
     "timeline": "Aikajana",
-    "deleteEvent": "Poista aikajanan merkintä",
-    "deleteEventConfirm": "Poistetaanko merkintä aikajanalta? Toimintoa ei voi perua.",
-    "deleteLatestEventConfirm": "Poistetaanko merkintä? Tilaksi palautuu {{status}}.",
-    "editEventDate": "Muokkaa päivämäärää",
+    "notSent": "Ei vielä lähetetty",
+    "editDate": "Muokkaa päivämäärää",
 
+    "statusGroups": {
+      "notSent": "Ei lähetetty",
+      "inProgress": "Käynnissä",
+      "closed": "Päättynyt"
+    },
     "statuses": {
       "saved": "Tallennettu",
       "applied": "Haettu",
       "interviewing": "Haastattelussa",
       "offer": "Tarjous",
-      "rejected": "Hylätty",
       "accepted": "Hyväksytty",
+      "rejected": "Hylätty",
+      "no_response": "Ei vastausta",
       "withdrawn": "Peruttu"
     }
   },
@@ -205,6 +208,7 @@
     "invalid": "{{field}} on virheellinen",
     "required": "{{field}} on pakollinen",
     "tooEarly": "{{field}}: päivämäärän on oltava {{date}} jälkeen",
+    "inFuture": "{{field}} ei voi olla tulevaisuudessa",
     "passwordsDoNotMatch": "Salasanat eivät täsmää",
     "passwordUnchanged": "Uuden salasanan on oltava eri kuin nykyinen"
   },

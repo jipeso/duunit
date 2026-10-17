@@ -7,7 +7,6 @@ import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
 import Link from '@mui/material/Link'
 import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Tooltip from '@mui/material/Tooltip'
@@ -19,7 +18,6 @@ import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useNavigate, useParams } from 'react-router'
 
 import {
-  APPLICATION_STATUSES,
   type ApplicationResponse,
   type ApplicationStatus,
 } from '#common/types/applications.ts'
@@ -28,6 +26,7 @@ import useUpdateApplication from '../../hooks/useUpdateApplication'
 import useResumes from '../../hooks/useResumes'
 import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
 import { useNotification } from '../../components/Notification'
+import StatusMenuItems from '../../components/StatusMenuItems'
 import { EMPTY_VALUE, statusColors } from '../../util/applications'
 import { DATE_TIME_FORMAT, parseDate } from '../../util/date'
 import StatusTimeline from './StatusTimeline'
@@ -103,7 +102,7 @@ const ApplicationDetails = ({
     position,
     company,
     status,
-    appliedAt,
+    createdAt,
     deadline,
     nextInterviewAt,
     location,
@@ -190,25 +189,18 @@ const ApplicationDetails = ({
             setStatusMenuOpen(false)
           }}
         >
-          {APPLICATION_STATUSES.map(option => (
-            <MenuItem
-              key={option}
-              selected={option === status}
-              onClick={() => {
-                changeStatus(option)
-              }}
-            >
-              {t(`applications.statuses.${option}`)}
-            </MenuItem>
-          ))}
+          {StatusMenuItems(t, option => ({
+            selected: option === status,
+            onClick: () => {
+              changeStatus(option)
+            },
+          }))}
         </Menu>
       </Box>
 
       <Stack component='dl' spacing={1.5} sx={{ m: 0 }}>
-        <Detail label={t('fields.appliedAt')}>
-          {appliedAt
-            ? parseDate(appliedAt).toLocaleDateString(i18n.language)
-            : EMPTY_VALUE}
+        <Detail label={t('fields.createdAt')}>
+          {new Date(createdAt).toLocaleDateString(i18n.language)}
         </Detail>
         <Detail label={t('fields.deadline')}>
           {deadline
@@ -249,7 +241,7 @@ const ApplicationDetails = ({
         </Detail>
       </Stack>
 
-      <StatusTimeline applicationId={application.id} />
+      <StatusTimeline application={application} />
 
       <TextSection
         title={t('fields.notes')}

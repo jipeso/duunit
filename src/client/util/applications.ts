@@ -12,5 +12,6 @@ export const statusColors: Record<
   offer: 'success',
   accepted: 'success',
   rejected: 'error',
+  no_response: 'default',
   withdrawn: 'default',
 }

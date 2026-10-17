@@ -12,7 +12,6 @@ export const toFormValues = (
   status: application.status,
   jobPostingUrl: application.jobPostingUrl ?? '',
   location: application.location ?? '',
-  appliedAt: application.appliedAt ?? '',
   deadline: application.deadline ?? '',
   nextInterviewAt: application.nextInterviewAt
     ? toDateTimeLocal(application.nextInterviewAt)

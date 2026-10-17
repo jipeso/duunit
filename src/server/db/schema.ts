@@ -96,8 +96,11 @@ export const applications = pgTable('applications', {
   position: text('position').notNull(),
   jobPostingUrl: text('job_posting_url'),
   location: text('location'),
-  status: applicationStatusEnum('status').notNull().default('applied'),
-  appliedAt: date('applied_at', { mode: 'string' }),
+  status: applicationStatusEnum('status').notNull(),
+  appliedOn: date('applied_on', { mode: 'string' }),
+  interviewingOn: date('interviewing_on', { mode: 'string' }),
+  offerOn: date('offer_on', { mode: 'string' }),
+  closedOn: date('closed_on', { mode: 'string' }),
   deadline: date('deadline', { mode: 'string' }),
   nextInterviewAt: timestamp('next_interview_at', {
     withTimezone: true,
@@ -115,26 +118,6 @@ export const applications = pgTable('applications', {
     .defaultNow()
     .$onUpdate(() => new Date()),
 })
-
-export const applicationStatusEvents = pgTable(
-  'application_status_events',
-  {
-    id: uuid('id').defaultRandom().primaryKey(),
-    applicationId: uuid('application_id')
-      .notNull()
-      .references(() => applications.id, { onDelete: 'cascade' }),
-    status: applicationStatusEnum('status').notNull(),
-    occurredOn: date('occurred_on', { mode: 'string' }).notNull().defaultNow(),
-    createdAt: timestamp('created_at', { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-  },
-  table => [
-    index('application_status_events_application_id_idx').on(
-      table.applicationId
-    ),
-  ]
-)
 
 export const jobAnalyses = pgTable(
   'job_analyses',
@@ -155,6 +138,5 @@ export const jobAnalyses = pgTable(
   ]
 )
 
-export type DatabaseStatusEvent = typeof applicationStatusEvents.$inferSelect
 export type DatabaseApplication = typeof applications.$inferSelect
 export type DatabaseResume = typeof resumes.$inferSelect

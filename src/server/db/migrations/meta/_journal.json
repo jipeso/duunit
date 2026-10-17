@@ -5,57 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1790776076307,
-      "tag": "0000_true_joseph",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1790927919549,
-      "tag": "0001_stale_red_hulk",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1791211944128,
-      "tag": "0002_serious_night_nurse",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1791298547970,
-      "tag": "0003_amused_hiroim",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1791360283605,
-      "tag": "0004_chilly_kid_colt",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1791368948741,
-      "tag": "0005_gigantic_umar",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1791467894366,
-      "tag": "0006_nice_paibok",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1791988042452,
-      "tag": "0007_bizarre_colleen_wing",
+      "when": 1792236309520,
+      "tag": "0000_init",
       "breakpoints": true
     }
   ]

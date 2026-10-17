@@ -58,6 +58,7 @@ const NewApplication = () => {
           isPending={isPending}
           error={error && t('common.errors.unexpected')}
           returnTo={returnTo}
+          showAppliedOn
         />
       </Box>
     </Container>

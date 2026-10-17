@@ -102,12 +102,12 @@ export const createApplicationColumns = (
       ),
     },
     {
-      field: 'appliedAt',
-      headerName: t('fields.appliedAt'),
+      field: 'appliedOn',
+      headerName: t('fields.appliedOn'),
       flex: 1,
       type: 'date',
       valueGetter: (_, row) =>
-        row.appliedAt ? parseDate(row.appliedAt) : null,
+        row.appliedOn ? parseDate(row.appliedOn) : null,
       valueFormatter: (value: Date | null) =>
         value ? value.toLocaleDateString(language) : EMPTY_VALUE,
     },

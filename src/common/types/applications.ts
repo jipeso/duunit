@@ -13,12 +13,40 @@ export const APPLICATION_STATUSES = [
   'applied',
   'interviewing',
   'offer',
-  'rejected',
   'accepted',
+  'rejected',
+  'no_response',
   'withdrawn',
 ] as const
 
-export const MIN_APPLIED_DATE = '2015-01-01'
+export const STATUS_DATE_FIELD = {
+  saved: null,
+  applied: 'appliedOn',
+  interviewing: 'interviewingOn',
+  offer: 'offerOn',
+  accepted: 'closedOn',
+  rejected: 'closedOn',
+  no_response: 'closedOn',
+  withdrawn: 'closedOn',
+} as const satisfies Record<ApplicationStatus, string | null>
+
+export const MIN_STATUS_DATE = '2015-01-01'
+
+// One day of slack, since the user's local date can be ahead of UTC
+const maxStatusDate = () => {
+  const date = new Date()
+  date.setUTCDate(date.getUTCDate() + 1)
+  return date.toISOString().slice(0, 10)
+}
+
+const statusDate = z.iso
+  .date()
+  .refine(date => date >= MIN_STATUS_DATE, {
+    error: 'validation.tooEarly',
+  })
+  .refine(date => date <= maxStatusDate(), {
+    error: 'validation.inFuture',
+  })
 
 export const ApplicationStatusSchema = z.enum(APPLICATION_STATUSES)
 
@@ -32,17 +60,10 @@ export const NewApplicationSchema = z.object({
     .pipe(z.url().nullable())
     .nullish(),
   location: optionalText(MAX_TEXT_LENGTH),
-  appliedAt: z
+  appliedOn: z
     .string()
     .transform(emptyToNull)
-    .pipe(
-      z.iso
-        .date()
-        .refine(date => date >= MIN_APPLIED_DATE, {
-          error: 'validation.tooEarly',
-        })
-        .nullable()
-    )
+    .pipe(statusDate.nullable())
     .nullish(),
   deadline: z
     .string()
@@ -76,7 +97,10 @@ export const ApplicationResponseSchema = z.object({
   status: ApplicationStatusSchema,
   jobPostingUrl: z.string().nullable(),
   location: z.string().nullable(),
-  appliedAt: z.iso.date().nullable(),
+  appliedOn: z.iso.date().nullable(),
+  interviewingOn: z.iso.date().nullable(),
+  offerOn: z.iso.date().nullable(),
+  closedOn: z.iso.date().nullable(),
   deadline: z.iso.date().nullable(),
   nextInterviewAt: z.iso.datetime().nullable(),
   salary: z.string().nullable(),
@@ -87,22 +111,16 @@ export const ApplicationResponseSchema = z.object({
   updatedAt: z.iso.datetime(),
 })
 
-export const UpdateApplicationSchema = NewApplicationSchema.partial().refine(
-  values => Object.keys(values).length > 0,
-  { error: 'At least one field must be provided' }
-)
-
-export const StatusEventResponseSchema = z.object({
-  id: z.uuid(),
-  status: ApplicationStatusSchema,
-  occurredOn: z.iso.date(),
+export const UpdateApplicationSchema = NewApplicationSchema.extend({
+  interviewingOn: statusDate,
+  offerOn: statusDate,
+  closedOn: statusDate,
 })
+  .partial()
+  .refine(values => Object.keys(values).length > 0, {
+    error: 'At least one field must be provided',
+  })
 
-export const UpdateStatusEventSchema = z.object({
-  occurredOn: z.iso.date(),
-})
-
-export type StatusEventResponse = z.infer<typeof StatusEventResponseSchema>
 export type ApplicationStatus = z.infer<typeof ApplicationStatusSchema>
 export type NewApplication = z.infer<typeof NewApplicationSchema>
 export type NewApplicationInput = z.input<typeof NewApplicationSchema>

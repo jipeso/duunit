@@ -12,15 +12,15 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
 import {
-  APPLICATION_STATUSES,
-  MIN_APPLIED_DATE,
+  MIN_STATUS_DATE,
   NewApplicationSchema,
   type NewApplication,
   type NewApplicationInput,
 } from '#common/types/applications.ts'
 import { MAX_TEXT_LENGTH, MAX_LONG_TEXT_LENGTH } from '#common/types/common.ts'
-import { parseDate } from '../../util/date'
+import { parseDate, today } from '../../util/date'
 import useResumes from '../../hooks/useResumes'
+import StatusMenuItems from '../StatusMenuItems'
 
 interface ApplicationFormProps {
   defaultValues: Partial<NewApplicationInput>
@@ -30,6 +30,7 @@ interface ApplicationFormProps {
   error: string | null
   returnTo?: string
   requireChanges?: boolean
+  showAppliedOn?: boolean
 }
 
 const ApplicationForm = ({
@@ -40,6 +41,7 @@ const ApplicationForm = ({
   error,
   returnTo = '/applications',
   requireChanges = false,
+  showAppliedOn = false,
 }: ApplicationFormProps) => {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
@@ -58,14 +60,16 @@ const ApplicationForm = ({
     defaultValues,
   })
 
-  const [position, company, location, salary, notes, coverLetter] = watch([
-    'position',
-    'company',
-    'location',
-    'salary',
-    'notes',
-    'coverLetter',
-  ])
+  const [status, position, company, location, salary, notes, coverLetter] =
+    watch([
+      'status',
+      'position',
+      'company',
+      'location',
+      'salary',
+      'notes',
+      'coverLetter',
+    ])
 
   const counter = (value: string | null | undefined, max: number) =>
     `${String(value?.length ?? 0)}/${String(max)}`
@@ -133,37 +137,38 @@ const ApplicationForm = ({
               error={!!errors.status}
               helperText={errors.status?.message}
             >
-              {APPLICATION_STATUSES.map(status => (
-                <MenuItem key={status} value={status}>
-                  {t(`applications.statuses.${status}`)}
-                </MenuItem>
-              ))}
+              {StatusMenuItems(t)}
             </TextField>
           )}
         />
 
-        <TextField
-          fullWidth
-          id='appliedAt'
-          type='date'
-          label={t('fields.appliedAt')}
-          slotProps={{
-            inputLabel: { shrink: true },
-            htmlInput: { 'data-testid': 'application-applied-at' },
-          }}
-          {...register('appliedAt')}
-          error={!!errors.appliedAt}
-          helperText={
-            errors.appliedAt?.message &&
-            t(errors.appliedAt.message, {
-              field: t('fields.appliedAt'),
-              date: parseDate(MIN_APPLIED_DATE).toLocaleDateString(
-                i18n.language
-              ),
-              defaultValue: errors.appliedAt.message,
-            })
-          }
-        />
+        {showAppliedOn && (
+          <TextField
+            fullWidth
+            id='appliedOn'
+            type='date'
+            label={t('fields.appliedOn')}
+            slotProps={{
+              inputLabel: { shrink: true },
+              htmlInput: {
+                max: today(),
+                'data-testid': 'application-applied-on',
+              },
+            }}
+            {...register('appliedOn', { disabled: status === 'saved' })}
+            error={!!errors.appliedOn}
+            helperText={
+              errors.appliedOn?.message &&
+              t(errors.appliedOn.message, {
+                field: t('fields.appliedOn'),
+                date: parseDate(MIN_STATUS_DATE).toLocaleDateString(
+                  i18n.language
+                ),
+                defaultValue: errors.appliedOn.message,
+              })
+            }
+          />
+        )}
 
         <TextField
           fullWidth

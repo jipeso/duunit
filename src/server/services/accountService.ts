@@ -1,20 +1,15 @@
-import { asc, desc, eq } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 
 import { db } from '../db/index.ts'
 import {
   applications,
-  applicationStatusEvents,
   jobAnalyses,
   resumes,
   sessions,
   users,
 } from '../db/schema.ts'
 import { AppError } from '../util/AppError.ts'
-import {
-  toApplicationResponse,
-  toResumeResponse,
-  toStatusEventResponse,
-} from './utils.ts'
+import { toApplicationResponse, toResumeResponse } from './utils.ts'
 
 const exportData = async (userId: string) => {
   const [user] = await db
@@ -36,24 +31,6 @@ const exportData = async (userId: string) => {
     .from(applications)
     .where(eq(applications.userId, userId))
     .orderBy(desc(applications.createdAt))
-
-  const statusEventRows = await db
-    .select({ event: applicationStatusEvents })
-    .from(applicationStatusEvents)
-    .innerJoin(
-      applications,
-      eq(applicationStatusEvents.applicationId, applications.id)
-    )
-    .where(eq(applications.userId, userId))
-    .orderBy(
-      asc(applicationStatusEvents.occurredOn),
-      asc(applicationStatusEvents.createdAt)
-    )
-
-  const statusEvents = Map.groupBy(
-    statusEventRows.map(({ event }) => event),
-    event => event.applicationId
-  )
 
   const userResumes = await db
     .select({
@@ -85,12 +62,7 @@ const exportData = async (userId: string) => {
   return {
     exportedAt: new Date(),
     user,
-    applications: userApplications.map(application => ({
-      ...toApplicationResponse(application),
-      statusEvents: (statusEvents.get(application.id) ?? []).map(
-        toStatusEventResponse
-      ),
-    })),
+    applications: userApplications.map(toApplicationResponse),
     resumes: userResumes.map(toResumeResponse),
     jobAnalyses: analyses,
     sessions: userSessions,
