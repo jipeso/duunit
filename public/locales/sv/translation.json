@@ -71,15 +71,20 @@
   "home": {
     "title": "Välkommen till Duunit",
     "description": "Detta är en plattform för att spåra jobbansökningar som hjälper dig att hantera dina ansökningar och följa deras status.",
-    "gettingStarted": "Kom igång",
-    "gettingStartedDesc": "För att börja utforska:",
-    "gsStep1": "<a>Registrera dig</a> för ett nytt konto",
-    "gsStep2": "<a>Logga in</a> för att komma åt din översikt",
-    "gsStep3": "<a>Skapa en ny ansökan</a>",
-    "gsStep4": "Visa <a> dina ansökningar</a>",
-    "builtUsing": "Appen är byggd med React, MUI och Vite. I backend: Node.js, PostgreSQL och Drizzle ORM.",
-    "sourceCode": "Källkoden finns tillgänglig på <a>GitHub</a>",
-    "privacy": "Läs vår <a>integritetspolicy</a>."
+    "overview": "Översikt",
+    "overviewSubtitle": "Dina kommande intervjuer och skickade ansökningar",
+    "upcoming": "Kommande",
+    "noUpcoming": "Inga kommande intervjuer eller sista ansökningsdagar",
+    "applicationsSent": "Skickade ansökningar",
+    "range": "Tidsperiod",
+    "ranges": {
+      "week": "1 vecka",
+      "month": "1 månad",
+      "year": "12 månader",
+      "all": "Hela tiden"
+    },
+    "total": "Totalt: {{count}}",
+    "noneSent": "Inga skickade ansökningar under den här perioden. <a>Lägg till en ansökan</a>"
   },
 
   "profile": {
@@ -237,7 +242,7 @@
       },
       "data": {
         "title": "Vilka uppgifter vi samlar in",
-        "body": "• Kontouppgifter: namn, e-postadress och lösenord (lagras endast som en säker hash)\n• Det du sparar i appen: ansökningar, anteckningar, personliga brev och uppladdade CV:n\n• Jobbannonser som du skickar till jobbanalysen\n• Tekniska uppgifter: IP-adress och webbläsarinformation för inloggningssessioner och i serverloggar"
+        "body": "• Kontouppgifter: namn och e-postadress\n• Det du sparar i appen: ansökningar, anteckningar, personliga brev och uppladdade CV:n\n• Jobbannonser som du skickar till jobbanalysen\n• Tekniska uppgifter: IP-adress och webbläsarinformation för inloggningssessioner och i serverloggar"
       },
       "purpose": {
         "title": "Varför vi behandlar dem",

@@ -71,15 +71,20 @@
   "home": {
     "title": "Tervetuloa Duunit sovellukseen",
     "description": "Tämä on työhakemusten seuranta-alusta, jonka avulla voit hallita työhakemuksiasi ja seurata niiden tilaa.",
-    "gettingStarted": "Näin pääset alkuun",
-    "gettingStartedDesc": "Aloita tutkiminen:",
-    "gsStep1": "<a>Rekisteröidy</a> luodaksesi uuden tilin",
-    "gsStep2": "<a>Kirjaudu sisään</a> päästäksesi hallintapaneeliisi",
-    "gsStep3": "<a>Luo uusi hakemus</a>",
-    "gsStep4": "Tarkastele <a>hakemuksiasi</a>",
-    "builtUsing": "Sovellus on rakennettu Reactilla, MUI:lla ja Vitellä. Taustalla Node.js, PostgreSQL ja Drizzle ORM.",
-    "sourceCode": "Lähdekoodi löytyy <a>GitHubista</a>",
-    "privacy": "Lue <a>tietosuojaseloste</a>."
+    "overview": "Yleiskatsaus",
+    "overviewSubtitle": "Tulevat haastattelusi ja lähettämäsi hakemukset",
+    "upcoming": "Tulossa",
+    "noUpcoming": "Ei tulevia haastatteluja tai hakuaikoja",
+    "applicationsSent": "Lähetetyt hakemukset",
+    "range": "Aikaväli",
+    "ranges": {
+      "week": "1 viikko",
+      "month": "1 kuukausi",
+      "year": "12 kuukautta",
+      "all": "Koko aika"
+    },
+    "total": "Yhteensä: {{count}}",
+    "noneSent": "Ei lähetettyjä hakemuksia tällä aikavälillä. <a>Lisää hakemus</a>"
   },
 
   "profile": {
@@ -237,7 +242,7 @@
       },
       "data": {
         "title": "Mitä tietoja keräämme",
-        "body": "• Tilin tiedot: nimi, sähköpostiosoite ja salasana (tallennetaan vain turvallisena tiivisteenä)\n• Sovellukseen tallentamasi tiedot: hakemukset, muistiinpanot, saatekirjeet ja ladatut CV:t\n• Työpaikka-analyysiin lähettämäsi työpaikkailmoitukset\n• Tekniset tiedot: kirjautumisistuntojen ja palvelinlokien IP-osoite ja selaintiedot"
+        "body": "• Tilin tiedot: nimi ja sähköpostiosoite\n• Sovellukseen tallentamasi tiedot: hakemukset, muistiinpanot, saatekirjeet ja ladatut CV:t\n• Työpaikka-analyysiin lähettämäsi työpaikkailmoitukset\n• Tekniset tiedot: kirjautumisistuntojen ja palvelinlokien IP-osoite ja selaintiedot"
       },
       "purpose": {
         "title": "Miksi käsittelemme tietoja",

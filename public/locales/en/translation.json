@@ -71,15 +71,20 @@
   "home": {
     "title": "Welcome to Duunit",
     "description": "This is a job application tracking platform that helps you manage your job applications and keep track of their status.",
-    "gettingStarted": "Getting started",
-    "gettingStartedDesc": "To start exploring Duunit:",
-    "gsStep1": "<a>Register</a> for a new account",
-    "gsStep2": "<a>Log in</a> to access your dashboard",
-    "gsStep3": "<a>Create a new application</a>",
-    "gsStep4": "View <a>your applications</a>",
-    "builtUsing": "Built with React, MUI and Vite. On the backend: Node.js, PostgreSQL and Drizzle ORM.",
-    "sourceCode": "Source code is available on <a>GitHub</a>",
-    "privacy": "Read our <a>privacy policy</a>."
+    "overview": "Overview",
+    "overviewSubtitle": "Your upcoming interviews and sent applications",
+    "upcoming": "Upcoming",
+    "noUpcoming": "No upcoming interviews or application deadlines",
+    "applicationsSent": "Applications sent",
+    "range": "Time range",
+    "ranges": {
+      "week": "1 week",
+      "month": "1 month",
+      "year": "12 months",
+      "all": "All time"
+    },
+    "total": "Total: {{count}}",
+    "noneSent": "No applications sent in this period. <a>Add an application</a>"
   },
 
   "profile": {
@@ -237,7 +242,7 @@
       },
       "data": {
         "title": "What data we collect",
-        "body": "• Your account details: name, email address and password (stored only as a secure hash)\n• What you save in the app: applications, notes, cover letters and uploaded resumes\n• Job descriptions you submit for job analysis\n• Technical data: IP address and browser information of your login sessions and in server logs"
+        "body": "• Your account details: name and email address\n• What you save in the app: applications, notes, cover letters and uploaded resumes\n• Job descriptions you submit for job analysis\n• Technical data: IP address and browser information of your login sessions and in server logs"
       },
       "purpose": {
         "title": "Why we process it",

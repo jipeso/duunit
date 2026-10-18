@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-import { deleteAccount } from '../../util/authClient'
+import { authClient } from '../../util/authClient'
 import { useNotification } from '../../components/Notification'
 import ConfirmDialog from '../../components/common/ConfirmDialog'
 
@@ -42,7 +42,9 @@ const DeleteAccountForm = ({ onDone }: { onDone: () => void }) => {
 
   const confirmDelete = async () => {
     setIsDeleting(true)
-    const { error } = await deleteAccount(getValues('password'))
+    const { error } = await authClient.deleteUser({
+      password: getValues('password'),
+    })
     setIsDeleting(false)
     setConfirming(false)
 

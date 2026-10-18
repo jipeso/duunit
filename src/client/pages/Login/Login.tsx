@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Box from '@mui/material/Box'
@@ -21,7 +20,6 @@ export const LoginForm: React.FC = () => {
   const { t } = useTranslation()
   const [globalError, setGlobalError] = useState<string | null>(null)
   const { showSuccess } = useNotification()
-  const navigate = useNavigate()
 
   const {
     register,
@@ -58,7 +56,6 @@ export const LoginForm: React.FC = () => {
     }
 
     showSuccess(t('notifications.loginSuccess'))
-    void navigate('/')
   }
 
   return (

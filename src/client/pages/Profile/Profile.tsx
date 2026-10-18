@@ -15,10 +15,10 @@ import { nameField } from '#common/types/common.ts'
 import { authClient } from '../../util/authClient'
 import { useNotification } from '../../components/Notification'
 import ConfirmDialog from '../../components/common/ConfirmDialog'
+import Section from '../../components/common/Section'
 import ChangePasswordForm from './ChangePasswordForm'
 import DeleteAccountForm from './DeleteAccountForm'
 import ProfileAction from './ProfileAction'
-import ProfileSection from './ProfileSection'
 
 const Profile = () => {
   const { t, i18n } = useTranslation()
@@ -68,7 +68,7 @@ const Profile = () => {
       </Typography>
 
       <Stack spacing={3}>
-        <ProfileSection title={t('profile.account')}>
+        <Section title={t('profile.account')}>
           <Box>
             <Typography variant='body2' color='text.secondary'>
               {t('fields.name')}
@@ -138,9 +138,9 @@ const Profile = () => {
               {user.createdAt.toLocaleDateString(i18n.language)}
             </Typography>
           </Box>
-        </ProfileSection>
+        </Section>
 
-        <ProfileSection title={t('profile.security')}>
+        <Section title={t('profile.security')}>
           {changingPassword ? (
             <ChangePasswordForm
               onDone={() => {
@@ -160,9 +160,9 @@ const Profile = () => {
               </Button>
             </ProfileAction>
           )}
-        </ProfileSection>
+        </Section>
 
-        <ProfileSection title={t('profile.yourData')}>
+        <Section title={t('profile.yourData')}>
           <ProfileAction description={t('profile.downloadDataDescription')}>
             <Button
               variant='outlined'
@@ -195,7 +195,7 @@ const Profile = () => {
               </Button>
             </ProfileAction>
           )}
-        </ProfileSection>
+        </Section>
       </Stack>
 
       <ConfirmDialog

@@ -185,13 +185,14 @@ test.describe('Authentication', () => {
 
       await page.goto('/login')
       await loginWith(page, 'test@example.com', TEST_PASSWORD)
-      await expect(page).toHaveURL('/')
+      await expect(page.getByText('Overview')).toBeVisible()
 
       await page.getByRole('button', { name: 'Settings' }).click()
       await page.getByRole('button', { name: 'Logout' }).click()
 
       await expect(page.getByText('You have been logged out.')).toBeVisible()
-      await expect(page.getByRole('link', { name: 'Login' })).toBeVisible()
+      await expect(page).toHaveURL('/')
+      await expect(page.getByText('Welcome to Duunit')).toBeVisible()
     })
   })
 

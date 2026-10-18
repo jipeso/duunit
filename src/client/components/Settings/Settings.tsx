@@ -12,7 +12,7 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import Modal from '../common/Modal'
 import ThemeSelect from '../common/ThemeSelect'
 import LanguageSelect from '../common/LanguageSelect'
-import { authClient, signOut } from '../../util/authClient'
+import { authClient } from '../../util/authClient'
 import { useNotification } from '../Notification'
 
 interface Props {
@@ -43,7 +43,7 @@ const Settings = ({ open, onClose }: Props) => {
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
-    await signOut()
+    await authClient.signOut()
     setIsLoggingOut(false)
     showSuccess(t('notifications.logoutSuccess'))
     onClose()

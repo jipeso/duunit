@@ -8,7 +8,7 @@ interface Props {
   children: ReactNode
 }
 
-const ProfileSection = ({ title, children }: Props) => (
+const Section = ({ title, children }: Props) => (
   <Paper variant='outlined' sx={{ p: 3 }}>
     <Typography variant='h6' component='h2' gutterBottom>
       {title}
@@ -17,4 +17,4 @@ const ProfileSection = ({ title, children }: Props) => (
   </Paper>
 )
 
-export default ProfileSection
+export default Section

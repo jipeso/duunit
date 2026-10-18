@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate, Link as RouterLink } from 'react-router'
+import { Link as RouterLink } from 'react-router'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { useTranslation, Trans } from 'react-i18next'
@@ -32,7 +32,6 @@ export const RegisterForm: React.FC = () => {
   const { t } = useTranslation()
   const [globalError, setGlobalError] = useState<string | null>(null)
   const { showSuccess } = useNotification()
-  const navigate = useNavigate()
 
   const {
     register,
@@ -62,7 +61,6 @@ export const RegisterForm: React.FC = () => {
     }
 
     showSuccess(t('notifications.registerSuccess'))
-    void navigate('/')
   }
 
   return (
