@@ -74,7 +74,13 @@
     "overview": "Overview",
     "overviewSubtitle": "Your upcoming interviews and sent applications",
     "upcoming": "Upcoming",
-    "noUpcoming": "No upcoming interviews or application deadlines",
+    "noUpcoming": "No upcoming events for the selection",
+    "noUpcomingTypes": "Select interviews or deadlines to show upcoming events",
+    "upcomingFilter": "Show",
+    "upcomingTypes": {
+      "interviews": "Interviews",
+      "deadlines": "Deadlines"
+    },
     "applicationsSent": "Applications sent",
     "range": "Time range",
     "ranges": {
@@ -84,7 +90,7 @@
       "all": "All time"
     },
     "total": "Total: {{count}}",
-    "noneSent": "No applications sent in this period. <a>Add an application</a>"
+    "noneSent": "No applications sent. <a>Add an application</a>"
   },
 
   "profile": {

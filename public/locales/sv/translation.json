@@ -74,7 +74,13 @@
     "overview": "Översikt",
     "overviewSubtitle": "Dina kommande intervjuer och skickade ansökningar",
     "upcoming": "Kommande",
-    "noUpcoming": "Inga kommande intervjuer eller sista ansökningsdagar",
+    "noUpcoming": "Inga kommande händelser för urvalet",
+    "noUpcomingTypes": "Välj intervjuer eller tidsfrister för att visa kommande händelser",
+    "upcomingFilter": "Visa",
+    "upcomingTypes": {
+      "interviews": "Intervjuer",
+      "deadlines": "Tidsfrister"
+    },
     "applicationsSent": "Skickade ansökningar",
     "range": "Tidsperiod",
     "ranges": {
@@ -84,7 +90,7 @@
       "all": "Hela tiden"
     },
     "total": "Totalt: {{count}}",
-    "noneSent": "Inga skickade ansökningar under den här perioden. <a>Lägg till en ansökan</a>"
+    "noneSent": "Inga skickade ansökningar. <a>Lägg till en ansökan</a>"
   },
 
   "profile": {

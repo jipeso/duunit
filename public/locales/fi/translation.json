@@ -74,7 +74,13 @@
     "overview": "Yleiskatsaus",
     "overviewSubtitle": "Tulevat haastattelusi ja lähettämäsi hakemukset",
     "upcoming": "Tulossa",
-    "noUpcoming": "Ei tulevia haastatteluja tai hakuaikoja",
+    "noUpcoming": "Ei tulevia tapahtumia valinnalla",
+    "noUpcomingTypes": "Valitse haastattelut tai hakuajat nähdäksesi tulevat tapahtumat",
+    "upcomingFilter": "Näytä",
+    "upcomingTypes": {
+      "interviews": "Haastattelut",
+      "deadlines": "Hakuajat"
+    },
     "applicationsSent": "Lähetetyt hakemukset",
     "range": "Aikaväli",
     "ranges": {
@@ -84,7 +90,7 @@
       "all": "Koko aika"
     },
     "total": "Yhteensä: {{count}}",
-    "noneSent": "Ei lähetettyjä hakemuksia tällä aikavälillä. <a>Lisää hakemus</a>"
+    "noneSent": "Ei lähetettyjä hakemuksia. <a>Lisää hakemus</a>"
   },
 
   "profile": {

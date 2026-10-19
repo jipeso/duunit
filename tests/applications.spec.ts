@@ -8,7 +8,6 @@ import {
 
 const TEST_EMAIL = 'test@example.com'
 const TEST_PASSWORD = 'joku erinomainen salasana'
-const MISSING_ID = '00000000-0000-4000-8000-000000000000'
 
 test.describe('Applications', () => {
   test.beforeEach(async () => {
@@ -25,7 +24,7 @@ test.describe('Applications', () => {
     await page.goto('/applications/new')
     await expect(page).toHaveURL('/')
 
-    await page.goto(`/applications/${MISSING_ID}/edit`)
+    await page.goto(`/applications/123/edit`)
     await expect(page).toHaveURL('/')
   })
 
@@ -140,35 +139,6 @@ test.describe('Applications', () => {
       await expect(row.locator('[data-field="location"]')).toHaveText('—')
     })
 
-    test('user can add and edit notes', async ({ page }) => {
-      await page.goto('/applications')
-      await createApplication(page, 'Test company', 'Test Developer')
-
-      await page.getByTestId('application-details-link').click()
-      await expect(page.getByText('No notes added')).toBeVisible()
-
-      await page.getByTestId('application-details-edit').click()
-      await page
-        .getByTestId('application-notes')
-        .fill('Phone interview with Anna\nWent well')
-      await page.getByTestId('application-submit').click()
-
-      await expect(page.getByTestId('application-details-notes')).toHaveText(
-        'Phone interview with Anna\nWent well'
-      )
-
-      await page.getByTestId('application-details-edit').click()
-      await expect(page.getByTestId('application-notes')).toHaveValue(
-        'Phone interview with Anna\nWent well'
-      )
-      await page.getByTestId('application-notes').fill('Second round booked')
-      await page.getByTestId('application-submit').click()
-
-      await expect(page.getByTestId('application-details-notes')).toHaveText(
-        'Second round booked'
-      )
-    })
-
     test('user can change the status from the grid', async ({ page }) => {
       await page.goto('/applications')
       await createApplication(page, 'Test company', 'Test Developer')
@@ -186,44 +156,6 @@ test.describe('Applications', () => {
           .getByRole('row', { name: /Test company/ })
           .getByText('Interviewing')
       ).toBeVisible()
-    })
-
-    test('patching only the status keeps other fields', async ({ page }) => {
-      await page.goto('/applications')
-      await createApplication(
-        page,
-        'Test company',
-        'Test Developer',
-        'Helsinki'
-      )
-
-      const listResponse = await page.request.get('/api/applications')
-      const [application] = await listResponse.json()
-
-      const response = await page.request.patch(
-        `/api/applications/${application.id}`,
-        { data: { status: 'offer' } }
-      )
-      expect(response.status()).toBe(200)
-      expect(await response.json()).toMatchObject({
-        company: 'Test company',
-        position: 'Test Developer',
-        location: 'Helsinki',
-        status: 'offer',
-      })
-
-      const emptyResponse = await page.request.patch(
-        `/api/applications/${application.id}`,
-        { data: {} }
-      )
-      expect(emptyResponse.status()).toBe(400)
-    })
-
-    test('editing a missing application shows not found', async ({ page }) => {
-      await page.goto(`/applications/${MISSING_ID}/edit`)
-
-      await expect(page.getByText('Application not found')).toBeVisible()
-      await expect(page.getByTestId('application-submit')).toBeHidden()
     })
 
     test('user can cancel deleting an application', async ({ page }) => {

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link as RouterLink } from 'react-router'
 import Alert from '@mui/material/Alert'
-import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
 import List from '@mui/material/List'
@@ -34,11 +33,18 @@ const MIN_CHART_MAX = 5
 
 type Range = keyof typeof RANGES
 
+const UPCOMING_TYPES = ['deadlines', 'interviews'] as const
+
+type UpcomingType = (typeof UPCOMING_TYPES)[number]
+
 const Dashboard = () => {
   const { t, i18n } = useTranslation()
   const theme = useTheme()
   const { data: applications = [], isPending, isError } = useApplications()
   const [range, setRange] = useState<Range>('month')
+  const [upcomingTypes, setUpcomingTypes] = useState<UpcomingType[]>([
+    ...UPCOMING_TYPES,
+  ])
   const [now] = useState(() => new Date())
 
   if (isPending) {
@@ -53,9 +59,13 @@ const Dashboard = () => {
 
   const upcoming = applications
     .flatMap(({ id, position, company, status, nextInterviewAt, deadline }) => {
-      const title = `${position} · ${company}`
+      const title = `${position} - ${company}`
       const items = []
-      if (nextInterviewAt && new Date(nextInterviewAt) > now) {
+      if (
+        upcomingTypes.includes('interviews') &&
+        nextInterviewAt &&
+        new Date(nextInterviewAt) > now
+      ) {
         const date = new Date(nextInterviewAt)
         items.push({
           id,
@@ -66,6 +76,7 @@ const Dashboard = () => {
       }
 
       if (
+        upcomingTypes.includes('deadlines') &&
         status === 'saved' &&
         deadline &&
         parseDate(deadline) >= startOfToday
@@ -136,109 +147,113 @@ const Dashboard = () => {
         </Alert>
       )}
 
-      {applications.length === 0 ? (
-        <Paper variant='outlined' sx={{ p: 4, textAlign: 'center' }}>
-          <Typography color='text.secondary' gutterBottom>
-            {t('applications.empty')}
-          </Typography>
-          <Button
-            component={RouterLink}
-            to='/applications/new'
-            variant='contained'
-            sx={{ mt: 1 }}
+      <Stack spacing={3}>
+        <Paper variant='outlined' sx={{ p: 3 }}>
+          <Stack
+            direction='row'
+            spacing={2}
+            sx={{
+              mb: 1,
+              alignItems: 'center',
+            }}
           >
-            {t('applications.new')}
-          </Button>
-        </Paper>
-      ) : (
-        <Stack spacing={3}>
-          <Section title={t('home.upcoming')}>
-            {upcoming.length === 0 ? (
-              <Typography variant='body2' color='text.secondary'>
-                {t('home.noUpcoming')}
-              </Typography>
-            ) : (
-              <List disablePadding>
-                {upcoming.map(item => (
-                  <ListItemButton
-                    key={item.id + item.detail}
-                    component={RouterLink}
-                    to={`/applications/${item.id}`}
-                    sx={{ px: 1, borderRadius: 1 }}
-                  >
-                    <ListItemText
-                      primary={item.title}
-                      secondary={item.detail}
-                    />
-                  </ListItemButton>
-                ))}
-              </List>
-            )}
-          </Section>
+            <Typography variant='h6' component='h2'>
+              {t('home.upcoming')}
+            </Typography>
 
-          <Section title={t('home.applicationsSent')}>
             <ToggleButtonGroup
-              value={range}
-              exclusive
-              color='primary'
-              size='small'
-              onChange={(_, value: Range | null) => {
-                if (value) {
-                  setRange(value)
-                }
+              value={upcomingTypes}
+              onChange={(_, value: UpcomingType[]) => {
+                setUpcomingTypes(value)
               }}
-              aria-label={t('home.range')}
+              aria-label={t('home.upcomingFilter')}
             >
-              {Object.keys(RANGES).map(key => (
+              {UPCOMING_TYPES.map(key => (
                 <ToggleButton key={key} value={key}>
-                  {t(`home.ranges.${key as Range}`)}
+                  {t(`home.upcomingTypes.${key}`)}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
+          </Stack>
 
-            {total === 0 ? (
+          {upcoming.length === 0 ? (
+            <Typography variant='body2' color='text.secondary' sx={{ py: 1 }}>
+              {upcomingTypes.length === 0
+                ? t('home.noUpcomingTypes')
+                : t('home.noUpcoming')}
+            </Typography>
+          ) : (
+            <List disablePadding>
+              {upcoming.map(item => (
+                <ListItemButton
+                  key={item.id + item.detail}
+                  component={RouterLink}
+                  to={`/applications/${item.id}`}
+                  sx={{ px: 0, py: 0.5, borderRadius: 1 }}
+                >
+                  <ListItemText primary={item.title} secondary={item.detail} />
+                </ListItemButton>
+              ))}
+            </List>
+          )}
+        </Paper>
+
+        <Section title={t('home.applicationsSent')}>
+          {total === 0 ? (
+            <Typography variant='body2' color='text.secondary'>
+              <Trans
+                i18nKey='home.noneSent'
+                components={{
+                  a: <Link component={RouterLink} to='/applications/new' />,
+                }}
+              />
+            </Typography>
+          ) : (
+            <>
               <Typography variant='body2' color='text.secondary'>
-                <Trans
-                  i18nKey='home.noneSent'
-                  components={{
-                    a: <Link component={RouterLink} to='/applications/new' />,
-                  }}
-                />
+                {t('home.total', { count: total })}
               </Typography>
-            ) : (
-              <>
-                <Typography variant='body2' color='text.secondary'>
-                  {t('home.total', { count: total })}
-                </Typography>
-                <BarChart
-                  height={260}
-                  hideLegend
-                  borderRadius={4}
-                  xAxis={[
-                    { scaleType: 'band', data: buckets.map(b => b.label) },
-                  ]}
-                  yAxis={[
-                    {
-                      tickMinStep: 1,
-                      max: Math.max(
-                        MIN_CHART_MAX,
-                        ...buckets.map(b => b.count)
-                      ),
-                    },
-                  ]}
-                  series={[
-                    {
-                      data: buckets.map(b => b.count),
-                      label: t('home.applicationsSent'),
-                      color: (theme.vars ?? theme).palette.primary.main,
-                    },
-                  ]}
-                />
-              </>
-            )}
-          </Section>
-        </Stack>
-      )}
+
+              <BarChart
+                height={260}
+                hideLegend
+                borderRadius={4}
+                xAxis={[{ scaleType: 'band', data: buckets.map(b => b.label) }]}
+                yAxis={[
+                  {
+                    tickMinStep: 1,
+                    max: Math.max(MIN_CHART_MAX, ...buckets.map(b => b.count)),
+                  },
+                ]}
+                series={[
+                  {
+                    data: buckets.map(b => b.count),
+                    label: t('home.applicationsSent'),
+                    color: (theme.vars ?? theme).palette.primary.main,
+                  },
+                ]}
+              />
+
+              <ToggleButtonGroup
+                value={range}
+                exclusive
+                onChange={(_, value: Range | null) => {
+                  if (value) {
+                    setRange(value)
+                  }
+                }}
+                aria-label={t('home.range')}
+              >
+                {Object.keys(RANGES).map(key => (
+                  <ToggleButton key={key} value={key}>
+                    {t(`home.ranges.${key as Range}`)}
+                  </ToggleButton>
+                ))}
+              </ToggleButtonGroup>
+            </>
+          )}
+        </Section>
+      </Stack>
     </Container>
   )
 }

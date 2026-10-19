@@ -22,9 +22,7 @@ const ThemeSelect = () => {
     <ToggleButtonGroup
       value={mode ?? 'system'}
       exclusive
-      color='primary'
       fullWidth
-      size='small'
       onChange={(_, value: Theme | null) => {
         if (value) {
           setMode(value)

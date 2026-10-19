@@ -103,6 +103,22 @@ export const createAppTheme = (language: LanguageId) =>
           },
         },
 
+        MuiToggleButtonGroup: {
+          defaultProps: {
+            color: 'primary',
+            size: 'small',
+          },
+        },
+
+        MuiToggleButton: {
+          styleOverrides: {
+            sizeSmall: {
+              padding: '2px 8px',
+              fontSize: '0.75rem',
+            },
+          },
+        },
+
         MuiCard: {
           defaultProps: {
             variant: 'outlined',

@@ -17,9 +17,7 @@ const LanguageSelect = () => {
     <ToggleButtonGroup
       value={i18n.resolvedLanguage}
       exclusive
-      color='primary'
       fullWidth
-      size='small'
       onChange={(_, value: LanguageId | null) => {
         if (value) {
           void i18n.changeLanguage(value)
