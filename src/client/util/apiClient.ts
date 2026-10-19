@@ -1,10 +1,16 @@
 import axios, { isAxiosError } from 'axios'
 
 import queryClient from './queryClient'
+import { today } from './date'
 
 const apiClient = axios.create({
   baseURL: '/api',
   withCredentials: true,
+})
+
+apiClient.interceptors.request.use(config => {
+  config.headers.set('X-Local-Date', today())
+  return config
 })
 
 apiClient.interceptors.response.use(undefined, (error: Error) => {

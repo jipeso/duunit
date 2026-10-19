@@ -1,6 +1,6 @@
 import {
-  STATUS_DATE_FIELD,
   STATUS_DATE_FIELDS,
+  statusRank,
   type ApplicationResponse,
   type ApplicationStatus,
 } from '#common/types/applications.ts'
@@ -24,11 +24,7 @@ export const statusColors: Record<
 export const clearsStatusDates = (
   application: ApplicationResponse,
   status: ApplicationStatus
-) => {
-  const field = STATUS_DATE_FIELD[status]
-  const start = field ? STATUS_DATE_FIELDS.indexOf(field) + 1 : 0
-
-  return STATUS_DATE_FIELDS.slice(start).some(
+) =>
+  STATUS_DATE_FIELDS.slice(statusRank(status)).some(
     later => later !== 'closedOn' && application[later]
   )
-}

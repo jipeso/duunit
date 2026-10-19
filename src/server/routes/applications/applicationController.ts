@@ -11,6 +11,8 @@ import {
 
 const router = Router()
 
+const localDate = (req: Request) => z.iso.date().parse(req.get('X-Local-Date'))
+
 router.use(requireAuth)
 
 router.get('/', async (req: Request, res: Response<ApplicationResponse[]>) => {
@@ -23,7 +25,8 @@ router.post('/', async (req: Request, res: Response<ApplicationResponse>) => {
 
   const createdApplication = await applicationService.createApplication(
     req.user.id,
-    application
+    application,
+    localDate(req)
   )
   res.status(201).json(createdApplication)
 })
@@ -37,7 +40,8 @@ router.patch(
     const updatedApplication = await applicationService.updateApplication(
       req.user.id,
       applicationId,
-      values
+      values,
+      localDate(req)
     )
     res.json(updatedApplication)
   }

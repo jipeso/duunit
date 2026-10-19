@@ -1,20 +1,14 @@
+const MINUTE_MS = 60 * 1000
+
 export const parseDate = (date: string) => new Date(`${date}T00:00:00`)
 
-// Today's date as YYYY-MM-DD in the user's local time zone
-export const today = () => {
-  const date = new Date()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  return `${String(date.getFullYear())}-${month}-${day}`
-}
+const toLocalIso = (date: Date) =>
+  new Date(date.getTime() - date.getTimezoneOffset() * MINUTE_MS).toISOString()
 
-// ISO timestamp to the YYYY-MM-DDTHH:mm format of a datetime-local input,
-// in the user's local time zone
-export const toDateTimeLocal = (iso: string) => {
-  const date = new Date(iso)
-  const pad = (value: number) => String(value).padStart(2, '0')
-  return `${String(date.getFullYear())}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`
-}
+export const today = () => toLocalIso(new Date()).slice(0, 10)
+
+export const toDateTimeLocal = (iso: string) =>
+  toLocalIso(new Date(iso)).slice(0, 16)
 
 export const DATE_TIME_FORMAT: Intl.DateTimeFormatOptions = {
   dateStyle: 'medium',

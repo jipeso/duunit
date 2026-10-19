@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router'
 import {
   MIN_STATUS_DATE,
   NewApplicationSchema,
+  statusRank,
   type NewApplication,
   type NewApplicationInput,
 } from '#common/types/applications.ts'
@@ -22,9 +23,17 @@ import { parseDate, today } from '../../util/date'
 import useResumes from '../../hooks/useResumes'
 import StatusMenuItems from '../StatusMenuItems'
 
+const formSchema = NewApplicationSchema.refine(
+  ({ appliedOn }) => !appliedOn || appliedOn <= today(),
+  { path: ['appliedOn'], error: 'validation.inFuture' }
+)
+
 interface ApplicationFormProps {
   defaultValues: Partial<NewApplicationInput>
-  onSubmit: SubmitHandler<NewApplication>
+  onSubmit: (
+    values: NewApplication,
+    changes: Partial<NewApplication>
+  ) => void | Promise<void>
   submitLabel: string
   isPending: boolean
   error: string | null
@@ -52,9 +61,9 @@ const ApplicationForm = ({
     control,
     handleSubmit,
     watch,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, dirtyFields },
   } = useForm<NewApplicationInput, unknown, NewApplication>({
-    resolver: zodResolver(NewApplicationSchema),
+    resolver: zodResolver(formSchema),
     mode: 'onTouched',
     reValidateMode: 'onSubmit',
     defaultValues,
@@ -78,7 +87,14 @@ const ApplicationForm = ({
     <Box
       component='form'
       onSubmit={event => {
-        void handleSubmit(onSubmit)(event)
+        void handleSubmit(values =>
+          onSubmit(
+            values,
+            Object.fromEntries(
+              Object.entries(values).filter(([field]) => field in dirtyFields)
+            )
+          )
+        )(event)
       }}
       noValidate
       sx={{ width: '100%', mb: 5 }}
@@ -193,7 +209,9 @@ const ApplicationForm = ({
             inputLabel: { shrink: true },
             htmlInput: { 'data-testid': 'application-next-interview-at' },
           }}
-          {...register('nextInterviewAt')}
+          {...register('nextInterviewAt', {
+            disabled: statusRank(status) > statusRank('interviewing'),
+          })}
           error={!!errors.nextInterviewAt}
           helperText={errors.nextInterviewAt?.message}
         />

@@ -178,6 +178,7 @@ const JobAnalysis = () => {
             const defaultValues: Partial<NewApplicationInput> = {
               position: data.position,
               company: data.company,
+              status: 'saved',
               location: data.location ?? '',
               salary: data.salary ?? '',
               deadline: data.deadline ?? '',

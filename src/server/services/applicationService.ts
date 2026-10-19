@@ -8,46 +8,70 @@ import {
 } from '../db/schema.ts'
 import {
   STATUS_DATE_FIELD,
-  STATUS_DATE_FIELDS as DATE_FIELDS,
+  STATUS_DATE_FIELDS,
+  statusRank,
   type ApplicationResponse,
-  type ApplicationStatus,
   type NewApplication,
+  type StatusDateField,
   type UpdateApplication,
 } from '#common/types/applications.ts'
 import { AppError } from '../util/AppError.ts'
 import { toApplicationResponse } from './utils.ts'
 
-const syncStatusFields = (
-  fields: Pick<DatabaseApplication, 'status' | (typeof DATE_FIELDS)[number]>
-) => {
-  const field = STATUS_DATE_FIELD[fields.status]
-  const result = { ...fields }
+type StatusFields = Pick<DatabaseApplication, 'status' | StatusDateField>
 
-  for (const later of DATE_FIELDS.slice(
-    field ? DATE_FIELDS.indexOf(field) + 1 : 0
-  )) {
-    result[later] = null
+const NEW_APPLICATION: StatusFields = {
+  status: 'saved',
+  appliedOn: null,
+  interviewingOn: null,
+  offerOn: null,
+  closedOn: null,
+}
+
+const resolveStatusFields = (
+  current: StatusFields,
+  input: UpdateApplication,
+  today: string
+) => {
+  const requested = input.status ?? current.status
+  const status =
+    input.nextInterviewAt && statusRank(requested) < statusRank('interviewing')
+      ? 'interviewing'
+      : requested
+
+  const field = STATUS_DATE_FIELD[status]
+
+  const dateFor = (dateField: StatusDateField) =>
+    STATUS_DATE_FIELDS.indexOf(dateField) < statusRank(status)
+      ? (input[dateField] ?? current[dateField])
+      : null
+
+  const result = {
+    status,
+    appliedOn: dateFor('appliedOn'),
+    interviewingOn: dateFor('interviewingOn'),
+    offerOn: dateFor('offerOn'),
+    closedOn: dateFor('closedOn'),
+    ...(status !== 'interviewing' && { nextInterviewAt: null }),
   }
 
   if (field) {
-    const today = new Date().toISOString().slice(0, 10)
-    const latest = DATE_FIELDS.flatMap(f => result[f] ?? [])
-      .toSorted()
-      .at(-1)
-    result[field] ??= latest && latest > today ? latest : today
-    result.appliedOn ??= result[field]
+    result[field] ??= today
+    if (status !== 'withdrawn') {
+      result.appliedOn ??= today
+    }
   }
 
-  const dates = DATE_FIELDS.flatMap(f => result[f] ?? [])
+  const dates = [
+    ...STATUS_DATE_FIELDS.flatMap(dateField => result[dateField] ?? []),
+    today,
+  ]
   if (dates.join() !== dates.toSorted().join()) {
     throw new AppError('VALIDATION_ERROR', 400, 'Status dates are out of order')
   }
 
   return result
 }
-
-const clearInterviewIfClosed = (status: ApplicationStatus) =>
-  STATUS_DATE_FIELD[status] === 'closedOn' ? { nextInterviewAt: null } : {}
 
 const checkResumeOwner = async (
   tx: Transaction,
@@ -68,16 +92,9 @@ const checkResumeOwner = async (
 
 const createApplication = async (
   userId: string,
-  application: NewApplication
+  application: NewApplication,
+  today: string
 ): Promise<ApplicationResponse> => {
-  const statusFields = syncStatusFields({
-    status: application.status,
-    appliedOn: application.appliedOn ?? null,
-    interviewingOn: null,
-    offerOn: null,
-    closedOn: null,
-  })
-
   const addedApplication = await db.transaction(async tx => {
     await checkResumeOwner(tx, userId, application.resumeId)
 
@@ -85,8 +102,7 @@ const createApplication = async (
       .insert(applications)
       .values({
         ...application,
-        ...statusFields,
-        ...clearInterviewIfClosed(statusFields.status),
+        ...resolveStatusFields(NEW_APPLICATION, application, today),
         userId,
       })
       .returning()
@@ -114,17 +130,12 @@ const getApplications = async (
 const updateApplication = async (
   userId: string,
   applicationId: string,
-  application: UpdateApplication
+  application: UpdateApplication,
+  today: string
 ): Promise<ApplicationResponse> => {
   const updatedApplication = await db.transaction(async tx => {
     const [current] = await tx
-      .select({
-        status: applications.status,
-        appliedOn: applications.appliedOn,
-        interviewingOn: applications.interviewingOn,
-        offerOn: applications.offerOn,
-        closedOn: applications.closedOn,
-      })
+      .select()
       .from(applications)
       .where(
         and(eq(applications.id, applicationId), eq(applications.userId, userId))
@@ -137,20 +148,11 @@ const updateApplication = async (
 
     await checkResumeOwner(tx, userId, application.resumeId)
 
-    const statusFields = syncStatusFields({
-      status: application.status ?? current.status,
-      appliedOn: application.appliedOn ?? current.appliedOn,
-      interviewingOn: application.interviewingOn ?? current.interviewingOn,
-      offerOn: application.offerOn ?? current.offerOn,
-      closedOn: application.closedOn ?? current.closedOn,
-    })
-
     const [row] = await tx
       .update(applications)
       .set({
         ...application,
-        ...statusFields,
-        ...clearInterviewIfClosed(statusFields.status),
+        ...resolveStatusFields(current, application, today),
       })
       .where(eq(applications.id, applicationId))
       .returning()

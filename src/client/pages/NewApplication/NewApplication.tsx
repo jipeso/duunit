@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import { type SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router'
 
@@ -25,7 +24,7 @@ const NewApplication = () => {
   } | null
   const returnTo = state?.returnTo ?? '/applications'
 
-  const onSubmit: SubmitHandler<NewApplicationPayload> = data => {
+  const onSubmit = (data: NewApplicationPayload) => {
     createApplication(data, {
       onSuccess: () => {
         showSuccess(t('notifications.applicationCreatedSuccess'))

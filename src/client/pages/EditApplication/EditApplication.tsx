@@ -2,13 +2,13 @@ import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import { type SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useParams } from 'react-router'
 
 import type {
   ApplicationResponse,
   NewApplication,
+  UpdateApplication,
 } from '#common/types/applications.ts'
 import useApplications from '../../hooks/useApplications'
 import useUpdateApplication from '../../hooks/useUpdateApplication'
@@ -34,13 +34,16 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
     (location.state as { returnTo?: string } | null)?.returnTo ??
     '/applications'
 
-  const onSubmit: SubmitHandler<NewApplication> = async data => {
-    if (!(await confirmStatusChange(application, data.status))) {
+  const onSubmit = async (_: NewApplication, changes: UpdateApplication) => {
+    if (
+      changes.status &&
+      !(await confirmStatusChange(application, changes.status))
+    ) {
       return
     }
 
     updateApplication(
-      { id: application.id, values: data },
+      { id: application.id, values: changes },
       {
         onSuccess: () => {
           showSuccess(t('notifications.applicationUpdatedSuccess'))

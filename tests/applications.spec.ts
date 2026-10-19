@@ -203,6 +203,43 @@ test.describe('Applications', () => {
       await expect(page.getByText('Not sent yet')).toBeVisible()
     })
 
+    test('scheduling an interview moves the application to interviewing', async ({
+      page,
+    }) => {
+      await page.goto('/applications')
+      await createApplication(page, 'Test company', 'Test Developer')
+
+      const row = page.getByRole('row', { name: /Test company/ })
+      await row.getByTestId('application-edit').click()
+      await page
+        .getByTestId('application-next-interview-at')
+        .fill('2030-01-01T10:00')
+      await page.getByTestId('application-submit').click()
+
+      await expect(row.getByText('Interviewing')).toBeVisible()
+    })
+
+    test('moving back to applied clears the interview', async ({ page }) => {
+      await page.goto('/applications')
+      await createApplication(page, 'Test company', 'Test Developer')
+
+      const row = page.getByRole('row', { name: /Test company/ })
+      await row.getByTestId('application-edit').click()
+      await page
+        .getByTestId('application-next-interview-at')
+        .fill('2030-01-01T10:00')
+      await page.getByTestId('application-submit').click()
+
+      await row.getByText('Interviewing').click()
+      await page.getByRole('option', { name: 'Applied' }).click()
+      await page.getByTestId('confirm-dialog-confirm').click()
+
+      await expect(row.getByText('Applied', { exact: true })).toBeVisible()
+      await expect(row.locator('[data-field="nextInterviewAt"]')).toHaveText(
+        '—'
+      )
+    })
+
     test('user can delete an application', async ({ page }) => {
       await page.goto('/applications')
       await createApplication(page, 'Test company', 'Test Developer')

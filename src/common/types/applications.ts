@@ -37,30 +37,23 @@ export const STATUS_DATE_FIELDS = [
   'closedOn',
 ] as const
 
-export const MIN_STATUS_DATE = '2015-01-01'
+export type StatusDateField = (typeof STATUS_DATE_FIELDS)[number]
 
-// One day of slack, since the user's local date can be ahead of UTC
-const maxStatusDate = () => {
-  const date = new Date()
-  date.setUTCDate(date.getUTCDate() + 1)
-  return date.toISOString().slice(0, 10)
+export const statusRank = (status: ApplicationStatus) => {
+  const field = STATUS_DATE_FIELD[status]
+  return field ? STATUS_DATE_FIELDS.indexOf(field) + 1 : 0
 }
 
-const statusDate = z.iso
-  .date()
-  .refine(date => date >= MIN_STATUS_DATE, {
-    error: 'validation.tooEarly',
-  })
-  .refine(date => date <= maxStatusDate(), {
-    error: 'validation.inFuture',
-  })
+export const MIN_STATUS_DATE = '2015-01-01'
 
-export const ApplicationStatusSchema = z.enum(APPLICATION_STATUSES)
+const statusDate = z.iso.date().refine(date => date >= MIN_STATUS_DATE, {
+  error: 'validation.tooEarly',
+})
 
 export const NewApplicationSchema = z.object({
   company: requiredText(MAX_TEXT_LENGTH),
   position: requiredText(MAX_TEXT_LENGTH),
-  status: ApplicationStatusSchema,
+  status: z.enum(APPLICATION_STATUSES),
   jobPostingUrl: z
     .string()
     .transform(emptyToNull)
@@ -101,7 +94,7 @@ export const ApplicationResponseSchema = z.object({
   id: z.uuid(),
   company: z.string(),
   position: z.string(),
-  status: ApplicationStatusSchema,
+  status: z.enum(APPLICATION_STATUSES),
   jobPostingUrl: z.string().nullable(),
   location: z.string().nullable(),
   appliedOn: z.iso.date().nullable(),
@@ -122,13 +115,9 @@ export const UpdateApplicationSchema = NewApplicationSchema.extend({
   interviewingOn: statusDate,
   offerOn: statusDate,
   closedOn: statusDate,
-})
-  .partial()
-  .refine(values => Object.keys(values).length > 0, {
-    error: 'At least one field must be provided',
-  })
+}).partial()
 
-export type ApplicationStatus = z.infer<typeof ApplicationStatusSchema>
+export type ApplicationStatus = (typeof APPLICATION_STATUSES)[number]
 export type NewApplication = z.infer<typeof NewApplicationSchema>
 export type NewApplicationInput = z.input<typeof NewApplicationSchema>
 export type UpdateApplication = z.infer<typeof UpdateApplicationSchema>
