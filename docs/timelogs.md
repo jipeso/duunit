@@ -27,4 +27,5 @@
 | 16.10 | 4        | Profile page                        |
 | 17.10 | 5        | Refactor application timeline       |
 | 18.10 | 4        | Update Home page + bug fixing       |
-| Total | 164      |                                     |
+| 19.10 | 6        | UX improvements + refactoring       |
+| Total | 170      |                                     |
