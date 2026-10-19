@@ -120,7 +120,7 @@
     "applicationCreatedSuccess": "Uusi hakemus on lisätty.",
     "applicationUpdatedSuccess": "Hakemus on päivitetty.",
     "applicationDeletedSuccess": "Hakemus on poistettu.",
-    "coverLetterCopied": "Saatekirje kopioitu leikepöydälle.",
+    "copied": "Kopioitu leikepöydälle.",
     "nameUpdatedSuccess": "Nimesi on päivitetty.",
     "passwordUpdatedSuccess": "Salasanasi on vaihdettu.",
     "resumeUploadedSuccess": "Ansioluettelo on ladattu.",
@@ -142,10 +142,16 @@
     "openJobPosting": "Avaa työpaikkailmoitus",
     "backToList": "Takaisin hakemuksiin",
     "noCoverLetter": "Saatekirjettä ei ole lisätty",
+    "files": "Tiedostot",
     "noNotes": "Muistiinpanoja ei ole lisätty",
     "timeline": "Aikajana",
     "notSent": "Ei vielä lähetetty",
     "editDate": "Muokkaa päivämäärää",
+    "statusChange": {
+      "title": "Vaihdetaanko tila?",
+      "message": "Tämä poistaa myöhemmät päivämäärät aikajanalta.",
+      "confirm": "Vaihda tila"
+    },
 
     "statusGroups": {
       "notSent": "Ei lähetetty",

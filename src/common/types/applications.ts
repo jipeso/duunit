@@ -30,6 +30,13 @@ export const STATUS_DATE_FIELD = {
   withdrawn: 'closedOn',
 } as const satisfies Record<ApplicationStatus, string | null>
 
+export const STATUS_DATE_FIELDS = [
+  'appliedOn',
+  'interviewingOn',
+  'offerOn',
+  'closedOn',
+] as const
+
 export const MIN_STATUS_DATE = '2015-01-01'
 
 // One day of slack, since the user's local date can be ahead of UTC

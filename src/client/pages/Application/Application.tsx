@@ -23,6 +23,7 @@ import {
 } from '#common/types/applications.ts'
 import useApplications from '../../hooks/useApplications'
 import useUpdateApplication from '../../hooks/useUpdateApplication'
+import useConfirmStatusChange from '../../hooks/useConfirmStatusChange'
 import useResumes from '../../hooks/useResumes'
 import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
 import { useNotification } from '../../components/Notification'
@@ -53,37 +54,57 @@ const TextSection = ({
   title,
   text,
   emptyText,
-  action,
   testId,
 }: {
   title: string
   text: string | null
   emptyText: string
-  action?: ReactNode
   testId: string
-}) => (
-  <Box>
-    <Stack direction='row' sx={{ alignItems: 'center', mb: 1 }}>
-      <Typography component='h2' variant='h6' sx={{ flexGrow: 1 }}>
-        {title}
-      </Typography>
-      {text && action}
-    </Stack>
-    {text ? (
-      <Paper
-        variant='outlined'
-        data-testid={testId}
-        sx={{ p: 2, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}
-      >
-        {text}
-      </Paper>
-    ) : (
-      <Typography variant='body2' color='text.secondary'>
-        {emptyText}
-      </Typography>
-    )}
-  </Box>
-)
+}) => {
+  const { t } = useTranslation()
+  const { showSuccess } = useNotification()
+
+  const copy = async (value: string) => {
+    await navigator.clipboard.writeText(value)
+    showSuccess(t('notifications.copied'))
+  }
+
+  return (
+    <Box>
+      <Stack direction='row' sx={{ alignItems: 'center', mb: 1 }}>
+        <Typography component='h2' variant='h6' sx={{ flexGrow: 1 }}>
+          {title}
+        </Typography>
+        {text && (
+          <Tooltip title={t('common.buttons.copyToClipboard')}>
+            <IconButton
+              size='small'
+              aria-label={t('common.buttons.copyToClipboard')}
+              onClick={() => {
+                void copy(text)
+              }}
+            >
+              <ContentCopyIcon fontSize='small' />
+            </IconButton>
+          </Tooltip>
+        )}
+      </Stack>
+      {text ? (
+        <Paper
+          variant='outlined'
+          data-testid={testId}
+          sx={{ p: 2, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}
+        >
+          {text}
+        </Paper>
+      ) : (
+        <Typography variant='body2' color='text.secondary'>
+          {emptyText}
+        </Typography>
+      )}
+    </Box>
+  )
+}
 
 const ApplicationDetails = ({
   application,
@@ -94,6 +115,8 @@ const ApplicationDetails = ({
   const navigate = useNavigate()
   const { showSuccess, showError } = useNotification()
   const { mutate: updateApplication } = useUpdateApplication()
+  const { confirm: confirmStatusChange, dialog: statusChangeDialog } =
+    useConfirmStatusChange()
   const { data: resumes } = useResumes()
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [statusMenuOpen, setStatusMenuOpen] = useState(false)
@@ -114,17 +137,13 @@ const ApplicationDetails = ({
   } = application
   const resume = resumes?.find(({ id }) => id === resumeId)
 
-  const copyCoverLetter = async () => {
-    if (coverLetter) {
-      await navigator.clipboard.writeText(coverLetter)
-      showSuccess(t('notifications.coverLetterCopied'))
-    }
-  }
-
-  const changeStatus = (newStatus: ApplicationStatus) => {
+  const changeStatus = async (newStatus: ApplicationStatus) => {
     setStatusMenuOpen(false)
 
-    if (newStatus === status) {
+    if (
+      newStatus === status ||
+      !(await confirmStatusChange(application, newStatus))
+    ) {
       return
     }
 
@@ -192,13 +211,23 @@ const ApplicationDetails = ({
           {StatusMenuItems(t, option => ({
             selected: option === status,
             onClick: () => {
-              changeStatus(option)
+              void changeStatus(option)
             },
           }))}
         </Menu>
+        {statusChangeDialog}
       </Box>
 
-      <Stack component='dl' spacing={1.5} sx={{ m: 0 }}>
+      <Box
+        component='dl'
+        sx={{
+          m: 0,
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+          columnGap: 3,
+          rowGap: 1.5,
+        }}
+      >
         <Detail label={t('fields.createdAt')}>
           {new Date(createdAt).toLocaleDateString(i18n.language)}
         </Detail>
@@ -230,16 +259,7 @@ const ApplicationDetails = ({
             EMPTY_VALUE
           )}
         </Detail>
-        <Detail label={t('fields.resume')}>
-          {resume ? (
-            <Link component={RouterLink} to={`/resumes/${resume.id}`}>
-              {resume.fileName}
-            </Link>
-          ) : (
-            EMPTY_VALUE
-          )}
-        </Detail>
-      </Stack>
+      </Box>
 
       <StatusTimeline application={application} />
 
@@ -255,20 +275,24 @@ const ApplicationDetails = ({
         text={coverLetter}
         emptyText={t('applications.noCoverLetter')}
         testId='application-details-cover-letter'
-        action={
-          <Tooltip title={t('common.buttons.copyToClipboard')}>
-            <IconButton
-              size='small'
-              aria-label={t('common.buttons.copyToClipboard')}
-              onClick={() => {
-                void copyCoverLetter()
-              }}
-            >
-              <ContentCopyIcon fontSize='small' />
-            </IconButton>
-          </Tooltip>
-        }
       />
+
+      <Box>
+        <Typography component='h2' variant='h6' sx={{ mb: 1 }}>
+          {t('applications.files')}
+        </Typography>
+        <Stack component='dl' spacing={1.5} sx={{ m: 0 }}>
+          <Detail label={t('fields.resume')}>
+            {resume ? (
+              <Link component={RouterLink} to={`/resumes/${resume.id}`}>
+                {resume.fileName}
+              </Link>
+            ) : (
+              EMPTY_VALUE
+            )}
+          </Detail>
+        </Stack>
+      </Box>
 
       <Stack direction='row' sx={{ justifyContent: 'flex-end' }}>
         <Button

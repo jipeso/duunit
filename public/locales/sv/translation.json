@@ -120,7 +120,7 @@
     "applicationCreatedSuccess": "Den nya ansökan har lagts till.",
     "applicationUpdatedSuccess": "Ansökan har uppdaterats.",
     "applicationDeletedSuccess": "Ansökan har tagits bort.",
-    "coverLetterCopied": "Det personliga brevet har kopierats till urklipp.",
+    "copied": "Kopierat till urklipp.",
     "nameUpdatedSuccess": "Ditt namn har uppdaterats.",
     "passwordUpdatedSuccess": "Ditt lösenord har ändrats.",
     "resumeUploadedSuccess": "CV:t har laddats upp.",
@@ -142,10 +142,16 @@
     "openJobPosting": "Öppna jobbannonsen",
     "backToList": "Tillbaka till ansökningar",
     "noCoverLetter": "Inget personligt brev har lagts till",
+    "files": "Filer",
     "noNotes": "Inga anteckningar har lagts till",
     "timeline": "Tidslinje",
     "notSent": "Inte skickad ännu",
     "editDate": "Redigera datum",
+    "statusChange": {
+      "title": "Byta status?",
+      "message": "Detta tar bort senare datum från tidslinjen.",
+      "confirm": "Byt status"
+    },
 
     "statusGroups": {
       "notSent": "Inte skickad",

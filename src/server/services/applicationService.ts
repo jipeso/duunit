@@ -8,19 +8,14 @@ import {
 } from '../db/schema.ts'
 import {
   STATUS_DATE_FIELD,
+  STATUS_DATE_FIELDS as DATE_FIELDS,
   type ApplicationResponse,
+  type ApplicationStatus,
   type NewApplication,
   type UpdateApplication,
 } from '#common/types/applications.ts'
 import { AppError } from '../util/AppError.ts'
 import { toApplicationResponse } from './utils.ts'
-
-const DATE_FIELDS = [
-  'appliedOn',
-  'interviewingOn',
-  'offerOn',
-  'closedOn',
-] as const
 
 const syncStatusFields = (
   fields: Pick<DatabaseApplication, 'status' | (typeof DATE_FIELDS)[number]>
@@ -50,6 +45,9 @@ const syncStatusFields = (
 
   return result
 }
+
+const clearInterviewIfClosed = (status: ApplicationStatus) =>
+  STATUS_DATE_FIELD[status] === 'closedOn' ? { nextInterviewAt: null } : {}
 
 const checkResumeOwner = async (
   tx: Transaction,
@@ -85,7 +83,12 @@ const createApplication = async (
 
     const [row] = await tx
       .insert(applications)
-      .values({ ...application, ...statusFields, userId })
+      .values({
+        ...application,
+        ...statusFields,
+        ...clearInterviewIfClosed(statusFields.status),
+        userId,
+      })
       .returning()
 
     if (!row) {
@@ -144,7 +147,11 @@ const updateApplication = async (
 
     const [row] = await tx
       .update(applications)
-      .set({ ...application, ...statusFields })
+      .set({
+        ...application,
+        ...statusFields,
+        ...clearInterviewIfClosed(statusFields.status),
+      })
       .where(eq(applications.id, applicationId))
       .returning()
 

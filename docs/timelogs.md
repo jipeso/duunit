@@ -26,4 +26,5 @@
 | 15.10 | 9        | UX, GDPR, Admin page                |
 | 16.10 | 4        | Profile page                        |
 | 17.10 | 5        | Refactor application timeline       |
-| Total | 160      |                                     |
+| 18.10 | 4        | Update Home page + bug fixing       |
+| Total | 164      |                                     |

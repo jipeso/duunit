@@ -12,6 +12,7 @@ import type { ApplicationResponse } from '#common/types/applications.ts'
 import DeleteApplicationDialog from '../../components/DeleteApplicationDialog'
 import { useNotification } from '../../components/Notification'
 import useUpdateApplication from '../../hooks/useUpdateApplication'
+import useConfirmStatusChange from '../../hooks/useConfirmStatusChange'
 import { isNotFoundError } from '../../util/apiClient'
 import { createApplicationColumns } from './ApplicationColumns'
 
@@ -34,6 +35,8 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
   const navigate = useNavigate()
   const { mutateAsync: updateApplication } = useUpdateApplication()
   const { showSuccess, showError } = useNotification()
+  const { confirm: confirmStatusChange, dialog: statusChangeDialog } =
+    useConfirmStatusChange()
 
   const [applicationToDelete, setApplicationToDelete] =
     useState<ApplicationResponse | null>(null)
@@ -57,7 +60,10 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
     newRow: ApplicationResponse,
     oldRow: ApplicationResponse
   ) => {
-    if (newRow.status === oldRow.status) {
+    if (
+      newRow.status === oldRow.status ||
+      !(await confirmStatusChange(oldRow, newRow.status))
+    ) {
       return oldRow
     }
 
@@ -126,6 +132,8 @@ const ApplicationGrid = ({ applications }: ApplicationGridProps) => {
           border: 0,
         }}
       />
+
+      {statusChangeDialog}
 
       <DeleteApplicationDialog
         application={applicationToDelete}

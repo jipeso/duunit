@@ -12,6 +12,7 @@ import type {
 } from '#common/types/applications.ts'
 import useApplications from '../../hooks/useApplications'
 import useUpdateApplication from '../../hooks/useUpdateApplication'
+import useConfirmStatusChange from '../../hooks/useConfirmStatusChange'
 import { useNotification } from '../../components/Notification'
 import ApplicationForm, { toFormValues } from '../../components/ApplicationForm'
 import { isNotFoundError } from '../../util/apiClient'
@@ -25,13 +26,19 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
   const { t } = useTranslation()
   const { mutate: updateApplication, isPending, error } = useUpdateApplication()
   const { showSuccess } = useNotification()
+  const { confirm: confirmStatusChange, dialog: statusChangeDialog } =
+    useConfirmStatusChange()
   const navigate = useNavigate()
   const location = useLocation()
   const returnTo =
     (location.state as { returnTo?: string } | null)?.returnTo ??
     '/applications'
 
-  const onSubmit: SubmitHandler<NewApplication> = data => {
+  const onSubmit: SubmitHandler<NewApplication> = async data => {
+    if (!(await confirmStatusChange(application, data.status))) {
+      return
+    }
+
     updateApplication(
       { id: application.id, values: data },
       {
@@ -44,22 +51,25 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
   }
 
   return (
-    <ApplicationForm
-      defaultValues={toFormValues(application)}
-      onSubmit={onSubmit}
-      submitLabel={t('common.buttons.update')}
-      isPending={isPending}
-      error={
-        error &&
-        t(
-          isNotFoundError(error)
-            ? 'applications.notFound'
-            : 'common.errors.unexpected'
-        )
-      }
-      returnTo={returnTo}
-      requireChanges
-    />
+    <>
+      {statusChangeDialog}
+      <ApplicationForm
+        defaultValues={toFormValues(application)}
+        onSubmit={onSubmit}
+        submitLabel={t('common.buttons.update')}
+        isPending={isPending}
+        error={
+          error &&
+          t(
+            isNotFoundError(error)
+              ? 'applications.notFound'
+              : 'common.errors.unexpected'
+          )
+        }
+        returnTo={returnTo}
+        requireChanges
+      />
+    </>
   )
 }
 

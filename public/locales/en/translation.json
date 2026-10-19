@@ -120,7 +120,7 @@
     "applicationCreatedSuccess": "New application has been added.",
     "applicationUpdatedSuccess": "Application has been updated.",
     "applicationDeletedSuccess": "Application has been deleted.",
-    "coverLetterCopied": "Cover letter copied to clipboard.",
+    "copied": "Copied to clipboard.",
     "nameUpdatedSuccess": "Your name has been updated.",
     "passwordUpdatedSuccess": "Your password has been changed.",
     "resumeUploadedSuccess": "Resume has been uploaded.",
@@ -142,10 +142,16 @@
     "openJobPosting": "Open job posting",
     "backToList": "Back to applications",
     "noCoverLetter": "No cover letter added",
+    "files": "Files",
     "noNotes": "No notes added",
     "timeline": "Timeline",
     "notSent": "Not sent yet",
     "editDate": "Edit date",
+    "statusChange": {
+      "title": "Change status?",
+      "message": "This removes later dates from the timeline.",
+      "confirm": "Change status"
+    },
 
     "statusGroups": {
       "notSent": "Not sent",
