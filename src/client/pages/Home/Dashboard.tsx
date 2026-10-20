@@ -16,6 +16,7 @@ import { BarChart } from '@mui/x-charts/BarChart'
 import { Trans, useTranslation } from 'react-i18next'
 
 import useApplications from '../../hooks/useApplications'
+import useLocalStorage from '../../hooks/useLocalStorage'
 import PageLoader from '../../components/common/PageLoader'
 import Section from '../../components/common/Section'
 import { DATE_TIME_FORMAT, parseDate } from '../../util/date'
@@ -41,10 +42,11 @@ const Dashboard = () => {
   const { t, i18n } = useTranslation()
   const theme = useTheme()
   const { data: applications = [], isPending, isError } = useApplications()
-  const [range, setRange] = useState<Range>('month')
-  const [upcomingTypes, setUpcomingTypes] = useState<UpcomingType[]>([
-    ...UPCOMING_TYPES,
-  ])
+  const [range, setRange] = useLocalStorage<Range>('dashboardRange', 'month')
+  const [upcomingTypes, setUpcomingTypes] = useLocalStorage<UpcomingType[]>(
+    'dashboardUpcomingTypes',
+    [...UPCOMING_TYPES]
+  )
   const [now] = useState(() => new Date())
 
   if (isPending) {

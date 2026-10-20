@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -12,9 +12,10 @@ import { DRAWER_WIDTH, DRAWER_WIDTH_COLLAPSED } from '../util/config.ts'
 import type { LanguageId } from '#common/types/common.ts'
 import { NotificationProvider } from '../components/Notification/index.ts'
 import { authClient } from '../util/authClient'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 const App = () => {
-  const [navCollapsed, setNavCollapsed] = useState(false)
+  const [navCollapsed, setNavCollapsed] = useLocalStorage('navCollapsed', false)
   const { i18n } = useTranslation()
   const theme = createAppTheme(i18n.language as LanguageId)
   const queryClient = useQueryClient()
