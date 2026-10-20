@@ -8,6 +8,7 @@
     "outDir": "../../dist/client",
     "emitDeclarationOnly": true
   },
+  "include": ["**/*", "locales/*.json"],
   "references": [
     {
       "path": "../common"

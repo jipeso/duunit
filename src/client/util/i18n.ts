@@ -1,24 +1,26 @@
 import i18n from 'i18next'
-import HttpApi from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { z } from 'zod'
 
 import { inDevelopment } from './config.ts'
 import { LANGUAGES } from '#common/types/common.ts'
+import en from '../locales/en.json'
+import fi from '../locales/fi.json'
+import sv from '../locales/sv.json'
 
 void i18n
-  .use(HttpApi)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
     interpolation: { escapeValue: false },
-    backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+    resources: {
+      en: { translation: en },
+      fi: { translation: fi },
+      sv: { translation: sv },
     },
     supportedLngs: LANGUAGES,
-    preload: LANGUAGES,
     debug: inDevelopment,
   })
 
