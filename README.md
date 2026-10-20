@@ -9,6 +9,10 @@ Production live in <https://duunit.site>
 [Timelogs](/docs/timelogs.md)
 [Architecture](/docs/architecture.md)
 
+## Use of generative AI
+
+Claude Code was used as an assistant during development for planning features and researching options, reviewing and debugging code, and writing documentation and the translations.
+
 ## Running the application locally
 
 Docker and Docker compose are needed to run the app.
