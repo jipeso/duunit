@@ -1,15 +1,17 @@
 import { useState } from 'react'
+import { Link as RouterLink } from 'react-router'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
+import Link from '@mui/material/Link'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 
 import { nameField } from '#common/types/common.ts'
 import { authClient } from '../../util/authClient'
@@ -163,10 +165,17 @@ const Profile = () => {
         </Section>
 
         <Section title={t('profile.yourData')}>
+          <Typography variant='body2' color='text.secondary' sx={{ pb: 1 }}>
+            <Trans
+              i18nKey='profile.privacyNotice'
+              components={{
+                a: <Link component={RouterLink} to='/privacy' />,
+              }}
+            />
+          </Typography>
           <ProfileAction description={t('profile.downloadDataDescription')}>
             <Button
               variant='outlined'
-              sx={{ flexShrink: 0 }}
               onClick={() => {
                 setConfirmingDownload(true)
               }}
@@ -186,7 +195,6 @@ const Profile = () => {
               <Button
                 variant='outlined'
                 color='error'
-                sx={{ flexShrink: 0 }}
                 onClick={() => {
                   setDeletingAccount(true)
                 }}

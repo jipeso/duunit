@@ -99,6 +99,7 @@
     "security": "Tietoturva",
     "passwordDescription": "Vaihda salasana, jolla kirjaudut sisään.",
     "yourData": "Tietosi",
+    "privacyNotice": "Lue, miten tietojasi käsitellään <a>tietosuojaselosteesta</a>.",
     "downloadDataDescription": "Lataa kopio kaikista tiedoistasi JSON-tiedostona.",
     "deleteAccountDescription": "Poista tilisi ja kaikki sen tiedot pysyvästi.",
     "downloadData": "Lataa tietoni",

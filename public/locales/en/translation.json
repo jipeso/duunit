@@ -99,6 +99,7 @@
     "security": "Security",
     "passwordDescription": "Change the password you use to log in.",
     "yourData": "Your data",
+    "privacyNotice": "Read how your data is handled in the <a>privacy policy</a>.",
     "downloadDataDescription": "Get a copy of all your data as a JSON file.",
     "deleteAccountDescription": "Permanently delete your account and all its data.",
     "downloadData": "Download my data",

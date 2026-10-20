@@ -350,7 +350,7 @@ const ApplicationForm = ({
           variant='contained'
           disabled={isPending || (requireChanges && !isDirty)}
           disableElevation
-          sx={{ py: 1.5, mt: 2, textTransform: 'none', fontSize: '1rem' }}
+          sx={{ py: 1.5, mt: 2, fontSize: '1rem' }}
         >
           {isPending ? (
             <CircularProgress size={24} color='inherit' />
@@ -367,7 +367,7 @@ const ApplicationForm = ({
           onClick={() => {
             void navigate(returnTo)
           }}
-          sx={{ textTransform: 'none', fontSize: '1rem' }}
+          sx={{ py: 1.5, fontSize: '1rem' }}
         >
           {t('common.buttons.cancel')}
         </Button>

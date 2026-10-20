@@ -99,6 +99,7 @@
     "security": "Säkerhet",
     "passwordDescription": "Byt lösenordet du loggar in med.",
     "yourData": "Dina uppgifter",
+    "privacyNotice": "Läs hur dina uppgifter hanteras i <a>integritetspolicyn</a>.",
     "downloadDataDescription": "Ladda ner en kopia av alla dina uppgifter som en JSON-fil.",
     "deleteAccountDescription": "Radera ditt konto och all dess data permanent.",
     "downloadData": "Ladda ner mina uppgifter",
