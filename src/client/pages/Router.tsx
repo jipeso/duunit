@@ -7,6 +7,8 @@ import PageLoader from '../components/common/PageLoader'
 const Home = lazy(() => import('./Home'))
 const Login = lazy(() => import('./Login'))
 const Register = lazy(() => import('./Register'))
+const ForgotPassword = lazy(() => import('./ForgotPassword'))
+const ResetPassword = lazy(() => import('./ResetPassword'))
 const Profile = lazy(() => import('./Profile'))
 const Admin = lazy(() => import('./Admin'))
 const Applications = lazy(() => import('./Applications'))
@@ -25,6 +27,7 @@ const Router = () => {
         <Route element={<AuthRoute access='guest' />}>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
         </Route>
         <Route element={<AuthRoute access='user' />}>
           <Route path='/profile' element={<Profile />} />
@@ -39,6 +42,7 @@ const Router = () => {
         <Route element={<AuthRoute access='admin' />}>
           <Route path='/admin' element={<Admin />} />
         </Route>
+        <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/privacy' element={<Privacy />} />
         <Route path='*' element={<Home />} />
       </Routes>

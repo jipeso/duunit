@@ -124,6 +124,7 @@
     "copied": "Copied to clipboard.",
     "nameUpdatedSuccess": "Your name has been updated.",
     "passwordUpdatedSuccess": "Your password has been changed.",
+    "passwordResetSuccess": "Your password has been reset. You can now log in.",
     "resumeUploadedSuccess": "Resume has been uploaded.",
     "resumeDeletedSuccess": "Resume has been deleted.",
     "accountDeletedSuccess": "Your account has been deleted."
@@ -217,7 +218,22 @@
       "invalidEmail": "Invalid email address.",
       "tooManyRequests": "Too many login attempts. Please wait a moment and try again."
     },
-    "doNotHaveAccount": "Do not have an account?"
+    "doNotHaveAccount": "Do not have an account?",
+    "forgotPassword": "Forgot password?"
+  },
+
+  "forgotPassword": {
+    "title": "Forgot your password?",
+    "subtitle": "Enter your email and we'll send you a link to reset your password.",
+    "submit": "Send reset link",
+    "sent": "If an account exists for that email, we've sent a link to reset your password. Check your inbox."
+  },
+
+  "resetPassword": {
+    "title": "Reset your password",
+    "subtitle": "Choose a new password for your account.",
+    "submit": "Reset password",
+    "invalidLink": "This password reset link is invalid or has expired."
   },
 
   "validation": {
@@ -247,7 +263,7 @@
 
   "privacy": {
     "title": "Privacy policy",
-    "updated": "Last updated: 15 October 2026",
+    "updated": "Last updated: 20 October 2026",
     "sections": {
       "controller": {
         "title": "Controller",
@@ -263,7 +279,7 @@
       },
       "recipients": {
         "title": "Who else processes it",
-        "body": "• Hosting: Amazon Web Services, in an EU region.\n• Job analysis: the job description you submit is sent to OpenRouter (USA), which forwards it to an AI model provider. Your resumes and other data are not sent. Avoid including personal data in the text you submit. Transfers outside the EU rely on safeguards required by GDPR, such as the EU Standard Contractual Clauses."
+        "body": "• Hosting and email: Amazon Web Services, in an EU region. Your email address is used to send you account emails, such as password reset links.\n• Job analysis: the job description you submit is sent to OpenRouter (USA), which forwards it to an AI model provider. Your resumes and other data are not sent. Avoid including personal data in the text you submit. Transfers outside the EU rely on safeguards required by GDPR, such as the EU Standard Contractual Clauses."
       },
       "cookies": {
         "title": "Cookies",

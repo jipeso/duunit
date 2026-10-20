@@ -3,6 +3,7 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { APIError } from 'better-auth/api'
 
 import { db } from '../db/index.ts'
+import { sendEmail } from './email.ts'
 import { ROLES } from '#common/types/users.ts'
 import {
   PASSWORD_MAX_LENGTH,
@@ -15,6 +16,13 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: PASSWORD_MIN_LENGTH,
     maxPasswordLength: PASSWORD_MAX_LENGTH,
+    revokeSessionsOnPasswordReset: true,
+    sendResetPassword: ({ user, url }) =>
+      sendEmail(
+        user.email,
+        'Reset your Duunit password',
+        `Reset your password here:\n\n${url}\n\nIf you didn't request this, ignore this email.`
+      ),
   },
   user: {
     additionalFields: {

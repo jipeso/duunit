@@ -124,6 +124,7 @@
     "copied": "Kopierat till urklipp.",
     "nameUpdatedSuccess": "Ditt namn har uppdaterats.",
     "passwordUpdatedSuccess": "Ditt lösenord har ändrats.",
+    "passwordResetSuccess": "Ditt lösenord har återställts. Du kan nu logga in.",
     "resumeUploadedSuccess": "CV:t har laddats upp.",
     "resumeDeletedSuccess": "CV:t har tagits bort.",
     "accountDeletedSuccess": "Ditt konto har raderats."
@@ -217,7 +218,22 @@
       "invalidEmail": "Ogiltig e-postadress.",
       "tooManyRequests": "För många inloggningsförsök. Vänta en stund och försök igen."
     },
-    "doNotHaveAccount": "Har du inget konto?"
+    "doNotHaveAccount": "Har du inget konto?",
+    "forgotPassword": "Glömt lösenordet?"
+  },
+
+  "forgotPassword": {
+    "title": "Glömt lösenordet?",
+    "subtitle": "Ange din e-postadress så skickar vi en länk för att återställa ditt lösenord.",
+    "submit": "Skicka länk",
+    "sent": "Om det finns ett konto för den e-postadressen har vi skickat en länk för att återställa lösenordet. Kontrollera din inkorg."
+  },
+
+  "resetPassword": {
+    "title": "Återställ lösenordet",
+    "subtitle": "Välj ett nytt lösenord för ditt konto.",
+    "submit": "Återställ lösenord",
+    "invalidLink": "Länken för att återställa lösenordet är ogiltig eller har gått ut."
   },
 
   "validation": {
@@ -247,7 +263,7 @@
 
   "privacy": {
     "title": "Integritetspolicy",
-    "updated": "Senast uppdaterad: 15.10.2026",
+    "updated": "Senast uppdaterad: 20.10.2026",
     "sections": {
       "controller": {
         "title": "Personuppgiftsansvarig",
@@ -263,7 +279,7 @@
       },
       "recipients": {
         "title": "Vilka andra som behandlar dem",
-        "body": "• Drift: Amazon Web Services, i en EU-region.\n• Jobbanalys: jobbannonsen du skickar skickas till OpenRouter (USA), som vidarebefordrar den till en leverantör av AI-modeller. Dina CV:n och övriga uppgifter skickas inte. Undvik att ta med personuppgifter i texten du skickar. Överföringar utanför EU bygger på skyddsåtgärder som krävs enligt GDPR, såsom EU:s standardavtalsklausuler."
+        "body": "• Drift och e-post: Amazon Web Services, i en EU-region. Din e-postadress används för att skicka e-post som gäller ditt konto, till exempel länkar för att återställa lösenordet.\n• Jobbanalys: jobbannonsen du skickar skickas till OpenRouter (USA), som vidarebefordrar den till en leverantör av AI-modeller. Dina CV:n och övriga uppgifter skickas inte. Undvik att ta med personuppgifter i texten du skickar. Överföringar utanför EU bygger på skyddsåtgärder som krävs enligt GDPR, såsom EU:s standardavtalsklausuler."
       },
       "cookies": {
         "title": "Kakor",

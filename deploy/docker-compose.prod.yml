@@ -12,6 +12,8 @@ services:
       LLM_URL: ${LLM_URL}
       LLM_API_KEY: ${LLM_API_KEY}
       LLM_MODEL: ${LLM_MODEL}
+      EMAIL_FROM: ${EMAIL_FROM}
+      SMTP_URL: ${SMTP_URL}
     ports:
       - 127.0.0.1:3000:3000
     logging:

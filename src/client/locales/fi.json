@@ -124,6 +124,7 @@
     "copied": "Kopioitu leikepöydälle.",
     "nameUpdatedSuccess": "Nimesi on päivitetty.",
     "passwordUpdatedSuccess": "Salasanasi on vaihdettu.",
+    "passwordResetSuccess": "Salasanasi on vaihdettu. Voit nyt kirjautua sisään.",
     "resumeUploadedSuccess": "Ansioluettelo on ladattu.",
     "resumeDeletedSuccess": "Ansioluettelo on poistettu.",
     "accountDeletedSuccess": "Tilisi on poistettu."
@@ -217,7 +218,22 @@
       "invalidEmail": "Virheellinen sähköpostiosoite.",
       "tooManyRequests": "Liian monta kirjautumisyritystä. Odota hetki ja yritä uudelleen."
     },
-    "doNotHaveAccount": "Eikö sinulla ole tiliä?"
+    "doNotHaveAccount": "Eikö sinulla ole tiliä?",
+    "forgotPassword": "Unohditko salasanasi?"
+  },
+
+  "forgotPassword": {
+    "title": "Unohditko salasanasi?",
+    "subtitle": "Syötä sähköpostiosoitteesi, niin lähetämme sinulle linkin salasanan vaihtamiseen.",
+    "submit": "Lähetä linkki",
+    "sent": "Jos osoitteella on tili, lähetimme siihen linkin salasanan vaihtamiseen. Tarkista sähköpostisi."
+  },
+
+  "resetPassword": {
+    "title": "Vaihda salasana",
+    "subtitle": "Valitse tilillesi uusi salasana.",
+    "submit": "Vaihda salasana",
+    "invalidLink": "Salasanan vaihtolinkki on virheellinen tai vanhentunut."
   },
 
   "validation": {
@@ -247,7 +263,7 @@
 
   "privacy": {
     "title": "Tietosuojaseloste",
-    "updated": "Päivitetty: 15.10.2026",
+    "updated": "Päivitetty: 20.10.2026",
     "sections": {
       "controller": {
         "title": "Rekisterinpitäjä",
@@ -263,7 +279,7 @@
       },
       "recipients": {
         "title": "Ketkä muut käsittelevät tietoja",
-        "body": "• Palvelinympäristö: Amazon Web Services, EU-alueella.\n• Työpaikka-analyysi: lähettämäsi työpaikkailmoitus välitetään OpenRouterille (Yhdysvallat), joka välittää sen tekoälymallin tarjoajalle. CV:itäsi tai muita tietojasi ei lähetetä. Vältä henkilötietojen lisäämistä lähettämääsi tekstiin. Siirrot EU:n ulkopuolelle perustuvat GDPR:n edellyttämiin suojatoimiin, kuten EU:n vakiosopimuslausekkeisiin."
+        "body": "• Palvelinympäristö ja sähköposti: Amazon Web Services, EU-alueella. Sähköpostiosoitettasi käytetään tiliin liittyvien viestien, kuten salasanan vaihtolinkkien, lähettämiseen.\n• Työpaikka-analyysi: lähettämäsi työpaikkailmoitus välitetään OpenRouterille (Yhdysvallat), joka välittää sen tekoälymallin tarjoajalle. CV:itäsi tai muita tietojasi ei lähetetä. Vältä henkilötietojen lisäämistä lähettämääsi tekstiin. Siirrot EU:n ulkopuolelle perustuvat GDPR:n edellyttämiin suojatoimiin, kuten EU:n vakiosopimuslausekkeisiin."
       },
       "cookies": {
         "title": "Evästeet",

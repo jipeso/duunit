@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack'
 import Alert from '@mui/material/Alert'
 import CircularProgress from '@mui/material/CircularProgress'
 import Link from '@mui/material/Link'
+import { Link as RouterLink } from 'react-router'
 import { useTranslation } from 'react-i18next'
 
 import { authClient } from '../../util/authClient'
@@ -133,13 +134,24 @@ export const LoginForm: React.FC = () => {
             <Typography variant='body2' sx={{ textAlign: 'center' }}>
               {t('login.doNotHaveAccount')}
               <Link
-                component='a'
-                href='/register'
+                component={RouterLink}
+                to='/register'
                 underline='hover'
-                sx={{ fontWeight: 600, cursor: 'pointer' }}
+                sx={{ fontWeight: 600 }}
               >
                 {' '}
                 {t('register.title')}
+              </Link>
+            </Typography>
+
+            <Typography variant='body2' sx={{ textAlign: 'center' }}>
+              <Link
+                component={RouterLink}
+                to='/forgot-password'
+                underline='hover'
+                color='text.secondary'
+              >
+                {t('login.forgotPassword')}
               </Link>
             </Typography>
           </Stack>

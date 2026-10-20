@@ -174,10 +174,10 @@ export const RegisterForm: React.FC = () => {
             <Typography variant='body2' sx={{ mt: 2, textAlign: 'center' }}>
               {t('register.alreadyHaveAccount')}
               <Link
-                component='a'
-                href='/login'
+                component={RouterLink}
+                to='/login'
                 underline='hover'
-                sx={{ fontWeight: 600, cursor: 'pointer' }}
+                sx={{ fontWeight: 600 }}
               >
                 {' '}
                 {t('navigation.login')}
