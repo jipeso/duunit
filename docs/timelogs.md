@@ -1,31 +1,32 @@
-| Date  | Time (h) | Description                         |
-| ----- | -------- | ----------------------------------- |
-| 19.9  | 5        | Initializing the project + planning |
-| 20.9  | 6        | Setting up project skeleton         |
-| 21.9  | 5        | Users API                           |
-| 22.9  | 7        | Auth APIs                           |
-| 23.9  | 4        | Lint, TypeScript and GitHub Actions |
-| 24.9  | 8        | Production setup + research         |
-| 25.9  | 4        | Frontend + CI/CD                    |
-| 26.9  | 7        | Testing                             |
-| 27.9  | 5        | Applications API                    |
-| 28.9  | 8        | Refactoring + Application pages     |
-| 29.9  | 8        | Frontend                            |
-| 30.9  | 5        | Auth refactor                       |
-| 1.10  | 9        | Frontend, bug fixing                |
-| 2.10  | 7        | Frontend + applications API         |
-| 3.10  | 4        | UI/UX updates                       |
-| 5.10  | 8        | documentation + refactoring         |
-| 6.10  | 6        | Events API + Frontend               |
-| 7.10  | 8        | Events API + Frontend               |
-| 8.10  | 8        | Resumes API + Frontend              |
-| 9.10  | 6        | Planning + Analysis functionality   |
-| 12.10 | 4        | Local LLM testing                   |
-| 13.10 | 5        | Frontend                            |
-| 14.10 | 5        | Refactoring                         |
-| 15.10 | 9        | UX, GDPR, Admin page                |
-| 16.10 | 4        | Profile page                        |
-| 17.10 | 5        | Refactor application timeline       |
-| 18.10 | 4        | Update Home page + bug fixing       |
-| 19.10 | 6        | UX improvements + refactoring       |
-| Total | 170      |                                     |
+| Date  | Time (h) | Description                                     |
+| ----- | -------- | ----------------------------------------------- |
+| 19.9  | 5        | Initializing the project + planning             |
+| 20.9  | 6        | Setting up project skeleton                     |
+| 21.9  | 5        | Users API                                       |
+| 22.9  | 7        | Auth APIs                                       |
+| 23.9  | 4        | Lint, TypeScript and GitHub Actions             |
+| 24.9  | 8        | Production setup + research                     |
+| 25.9  | 4        | Frontend + CI/CD                                |
+| 26.9  | 7        | Testing                                         |
+| 27.9  | 5        | Applications API                                |
+| 28.9  | 8        | Refactoring + Application pages                 |
+| 29.9  | 8        | Frontend                                        |
+| 30.9  | 5        | Auth refactor                                   |
+| 1.10  | 9        | Frontend, bug fixing                            |
+| 2.10  | 7        | Frontend + applications API                     |
+| 3.10  | 4        | UI/UX updates                                   |
+| 5.10  | 8        | documentation + refactoring                     |
+| 6.10  | 6        | Events API + Frontend                           |
+| 7.10  | 8        | Events API + Frontend                           |
+| 8.10  | 8        | Resumes API + Frontend                          |
+| 9.10  | 6        | Planning + Analysis functionality               |
+| 12.10 | 4        | Local LLM testing                               |
+| 13.10 | 5        | Frontend                                        |
+| 14.10 | 5        | Refactoring                                     |
+| 15.10 | 9        | UX, GDPR, Admin page                            |
+| 16.10 | 4        | Profile page                                    |
+| 17.10 | 5        | Refactor application timeline                   |
+| 18.10 | 4        | Update Home page + bug fixing                   |
+| 19.10 | 6        | UX improvements + refactoring                   |
+| 20.10 | 8        | Production improvements + password reset mailer |
+| Total | 178      |                                                 |
