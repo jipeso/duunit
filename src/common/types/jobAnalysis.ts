@@ -23,5 +23,10 @@ export const DescriptionAnalysisSchema = z.object({
   requirements: ListSchema,
 })
 
+export const AnalysisUsageSchema = z.object({
+  remaining: z.number().int().nonnegative(),
+})
+
 export type AnalyzeDescription = z.infer<typeof AnalyzeDescriptionSchema>
 export type DescriptionAnalysis = z.infer<typeof DescriptionAnalysisSchema>
+export type AnalysisUsage = z.infer<typeof AnalysisUsageSchema>

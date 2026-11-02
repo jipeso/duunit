@@ -6,6 +6,7 @@ import { jobAnalyses, users } from '../db/schema.ts'
 import { AppError } from '../util/AppError.ts'
 import { LLM_URL, LLM_API_KEY, LLM_MODEL } from '../util/config.ts'
 import {
+  type AnalysisUsage,
   type AnalyzeDescription,
   type DescriptionAnalysis,
   DescriptionAnalysisSchema,
@@ -40,6 +41,22 @@ const CompletionSchema = z.object({
   ]),
 })
 
+const countRecentAnalyses = (tx: Pick<typeof db, '$count'>, userId: string) =>
+  tx.$count(
+    jobAnalyses,
+    and(
+      eq(jobAnalyses.userId, userId),
+      gt(jobAnalyses.createdAt, sql`now() - interval '1 day'`)
+    )
+  )
+
+const getUsage = async (userId: string): Promise<AnalysisUsage> => ({
+  remaining: Math.max(
+    0,
+    MAX_ANALYSES_PER_DAY - (await countRecentAnalyses(db, userId))
+  ),
+})
+
 const reserveAnalysis = async (userId: string): Promise<void> => {
   await db.transaction(async tx => {
     await tx
@@ -48,13 +65,7 @@ const reserveAnalysis = async (userId: string): Promise<void> => {
       .where(eq(users.id, userId))
       .for('update')
 
-    const recentAnalyses = await tx.$count(
-      jobAnalyses,
-      and(
-        eq(jobAnalyses.userId, userId),
-        gt(jobAnalyses.createdAt, sql`now() - interval '1 day'`)
-      )
-    )
+    const recentAnalyses = await countRecentAnalyses(tx, userId)
 
     if (recentAnalyses >= MAX_ANALYSES_PER_DAY) {
       throw new AppError('ANALYSIS_LIMIT_REACHED', 429)
@@ -133,5 +144,6 @@ const analyzeDescription = async (
 }
 
 export default {
+  getUsage,
   analyzeDescription,
 }

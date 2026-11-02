@@ -23,7 +23,8 @@
       "cancel": "Peruuta",
       "edit": "Muokkaa",
       "copyToClipboard": "Kopioi leikepöydälle",
-      "save": "Tallenna"
+      "save": "Tallenna",
+      "clear": "Tyhjennä"
     }
   },
 
@@ -196,7 +197,8 @@
     "tasks": "Tärkeimmät tehtävät",
     "requirements": "Tärkeimmät vaatimukset",
     "notJobDescription": "Teksti ei näytä työpaikkailmoitukselta. Liitä työpaikkailmoituksen teksti ja yritä uudelleen.",
-    "limitReached": "Olet käyttänyt päivän {{count}} analyysia. Yritä myöhemmin uudelleen."
+    "limitReached": "Olet käyttänyt päivän {{count}} analyysia. Yritä myöhemmin uudelleen.",
+    "remaining": "Analyyseja jäljellä tänään: {{count}}/{{limit}}"
   },
 
   "register": {

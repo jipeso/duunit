@@ -23,7 +23,8 @@
       "cancel": "Cancel",
       "edit": "Edit",
       "copyToClipboard": "Copy to clipboard",
-      "save": "Save"
+      "save": "Save",
+      "clear": "Clear"
     }
   },
 
@@ -196,7 +197,8 @@
     "tasks": "Key tasks",
     "requirements": "Key requirements",
     "notJobDescription": "This doesn't look like a job description. Paste the text of a job ad and try again.",
-    "limitReached": "You've reached the limit of {{count}} analyses per day. Try again later."
+    "limitReached": "You've reached the limit of {{count}} analyses per day. Try again later.",
+    "remaining": "Analyses left today: {{count}}/{{limit}}"
   },
 
   "register": {

@@ -23,7 +23,8 @@
       "cancel": "Avbryt",
       "edit": "Redigera",
       "copyToClipboard": "Kopiera till urklipp",
-      "save": "Spara"
+      "save": "Spara",
+      "clear": "Rensa"
     }
   },
 
@@ -196,7 +197,8 @@
     "tasks": "Viktigaste arbetsuppgifter",
     "requirements": "Viktigaste krav",
     "notJobDescription": "Texten ser inte ut som en platsannons. Klistra in texten från en platsannons och försök igen.",
-    "limitReached": "Du har nått gränsen på {{count}} analyser per dag. Försök igen senare."
+    "limitReached": "Du har nått gränsen på {{count}} analyser per dag. Försök igen senare.",
+    "remaining": "Analyser kvar idag: {{count}}/{{limit}}"
   },
 
   "register": {

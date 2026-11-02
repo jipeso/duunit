@@ -1,6 +1,9 @@
+import type { ReactNode } from 'react'
 import Alert from '@mui/material/Alert'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
+import Divider from '@mui/material/Divider'
 import Paper from '@mui/material/Paper'
 import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
@@ -18,6 +21,7 @@ import {
   MAX_DESCRIPTION_LENGTH,
   type AnalyzeDescription,
 } from '#common/types/jobAnalysis.ts'
+import useAnalysisUsage from '../../hooks/useAnalysisUsage'
 import useAnalyzeDescription from '../../hooks/useAnalyzeDescription'
 import {
   isTooManyRequestsError,
@@ -28,30 +32,87 @@ import { parseDate } from '../../util/date'
 
 const bullets = (items: string[]) => items.map(item => `- ${item}`).join('\n')
 
+const Detail = ({
+  label,
+  children,
+}: {
+  label: string
+  children: ReactNode
+}) => (
+  <Box>
+    <Typography component='dt' variant='body2' color='text.secondary'>
+      {label}
+    </Typography>
+    <Typography component='dd' sx={{ m: 0, overflowWrap: 'anywhere' }}>
+      {children}
+    </Typography>
+  </Box>
+)
+
+const ListSection = ({
+  title,
+  items,
+}: {
+  title: string
+  items: string[] | undefined
+}) => (
+  <Box>
+    <Typography component='h3' variant='subtitle1' sx={{ mb: 0.5 }}>
+      {title}
+    </Typography>
+    {!items ? (
+      <>
+        <Skeleton />
+        <Skeleton />
+        <Skeleton width='60%' />
+      </>
+    ) : items.length ? (
+      <Box component='ul' sx={{ m: 0, pl: 2.5, overflowWrap: 'anywhere' }}>
+        {items.map(item => (
+          <Typography component='li' key={item} sx={{ mb: 0.5 }}>
+            {item}
+          </Typography>
+        ))}
+      </Box>
+    ) : (
+      <Typography color='text.secondary'>{EMPTY_VALUE}</Typography>
+    )}
+  </Box>
+)
+
 const JobAnalysis = () => {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
-  const { mutate: analyze, data, isPending, error } = useAnalyzeDescription()
+  const {
+    mutate: analyze,
+    data,
+    variables,
+    isPending,
+    error,
+  } = useAnalyzeDescription()
+  const { data: usage } = useAnalysisUsage()
 
   const {
     register,
     handleSubmit,
     watch,
+    reset,
+    setFocus,
     formState: { errors },
   } = useForm<AnalyzeDescription>({
     resolver: zodResolver(AnalyzeDescriptionSchema),
     defaultValues: { description: '' },
   })
 
-  const descriptionLength = watch('description').length
+  const description = watch('description')
+  const alreadyAnalyzed = !!data && variables?.description === description
+  const limitReached = usage?.remaining === 0
 
   const submit = handleSubmit(values => {
     analyze(values)
   })
 
-  const fields = [
-    [t('fields.position'), data?.position],
-    [t('fields.company'), data?.company],
+  const details = [
     [t('fields.location'), data?.location],
     [t('fields.salary'), data?.salary],
     [
@@ -59,9 +120,29 @@ const JobAnalysis = () => {
       data?.deadline &&
         parseDate(data.deadline).toLocaleDateString(i18n.language),
     ],
-    [t('jobAnalysis.tasks'), data && bullets(data.tasks)],
-    [t('jobAnalysis.requirements'), data && bullets(data.requirements)],
-  ]
+  ] as const
+
+  const createApplication = () => {
+    if (!data) return
+    const defaultValues: Partial<NewApplicationInput> = {
+      position: data.position,
+      company: data.company,
+      status: 'saved',
+      location: data.location ?? '',
+      salary: data.salary ?? '',
+      deadline: data.deadline ?? '',
+      notes: [
+        `${t('jobAnalysis.tasks')}:`,
+        bullets(data.tasks),
+        '',
+        `${t('jobAnalysis.requirements')}:`,
+        bullets(data.requirements),
+      ].join('\n'),
+    }
+    void navigate('/applications/new', {
+      state: { defaultValues, returnTo: '/job-analysis' },
+    })
+  }
 
   return (
     <Container maxWidth='sm'>
@@ -71,9 +152,6 @@ const JobAnalysis = () => {
         </Typography>
         <Typography variant='body2' color='text.secondary'>
           {t('jobAnalysis.subtitle')}
-        </Typography>
-        <Typography variant='caption' color='text.secondary'>
-          {t('jobAnalysis.disclaimer')}
         </Typography>
       </Stack>
 
@@ -102,7 +180,7 @@ const JobAnalysis = () => {
           error={!!errors.description}
           helperText={
             errors.description?.message ??
-            `${String(descriptionLength)}/${String(MAX_DESCRIPTION_LENGTH)}`
+            `${String(description.length)}/${String(MAX_DESCRIPTION_LENGTH)}`
           }
         />
 
@@ -118,43 +196,74 @@ const JobAnalysis = () => {
           </Alert>
         )}
 
-        <Button
-          type='submit'
-          data-testid='job-analysis-analyze'
-          fullWidth
-          variant='contained'
-          loading={isPending}
-          disableElevation
-          sx={{ py: 1 }}
+        <Stack
+          direction={{ xs: 'column-reverse', sm: 'row' }}
+          spacing={2}
+          sx={{ alignItems: { sm: 'center' } }}
         >
-          {t('jobAnalysis.analyze')}
-        </Button>
+          <Typography
+            variant='caption'
+            color={limitReached ? 'error' : 'text.secondary'}
+            data-testid='job-analysis-remaining'
+            sx={{ flexGrow: 1 }}
+          >
+            {usage &&
+              t('jobAnalysis.remaining', {
+                count: usage.remaining,
+                limit: MAX_ANALYSES_PER_DAY,
+              })}
+          </Typography>
+          <Button
+            data-testid='job-analysis-clear'
+            disabled={!description || isPending}
+            onClick={() => {
+              reset()
+              setFocus('description')
+            }}
+          >
+            {t('common.buttons.clear')}
+          </Button>
+          <Button
+            type='submit'
+            data-testid='job-analysis-analyze'
+            variant='contained'
+            loading={isPending}
+            disabled={alreadyAnalyzed || limitReached}
+            sx={{ py: 1, px: 4 }}
+          >
+            {t('jobAnalysis.analyze')}
+          </Button>
+        </Stack>
       </Stack>
 
       {(isPending || data) && (
         <Paper
           variant='outlined'
           data-testid='job-analysis-result'
-          sx={{ p: 2, mb: 2 }}
+          sx={{ p: { xs: 2, sm: 3 }, mb: 4 }}
         >
-          <Stack component='dl' spacing={2} sx={{ m: 0 }}>
-            {fields.map(([label, value]) => (
-              <div key={label}>
-                <Typography
-                  component='dt'
-                  variant='body2'
-                  color='text.secondary'
-                >
-                  {label}
-                </Typography>
-                <Typography
-                  component='dd'
-                  sx={{
-                    m: 0,
-                    whiteSpace: 'pre-line',
-                    overflowWrap: 'anywhere',
-                  }}
-                >
+          <Stack spacing={3}>
+            <Box sx={{ overflowWrap: 'anywhere' }}>
+              <Typography component='h2' variant='h6'>
+                {isPending ? <Skeleton width='70%' /> : data?.position}
+              </Typography>
+              <Typography color='text.secondary'>
+                {isPending ? <Skeleton width='40%' /> : data?.company}
+              </Typography>
+            </Box>
+
+            <Box
+              component='dl'
+              sx={{
+                m: 0,
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+                columnGap: 3,
+                rowGap: 1.5,
+              }}
+            >
+              {details.map(([label, value]) => (
+                <Detail key={label} label={label}>
                   {isPending ? (
                     <Skeleton />
                   ) : value?.length ? (
@@ -162,43 +271,47 @@ const JobAnalysis = () => {
                   ) : (
                     EMPTY_VALUE
                   )}
-                </Typography>
-              </div>
-            ))}
+                </Detail>
+              ))}
+            </Box>
+
+            <Divider />
+
+            <ListSection
+              title={t('jobAnalysis.tasks')}
+              items={isPending ? undefined : data?.tasks}
+            />
+            <ListSection
+              title={t('jobAnalysis.requirements')}
+              items={isPending ? undefined : data?.requirements}
+            />
+
+            <Divider />
+
+            <Stack
+              direction={{ xs: 'column-reverse', sm: 'row' }}
+              spacing={2}
+              sx={{ alignItems: { sm: 'center' } }}
+            >
+              <Typography
+                variant='caption'
+                color='text.secondary'
+                sx={{ flexGrow: 1 }}
+              >
+                {t('jobAnalysis.disclaimer')}
+              </Typography>
+              <Button
+                data-testid='job-analysis-create-application'
+                variant='contained'
+                disabled={!data || isPending}
+                onClick={createApplication}
+                sx={{ py: 1, flexShrink: 0 }}
+              >
+                {t('jobAnalysis.createApplication')}
+              </Button>
+            </Stack>
           </Stack>
         </Paper>
-      )}
-
-      {data && (
-        <Button
-          data-testid='job-analysis-create-application'
-          fullWidth
-          variant='contained'
-          onClick={() => {
-            const defaultValues: Partial<NewApplicationInput> = {
-              position: data.position,
-              company: data.company,
-              status: 'saved',
-              location: data.location ?? '',
-              salary: data.salary ?? '',
-              deadline: data.deadline ?? '',
-              notes: [
-                `${t('jobAnalysis.tasks')}:`,
-                bullets(data.tasks),
-                '',
-                `${t('jobAnalysis.requirements')}:`,
-                bullets(data.requirements),
-              ].join('\n'),
-            }
-            void navigate('/applications/new', {
-              state: { defaultValues, returnTo: '/job-analysis' },
-            })
-          }}
-          disableElevation
-          sx={{ py: 1 }}
-        >
-          {t('jobAnalysis.createApplication')}
-        </Button>
       )}
     </Container>
   )
