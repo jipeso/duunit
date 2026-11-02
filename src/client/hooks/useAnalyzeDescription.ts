@@ -6,6 +6,7 @@ import type {
   DescriptionAnalysis,
 } from '#common/types/jobAnalysis.ts'
 import { analysisUsageQueryKey } from './useAnalysisUsage.ts'
+import { lastAnalysisQueryKey, type LastAnalysis } from './useLastAnalysis.ts'
 
 const useAnalyzeDescription = () => {
   const queryClient = useQueryClient()
@@ -17,6 +18,12 @@ const useAnalyzeDescription = () => {
         values
       )
       return data
+    },
+    onSuccess: (result, { description }) => {
+      queryClient.setQueryData<LastAnalysis>(lastAnalysisQueryKey, {
+        description,
+        result,
+      })
     },
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: analysisUsageQueryKey })

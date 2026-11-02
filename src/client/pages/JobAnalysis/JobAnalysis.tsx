@@ -9,6 +9,7 @@ import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import { useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslation } from 'react-i18next'
@@ -23,6 +24,9 @@ import {
 } from '#common/types/jobAnalysis.ts'
 import useAnalysisUsage from '../../hooks/useAnalysisUsage'
 import useAnalyzeDescription from '../../hooks/useAnalyzeDescription'
+import useLastAnalysis, {
+  lastAnalysisQueryKey,
+} from '../../hooks/useLastAnalysis'
 import {
   isTooManyRequestsError,
   isUnprocessableError,
@@ -85,11 +89,13 @@ const JobAnalysis = () => {
   const navigate = useNavigate()
   const {
     mutate: analyze,
-    data,
-    variables,
+    reset: resetAnalysis,
     isPending,
     error,
   } = useAnalyzeDescription()
+  const queryClient = useQueryClient()
+  const { data: lastAnalysis } = useLastAnalysis()
+  const data = lastAnalysis?.result
   const { data: usage } = useAnalysisUsage()
 
   const {
@@ -101,11 +107,11 @@ const JobAnalysis = () => {
     formState: { errors },
   } = useForm<AnalyzeDescription>({
     resolver: zodResolver(AnalyzeDescriptionSchema),
-    defaultValues: { description: '' },
+    defaultValues: { description: lastAnalysis?.description ?? '' },
   })
 
   const description = watch('description')
-  const alreadyAnalyzed = !!data && variables?.description === description
+  const alreadyAnalyzed = lastAnalysis?.description === description
   const limitReached = usage?.remaining === 0
 
   const submit = handleSubmit(values => {
@@ -215,9 +221,11 @@ const JobAnalysis = () => {
           </Typography>
           <Button
             data-testid='job-analysis-clear'
-            disabled={!description || isPending}
+            disabled={(!description && !lastAnalysis) || isPending}
             onClick={() => {
-              reset()
+              reset({ description: '' })
+              resetAnalysis()
+              queryClient.setQueryData(lastAnalysisQueryKey, null)
               setFocus('description')
             }}
           >
