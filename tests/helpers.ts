@@ -16,13 +16,11 @@ export const createUser = async (
   email: string,
   password: string
 ) => {
-  const response = await axios.post(`${baseUrl}/api/auth/sign-up/email`, {
+  await axios.post(`${baseUrl}/api/auth/sign-up/email`, {
     email,
     name,
     password,
   })
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return response.data
 }
 
 export const loginWith = async (

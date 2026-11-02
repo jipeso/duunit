@@ -5,7 +5,7 @@ Job application tracker. Express 5 + Drizzle/Postgres backend, React 19 + Vite +
 ## Commands
 
 - `npm start` — dev env in Docker.
-- `npm run lint` — typecheck + ESLint.
+- `npm run lint` — typecheck + oxlint (type-aware).
 - `npm run format` — format with Prettier.
 - `npm test` — Playwright e2e against CI containers.
 
