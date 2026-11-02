@@ -76,7 +76,7 @@ const Admin = () => {
   ]
 
   return (
-    <Container maxWidth='md'>
+    <Container>
       <Typography
         component='h1'
         variant='h5'
