@@ -10,6 +10,9 @@ import { AppError } from './util/AppError.ts'
 
 const app = express()
 
+app.set('trust proxy', 1)
+app.disable('x-powered-by')
+
 app.all('/api/auth/*splat', toNodeHandler(auth))
 
 app.use(express.json())
