@@ -71,7 +71,9 @@
 
   "home": {
     "title": "Välkommen till Duunit",
-    "description": "Detta är en plattform för att spåra jobbansökningar som hjälper dig att hantera dina ansökningar och följa deras status.",
+    "description": "Ditt jobbsökande, organiserat.",
+    "demoPosition": "Mjukvaruutvecklare",
+    "demoCompany": "Företag A",
     "overview": "Översikt",
     "upcoming": "Kommande",
     "noUpcoming": "Inga kommande händelser för urvalet",

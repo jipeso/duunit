@@ -71,7 +71,9 @@
 
   "home": {
     "title": "Welcome to Duunit",
-    "description": "This is a job application tracking platform that helps you manage your job applications and keep track of their status.",
+    "description": "Your job search, organised.",
+    "demoPosition": "Software Developer",
+    "demoCompany": "Company A",
     "overview": "Overview",
     "upcoming": "Upcoming",
     "noUpcoming": "No upcoming events for the selection",

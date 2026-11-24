@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { authClient } from '../../util/authClient'
 import PageLoader from '../../components/common/PageLoader'
 import Dashboard from './Dashboard'
+import StatusAnimation from './StatusAnimation'
 import PageHeading from '../../components/common/PageHeading'
 
 const Home = () => {
@@ -22,10 +23,10 @@ const Home = () => {
   }
 
   return (
-    <Container maxWidth='sm'>
+    <Container maxWidth='sm' sx={{ textAlign: 'center' }}>
       <PageHeading title={t('home.title')} subtitle={t('home.description')} />
 
-      <Stack direction='row' spacing={2}>
+      <Stack direction='row' spacing={2} sx={{ justifyContent: 'center' }}>
         <Button component={RouterLink} to='/register' variant='contained'>
           {t('navigation.register')}
         </Button>
@@ -33,6 +34,8 @@ const Home = () => {
           {t('navigation.login')}
         </Button>
       </Stack>
+
+      <StatusAnimation />
     </Container>
   )
 }

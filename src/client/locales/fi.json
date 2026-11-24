@@ -71,7 +71,9 @@
 
   "home": {
     "title": "Tervetuloa Duunit sovellukseen",
-    "description": "Tämä on työhakemusten seuranta-alusta, jonka avulla voit hallita työhakemuksiasi ja seurata niiden tilaa.",
+    "description": "Työnhakusi järjestyksessä.",
+    "demoPosition": "Ohjelmistokehittäjä",
+    "demoCompany": "Yritys A",
     "overview": "Yleiskatsaus",
     "upcoming": "Tulossa",
     "noUpcoming": "Ei tulevia tapahtumia valinnalla",
