@@ -73,7 +73,6 @@
     "title": "Tervetuloa Duunit sovellukseen",
     "description": "Tämä on työhakemusten seuranta-alusta, jonka avulla voit hallita työhakemuksiasi ja seurata niiden tilaa.",
     "overview": "Yleiskatsaus",
-    "overviewSubtitle": "Tulevat haastattelusi ja lähettämäsi hakemukset",
     "upcoming": "Tulossa",
     "noUpcoming": "Ei tulevia tapahtumia valinnalla",
     "noUpcomingTypes": "Valitse haastattelut tai hakuajat nähdäksesi tulevat tapahtumat",
@@ -91,7 +90,10 @@
       "all": "Koko aika"
     },
     "total": "Yhteensä: {{count}}",
-    "noneSent": "Ei lähetettyjä hakemuksia. <a>Lisää hakemus</a>"
+    "noneSent": "Ei lähetettyjä hakemuksia. <a>Lisää hakemus</a>",
+    "followUp": "Odottaa vastausta",
+    "followUpDays": "Haettu {{count}} päivää sitten",
+    "noFollowUp": "Ei vastausta odottavia hakemuksia"
   },
 
   "profile": {
@@ -133,12 +135,9 @@
 
   "applications": {
     "title": "Hakemukseni",
-    "subtitle": "Seuraa tallentamiasi ja lähettämiäsi työhakemuksia",
     "empty": "Et ole vielä lisännyt hakemuksia",
     "new": "Lisää uusi hakemus",
-    "newSubtitle": "Täytä hakemasi työpaikan tiedot",
     "edit": "Muokkaa hakemusta",
-    "editSubtitle": "Päivitä hakemuksesi tiedot",
     "notFound": "Hakemusta ei löytynyt",
     "delete": "Poista hakemus",
     "deleteConfirm": "Poistetaanko hakemus: {{position}}, {{company}}? Toimintoa ei voi perua.",
@@ -175,7 +174,6 @@
 
   "resumes": {
     "title": "Ansioluettelot",
-    "subtitle": "Lataa ansioluettelosi ja liitä ne hakemuksiisi",
     "backToList": "Takaisin ansioluetteloihin",
     "notFound": "Ansioluetteloa ei löytynyt",
     "upload": "Lataa PDF",
@@ -203,7 +201,6 @@
 
   "register": {
     "title": "Luo tili",
-    "subtitle": "Syötä tietosi luodaksesi uuden tilin",
     "errors": {
       "emailInUse": "Tämä sähköpostiosoite on jo käytössä."
     },
@@ -213,7 +210,6 @@
 
   "login": {
     "title": "Tervetuloa takaisin",
-    "subtitle": "Kirjaudu sisään syöttämällä tunnuksesi.",
     "submit": "Kirjaudu sisään",
     "errors": {
       "invalidCredentials": "Virheellinen sähköposti tai salasana.",

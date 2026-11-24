@@ -18,6 +18,7 @@ import i18n from '../../util/i18n'
 import { NewUserSchema } from '#common/types/users.ts'
 import { authClient } from '../../util/authClient'
 import { useNotification } from '../../components/Notification'
+import PageHeading from '../../components/common/PageHeading'
 
 const registerSchema = NewUserSchema.extend({
   confirmPassword: z.string().min(1),
@@ -68,18 +69,7 @@ export const RegisterForm: React.FC = () => {
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        <Typography
-          component='h1'
-          variant='h5'
-          color='text.primary'
-          gutterBottom
-        >
-          {t('register.title')}
-        </Typography>
-        <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
-          {t('register.subtitle')}
-        </Typography>
-
+        <PageHeading title={t('register.title')} />
         <Box
           component='form'
           onSubmit={event => {

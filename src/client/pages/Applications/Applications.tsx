@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import useApplications from '../../hooks/useApplications'
 import ApplicationGrid from './ApplicationGrid'
 import PageLoader from '../../components/common/PageLoader'
+import PageHeading from '../../components/common/PageHeading'
 
 const Applications = () => {
   const { t } = useTranslation()
@@ -23,20 +24,9 @@ const Applications = () => {
 
   return (
     <Container>
-      <Stack spacing={2} sx={{ mb: 4 }}>
-        <Typography
-          component='h1'
-          variant='h5'
-          color='text.primary'
-          gutterBottom
-        >
-          {t('applications.title')}
-        </Typography>
+      <PageHeading title={t('applications.title')} />
 
-        <Typography variant='body2' color='text.secondary'>
-          {t('applications.subtitle')}
-        </Typography>
-
+      <Stack sx={{ mb: 3 }}>
         <Button
           component={RouterLink}
           to='/applications/new'

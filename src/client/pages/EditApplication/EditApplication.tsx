@@ -1,7 +1,6 @@
 import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useParams } from 'react-router'
 
@@ -17,6 +16,7 @@ import { useNotification } from '../../components/Notification'
 import ApplicationForm, { toFormValues } from '../../components/ApplicationForm'
 import { isNotFoundError } from '../../util/apiClient'
 import PageLoader from '../../components/common/PageLoader'
+import PageHeading from '../../components/common/PageHeading'
 
 interface EditApplicationFormProps {
   application: ApplicationResponse
@@ -92,18 +92,7 @@ const EditApplication = () => {
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        <Typography
-          component='h1'
-          variant='h5'
-          color='text.primary'
-          gutterBottom
-        >
-          {t('applications.edit')}
-        </Typography>
-        <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
-          {t('applications.editSubtitle')}
-        </Typography>
-
+        <PageHeading title={t('applications.edit')} />
         {application ? (
           <EditApplicationForm key={application.id} application={application} />
         ) : (

@@ -73,7 +73,6 @@
     "title": "Välkommen till Duunit",
     "description": "Detta är en plattform för att spåra jobbansökningar som hjälper dig att hantera dina ansökningar och följa deras status.",
     "overview": "Översikt",
-    "overviewSubtitle": "Dina kommande intervjuer och skickade ansökningar",
     "upcoming": "Kommande",
     "noUpcoming": "Inga kommande händelser för urvalet",
     "noUpcomingTypes": "Välj intervjuer eller tidsfrister för att visa kommande händelser",
@@ -91,7 +90,10 @@
       "all": "Hela tiden"
     },
     "total": "Totalt: {{count}}",
-    "noneSent": "Inga skickade ansökningar. <a>Lägg till en ansökan</a>"
+    "noneSent": "Inga skickade ansökningar. <a>Lägg till en ansökan</a>",
+    "followUp": "Väntar på svar",
+    "followUpDays": "Ansökt för {{count}} dagar sedan",
+    "noFollowUp": "Inga ansökningar väntar på svar"
   },
 
   "profile": {
@@ -133,12 +135,9 @@
 
   "applications": {
     "title": "Mina ansökningar",
-    "subtitle": "Håll koll på de jobbansökningar du har sparat och skickat",
     "empty": "Du har inte lagt till några ansökningar ännu",
     "new": "Lägg till en ny ansökan",
-    "newSubtitle": "Fyll i uppgifterna om jobbet du söker",
     "edit": "Redigera ansökan",
-    "editSubtitle": "Uppdatera uppgifterna om din ansökan",
     "notFound": "Ansökan hittades inte",
     "delete": "Ta bort ansökan",
     "deleteConfirm": "Ta bort ansökan för {{position}} hos {{company}}? Det går inte att ångra.",
@@ -175,7 +174,6 @@
 
   "resumes": {
     "title": "CV:n",
-    "subtitle": "Ladda upp dina CV:n och bifoga dem till dina ansökningar",
     "backToList": "Tillbaka till CV:n",
     "notFound": "CV:t hittades inte",
     "upload": "Ladda upp PDF",
@@ -203,7 +201,6 @@
 
   "register": {
     "title": "Skapa ett konto",
-    "subtitle": "Fyll i dina uppgifter för att skapa ett nytt konto",
     "errors": {
       "emailInUse": "Den e-postadressen används redan."
     },
@@ -213,7 +210,6 @@
 
   "login": {
     "title": "Välkommen tillbaka",
-    "subtitle": "Ange dina uppgifter för att logga in.",
     "submit": "Logga in",
     "errors": {
       "invalidCredentials": "Ogiltig e-postadress eller ogiltigt lösenord.",

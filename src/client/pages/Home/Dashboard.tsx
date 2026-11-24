@@ -2,13 +2,14 @@ import { useState } from 'react'
 import Alert from '@mui/material/Alert'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
 import useApplications from '../../hooks/useApplications'
 import PageLoader from '../../components/common/PageLoader'
 import ApplicationsSentChart from './ApplicationsSentChart'
+import FollowUps from './FollowUps'
 import UpcomingEvents from './UpcomingEvents'
+import PageHeading from '../../components/common/PageHeading'
 
 const Dashboard = () => {
   const { t } = useTranslation()
@@ -21,13 +22,7 @@ const Dashboard = () => {
 
   return (
     <Container maxWidth='sm'>
-      <Typography component='h1' variant='h5' gutterBottom>
-        {t('home.overview')}
-      </Typography>
-
-      <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
-        {t('home.overviewSubtitle')}
-      </Typography>
+      <PageHeading title={t('home.overview')} />
 
       {isError && (
         <Alert severity='error' sx={{ borderRadius: 1, mb: 3 }}>
@@ -38,6 +33,7 @@ const Dashboard = () => {
       {applications && (
         <Stack spacing={3}>
           <UpcomingEvents applications={applications} now={now} />
+          <FollowUps applications={applications} now={now} />
           <ApplicationsSentChart applications={applications} now={now} />
         </Stack>
       )}

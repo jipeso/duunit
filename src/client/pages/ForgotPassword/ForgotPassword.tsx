@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
@@ -13,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 
 import { authClient } from '../../util/authClient'
 import { LoginSchema } from '#common/types/users.ts'
+import PageHeading from '../../components/common/PageHeading'
 
 const forgotPasswordSchema = LoginSchema.pick({ email: true })
 
@@ -50,17 +50,10 @@ const ForgotPassword = () => {
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        <Typography
-          component='h1'
-          variant='h5'
-          color='text.primary'
-          gutterBottom
-        >
-          {t('forgotPassword.title')}
-        </Typography>
-        <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
-          {t('forgotPassword.subtitle')}
-        </Typography>
+        <PageHeading
+          title={t('forgotPassword.title')}
+          subtitle={t('forgotPassword.subtitle')}
+        />
 
         <Box
           component='form'

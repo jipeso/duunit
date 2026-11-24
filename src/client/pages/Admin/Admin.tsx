@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next'
 import type { AdminUser } from '#common/types/admin.ts'
 import useAdminUsers from '../../hooks/useAdminUsers'
 import PageLoader from '../../components/common/PageLoader'
+import PageHeading from '../../components/common/PageHeading'
 
 const GRID_HEIGHT = '60dvh'
 const GRID_MIN_HEIGHT = 300
@@ -77,15 +78,7 @@ const Admin = () => {
 
   return (
     <Container>
-      <Typography
-        component='h1'
-        variant='h5'
-        color='text.primary'
-        gutterBottom
-        sx={{ mb: 4 }}
-      >
-        {t('admin.title')}
-      </Typography>
+      <PageHeading title={t('admin.title')} />
 
       {isError && (
         <Alert severity='error' sx={{ borderRadius: 1, mb: 3 }}>

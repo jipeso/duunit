@@ -2,6 +2,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
 import { useTranslation, Trans } from 'react-i18next'
+import PageHeading from '../../components/common/PageHeading'
 
 const SECTIONS = [
   'controller',
@@ -18,12 +19,7 @@ const Privacy = () => {
 
   return (
     <Container maxWidth='sm'>
-      <Typography component='h1' variant='h5' gutterBottom>
-        {t('privacy.title')}
-      </Typography>
-      <Typography variant='body2' color='text.secondary'>
-        {t('privacy.updated')}
-      </Typography>
+      <PageHeading title={t('privacy.title')} subtitle={t('privacy.updated')} />
 
       {SECTIONS.map(section => (
         <section key={section}>

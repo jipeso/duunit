@@ -33,6 +33,7 @@ import {
 } from '../../util/apiClient'
 import { EMPTY_VALUE } from '../../util/applications'
 import { parseDate } from '../../util/date'
+import PageHeading from '../../components/common/PageHeading'
 
 const bullets = (items: string[]) => items.map(item => `- ${item}`).join('\n')
 
@@ -152,14 +153,10 @@ const JobAnalysis = () => {
 
   return (
     <Container maxWidth='sm'>
-      <Stack spacing={2} sx={{ mb: 4 }}>
-        <Typography component='h1' variant='h5'>
-          {t('jobAnalysis.title')}
-        </Typography>
-        <Typography variant='body2' color='text.secondary'>
-          {t('jobAnalysis.subtitle')}
-        </Typography>
-      </Stack>
+      <PageHeading
+        title={t('jobAnalysis.title')}
+        subtitle={t('jobAnalysis.subtitle')}
+      />
 
       <Stack
         component='form'

@@ -73,7 +73,6 @@
     "title": "Welcome to Duunit",
     "description": "This is a job application tracking platform that helps you manage your job applications and keep track of their status.",
     "overview": "Overview",
-    "overviewSubtitle": "Your upcoming interviews and sent applications",
     "upcoming": "Upcoming",
     "noUpcoming": "No upcoming events for the selection",
     "noUpcomingTypes": "Select interviews or deadlines to show upcoming events",
@@ -91,7 +90,10 @@
       "all": "All time"
     },
     "total": "Total: {{count}}",
-    "noneSent": "No applications sent. <a>Add an application</a>"
+    "noneSent": "No applications sent. <a>Add an application</a>",
+    "followUp": "Waiting for a response",
+    "followUpDays": "Applied {{count}} days ago",
+    "noFollowUp": "Nothing waiting for a reply"
   },
 
   "profile": {
@@ -133,12 +135,9 @@
 
   "applications": {
     "title": "My applications",
-    "subtitle": "Track the job applications you have saved and sent",
     "empty": "You have not added any applications yet",
     "new": "Add a new application",
-    "newSubtitle": "Fill in the details of the job you are applying to",
     "edit": "Edit application",
-    "editSubtitle": "Update the details of your application",
     "notFound": "Application not found",
     "delete": "Delete application",
     "deleteConfirm": "Delete the application for {{position}} at {{company}}? This cannot be undone.",
@@ -175,7 +174,6 @@
 
   "resumes": {
     "title": "Resumes",
-    "subtitle": "Upload your resumes and attach them to your applications",
     "backToList": "Back to resumes",
     "notFound": "Resume not found",
     "upload": "Upload PDF",
@@ -203,7 +201,6 @@
 
   "register": {
     "title": "Create an account",
-    "subtitle": "Enter your details to create a new account",
     "errors": {
       "emailInUse": "That email address is already in use."
     },
@@ -213,7 +210,6 @@
 
   "login": {
     "title": "Welcome back",
-    "subtitle": "Enter your credentials to sign in.",
     "submit": "Login",
     "errors": {
       "invalidCredentials": "Invalid email or password.",

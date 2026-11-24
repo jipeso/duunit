@@ -117,7 +117,7 @@ const UpcomingEvents = ({ applications, now }: Props) => {
               key={`${event.id}-${event.type}`}
               component={RouterLink}
               to={`/applications/${event.id}`}
-              sx={{ px: 0, py: 0.5, borderRadius: 1 }}
+              sx={{ mx: -1, px: 1, py: 0.5, borderRadius: 1 }}
             >
               <ListItemText primary={event.title} secondary={event.detail} />
             </ListItemButton>

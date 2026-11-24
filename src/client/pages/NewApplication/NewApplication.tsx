@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router'
 
@@ -11,6 +10,7 @@ import {
 import useCreateApplication from '../../hooks/useCreateApplication'
 import { useNotification } from '../../components/Notification'
 import ApplicationForm from '../../components/ApplicationForm'
+import PageHeading from '../../components/common/PageHeading'
 
 const NewApplication = () => {
   const { t } = useTranslation()
@@ -38,18 +38,7 @@ const NewApplication = () => {
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        <Typography
-          component='h1'
-          variant='h5'
-          color='text.primary'
-          gutterBottom
-        >
-          {t('applications.new')}
-        </Typography>
-        <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
-          {t('applications.newSubtitle')}
-        </Typography>
-
+        <PageHeading title={t('applications.new')} />
         <ApplicationForm
           defaultValues={{ status: 'applied', ...state?.defaultValues }}
           onSubmit={onSubmit}

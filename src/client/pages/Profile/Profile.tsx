@@ -21,6 +21,7 @@ import Section from '../../components/common/Section'
 import ChangePasswordForm from './ChangePasswordForm'
 import DeleteAccountForm from './DeleteAccountForm'
 import ProfileAction from './ProfileAction'
+import PageHeading from '../../components/common/PageHeading'
 
 const Profile = () => {
   const { t, i18n } = useTranslation()
@@ -65,9 +66,7 @@ const Profile = () => {
 
   return (
     <Container maxWidth='sm'>
-      <Typography component='h1' variant='h5' gutterBottom>
-        {t('navigation.profile')}
-      </Typography>
+      <PageHeading title={t('navigation.profile')} />
 
       <Stack spacing={3}>
         <Section title={t('profile.account')}>

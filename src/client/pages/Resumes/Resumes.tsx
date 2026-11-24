@@ -19,6 +19,7 @@ import useResumes from '../../hooks/useResumes'
 import useUploadResume from '../../hooks/useUploadResume'
 import { useNotification } from '../../components/Notification'
 import PageLoader from '../../components/common/PageLoader'
+import PageHeading from '../../components/common/PageHeading'
 
 const LIST_MAX_HEIGHT = 600
 
@@ -60,20 +61,7 @@ const Resumes = () => {
 
   return (
     <Container maxWidth='sm'>
-      <Stack spacing={2} sx={{ mb: 4 }}>
-        <Typography
-          component='h1'
-          variant='h5'
-          color='text.primary'
-          gutterBottom
-        >
-          {t('resumes.title')}
-        </Typography>
-
-        <Typography variant='body2' color='text.secondary'>
-          {t('resumes.subtitle')}
-        </Typography>
-      </Stack>
+      <PageHeading title={t('resumes.title')} />
 
       {isError && (
         <Alert severity='error' sx={{ borderRadius: 1, mb: 3 }}>

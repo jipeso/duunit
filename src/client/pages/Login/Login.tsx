@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next'
 import { authClient } from '../../util/authClient'
 import { useNotification } from '../../components/Notification'
 import { LoginSchema, type LoginCredentials } from '#common/types/users.ts'
+import PageHeading from '../../components/common/PageHeading'
 
 export const LoginForm: React.FC = () => {
   const { t } = useTranslation()
@@ -64,17 +65,7 @@ export const LoginForm: React.FC = () => {
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        <Typography
-          component='h1'
-          variant='h5'
-          color='text.primary'
-          gutterBottom
-        >
-          {t('login.title')}
-        </Typography>
-        <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
-          {t('login.subtitle')}
-        </Typography>
+        <PageHeading title={t('login.title')} />
         <Box
           component='form'
           onSubmit={event => {

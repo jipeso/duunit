@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
@@ -15,6 +14,7 @@ import i18n from '../../util/i18n'
 import { authClient } from '../../util/authClient'
 import { useNotification } from '../../components/Notification'
 import { ChangePasswordSchema } from '#common/types/users.ts'
+import PageHeading from '../../components/common/PageHeading'
 
 const resetPasswordSchema = ChangePasswordSchema.pick({ newPassword: true })
   .extend({ confirmPassword: z.string().min(1) })
@@ -66,17 +66,10 @@ const ResetPassword = () => {
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        <Typography
-          component='h1'
-          variant='h5'
-          color='text.primary'
-          gutterBottom
-        >
-          {t('resetPassword.title')}
-        </Typography>
-        <Typography variant='body2' color='text.secondary' sx={{ mb: 3 }}>
-          {t('resetPassword.subtitle')}
-        </Typography>
+        <PageHeading
+          title={t('resetPassword.title')}
+          subtitle={t('resetPassword.subtitle')}
+        />
 
         <Box
           component='form'
